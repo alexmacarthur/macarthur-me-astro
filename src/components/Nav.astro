@@ -1,0 +1,88 @@
+---
+import Logo from "./Logo.astro";
+import MenuToggle from "./MenuToggle.astro";
+
+const navItems = [
+  {
+    name: 'About',
+    href: '/about'
+  },
+  {
+    name: 'Posts',
+    href: '/posts'
+  },
+  {
+    name: 'Projects',
+    href: '/projects'
+  },
+  {
+    name: 'Dashboard',
+    href: '/dashboard'
+  },
+  {
+    name: 'Contact',
+    href: '/contact'
+  },
+];
+---
+
+<nav class="p-6 flex justify-between">
+  <Logo>
+    <a href="/">AM</a>
+  </Logo>
+
+  <ul class="gap-6 items-center hidden md:flex">
+    {navItems.map((item) => (
+      <li class="">
+        <a href={item.href} class="text-gray-600 hover:text-gray-800 font-light">
+          {item.name}
+        </a>
+      </li>
+      ))}
+  </ul>
+
+  <input
+    id="menuToggle"
+    type="checkbox"
+    aria-labelledby="menuToggleLabel"
+    class="absolute opacity-0 md:hidden -z-10"
+  />
+
+  <div class="block md:hidden w-full h-screen bg-green-200 z-40 fixed top-0 left-0 -translate-x-full transition-transform" id="mobileNav">
+    <ul class="gap-6 items-center flex flex-col">
+      {navItems.map((item) => (
+        <li class="">
+          <a href={item.href} class="text-gray-600 hover:text-gray-800 font-light">
+            {item.name}
+          </a>
+        </li>
+        ))}
+    </ul>
+  </div>
+
+  <label
+    class="cursor-pointer z-50 md:hidden absolute top-[2.15rem] right-0 mr-6"
+    for="menuToggle"
+    id="menuToggleLabel"
+  >
+    <MenuToggle />
+  </label>
+</nav>
+
+<style is:global>
+  #menuToggle:checked ~ #mobileNav {
+    @apply translate-x-0;
+  }
+
+  #menuToggle:checked ~ #menuToggleLabel .menu-bar-1 {
+    transform: translate3d(0, 1rem, 0) rotate(-45deg);
+  }
+
+  #menuToggle:checked ~ #menuToggleLabel .menu-bar-2 {
+    @apply opacity-0;
+  }
+
+  #menuToggle:checked ~ #menuToggleLabel .menu-bar-3 {
+    transform: translate3d(0, -1rem, 0) rotate(45deg);
+  }
+</style>
