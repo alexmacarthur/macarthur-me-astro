@@ -1,0 +1,15 @@
+---
+
+const { classes = "", value = "0", disableAnimation = true } = Astro.props;
+const formattedValue = value.replace(/\,/g, "");
+
+---
+
+<span class={classes} data-counter-value={formattedValue} data-counter-disabled={disableAnimation}>
+  "-"
+</span>
+
+<script>
+  import "../scripts/counter.ts";
+</script>
+

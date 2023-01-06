@@ -1,0 +1,14 @@
+---
+
+const { date, prettyDate, className = "" } = Astro.props;
+
+
+---
+
+<span class:list={["text-sm", "text-gray-500", className]}>
+  <slot></slot>
+
+  <time dateTime={date}>
+    {prettyDate}
+  </time>
+</span>

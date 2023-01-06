@@ -1,0 +1,23 @@
+---
+import Logo from '../../components/Logo.astro';
+import Title from '../../components/Title.astro';
+import Layout from '../../layouts/Layout.astro';
+import PostList from '../../components/PostList.astro';
+
+import cmsService from '../../lib/CMSService';
+
+const { posts } = await cmsService.getPosts({
+  pageNumber: 1,
+  propertiesToExclude: ["markdown"]
+});
+
+
+---
+
+<Layout title="Posts" pageType="narrow">
+  <Title>
+    Posts
+  </Title>
+
+  <PostList posts={posts} />
+</Layout>

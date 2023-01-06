@@ -1,0 +1,77 @@
+{
+  "totalStars": 3511,
+  "repoData": [
+    {
+      "html_url": "https://github.com/alexmacarthur/typeit",
+      "description": "The most versatile JavaScript typewriter effect library on the planet.",
+      "name": "typeit",
+      "stargazers_count": 2327
+    },
+    {
+      "html_url": "https://github.com/alexmacarthur/wp-vue",
+      "description": "A simple Vue blog template that displays posts from any WordPress REST API endpoint.",
+      "name": "wp-vue",
+      "stargazers_count": 435
+    },
+    {
+      "html_url": "https://github.com/alexmacarthur/local-docker-db",
+      "description": "A bunch o' Docker Compose files used to quickly spin up local databases. ",
+      "name": "local-docker-db",
+      "stargazers_count": 207
+    },
+    {
+      "html_url": "https://github.com/alexmacarthur/slide-element",
+      "description": "A ~700 byte Promise-based library for animating elements with dynamic heights open & closed. Basically, a modern variant of jQuery's slideUp(), slideDown(), and slideToggle(). ",
+      "name": "slide-element",
+      "stargazers_count": 130
+    },
+    {
+      "html_url": "https://github.com/alexmacarthur/netlify-lambda-function-example",
+      "description": "An example Netlify Lambda function that processes payments with Stripe.",
+      "name": "netlify-lambda-function-example",
+      "stargazers_count": 93
+    },
+    {
+      "html_url": "https://github.com/alexmacarthur/probaclick",
+      "description": "Do something when someone is probably going to click something.",
+      "name": "probaclick",
+      "stargazers_count": 71
+    },
+    {
+      "html_url": "https://github.com/alexmacarthur/christian-git",
+      "description": "A Christian wrapper for Git to sanctify your version control workflow. ✝️",
+      "name": "christian-git",
+      "stargazers_count": 65
+    },
+    {
+      "html_url": "https://github.com/alexmacarthur/typeit-react",
+      "description": "A React component for TypeIt, the most versatile JavaScript animated typing utility on the planet.",
+      "name": "typeit-react",
+      "stargazers_count": 27
+    },
+    {
+      "html_url": "https://github.com/alexmacarthur/wp-better-resource-hints",
+      "description": "A WordPress plugin to help better manage resource hinting (preloading, prefetching, server pushing).",
+      "name": "wp-better-resource-hints",
+      "stargazers_count": 15
+    },
+    {
+      "html_url": "https://github.com/alexmacarthur/graphql-quest",
+      "description": "Ultra-minimal library for making GraphQL requests in the browser and Node (with a quick polyfill). ",
+      "name": "graphql-quest",
+      "stargazers_count": 10
+    },
+    {
+      "html_url": "https://github.com/alexmacarthur/wp-typeit",
+      "description": "Easily add typewriter effects to your WordPress site with TypeIt, the most versatile animated typing utility on the planet.",
+      "name": "wp-typeit",
+      "stargazers_count": 5
+    },
+    {
+      "html_url": "https://github.com/alexmacarthur/expand-text-nodes",
+      "description": "Expand text within HTML to be composed of one text node per character.",
+      "name": "expand-text-nodes",
+      "stargazers_count": 1
+    }
+  ]
+}

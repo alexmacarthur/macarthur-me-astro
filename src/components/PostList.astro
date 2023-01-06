@@ -1,0 +1,53 @@
+---
+import DateFormatter from './DateFormatter.astro';
+import Counter from './Counter.astro';
+
+const { posts } = Astro.props;
+
+---
+
+<ul class="space-y-10">
+  {posts.map((post) => {
+    return (
+      <li>
+        <article>
+          <h2 class="text-2xl font-bold">
+            <a href="">{post.title}</a>
+          </h2>
+
+          <div class="flex items-center mb-3 gap-3 text-base">
+            {post.lastUpdated && (
+              <>
+                <DateFormatter
+                  date={post.lastUpdated}
+                  prettyDate={post.prettyLastUpdated}
+                  className="inline-block"
+                >
+                  Updated on
+                </DateFormatter>
+
+                <small>/</small>
+              </>
+            )}
+
+            <Counter />
+
+            <DateFormatter
+              date={post.date}
+              prettyDate={post.prettyDate}
+              className="inline-block"
+            >
+              {post.lastUpdated && "Originally posted on"}
+            </DateFormatter>
+
+            {!post.externalUrl && "view count!"}
+          </div>
+
+          <small class="block text-gray-500 mb-2">{post.description}</small>
+
+        read it button
+        </article>
+      </li>
+    );
+  })}
+</ul>
