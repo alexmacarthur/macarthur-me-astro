@@ -1,9 +1,9 @@
 ---
 import DateFormatter from './DateFormatter.astro';
-import Counter from './Counter.astro';
+import ViewCount from './ViewCount.astro';
+import ButtonLink from './ButtonLink.astro';
 
 const { posts } = Astro.props;
-
 ---
 
 <ul class="space-y-10">
@@ -30,8 +30,6 @@ const { posts } = Astro.props;
               </>
             )}
 
-            <Counter />
-
             <DateFormatter
               date={post.date}
               prettyDate={post.prettyDate}
@@ -40,12 +38,17 @@ const { posts } = Astro.props;
               {post.lastUpdated && "Originally posted on"}
             </DateFormatter>
 
-            {!post.externalUrl && "view count!"}
+            {!post.externalUrl && <ViewCount
+              slug={post.slug}
+              disableAnimation={true}
+            />}
           </div>
 
           <small class="block text-gray-500 mb-2">{post.description}</small>
 
-        read it button
+          <ButtonLink href={`/posts/${post.slug}`} withArrow={true}>
+            Read It
+          <ButtonLink>
         </article>
       </li>
     );

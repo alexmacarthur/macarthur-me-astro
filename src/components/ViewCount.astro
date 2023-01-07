@@ -1,0 +1,35 @@
+---
+import Counter from "./Counter.astro";
+import Eye from 'astro-heroicons/outline/Eye.astro';
+
+export interface Props {
+  count: string;
+  disableAnimation?: boolean;
+  slug: string;
+}
+
+const { value, disableAnimation = false, slug } = Astro.props;
+---
+
+<span
+  data-view-count-slug={slug}
+  title={`${value} analytics views`}
+  class="flex items-center gap-0.5 text-gray-500 text-sm"
+>
+  <Eye class="h-4 w-4" />
+
+  <span class="text-gray-500" data-view-count-stat>
+    {!value ? (
+      "-"
+    ) : (
+      <Counter
+        value={value}
+        disableAnimation={disableAnimation}
+      />
+    )}
+  </span>
+</span>
+
+<script>
+  import "../scripts/analytics.js";
+</script>

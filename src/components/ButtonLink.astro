@@ -1,0 +1,24 @@
+---
+import ArrowSmallRight from 'astro-heroicons/outline/ArrowSmallRight.astro';
+
+export interface Props {
+  href: string;
+  withArrow: boolean;
+}
+
+const { href, withArrow } = Astro.props;
+---
+
+<a
+  class="text-purple-500 hover:text-purple-400 flex items-center gap-1"
+  href={href}
+  >
+    <slot />
+  { withArrow && <ArrowSmallRight class="h-4"/> }
+</a>
+
+<style>
+  svg {
+    stroke: theme('colors.purple.500');
+  }
+</style>

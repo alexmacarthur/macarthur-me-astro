@@ -2,6 +2,7 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "noImplicitAny": false,
-    "isolatedModules": false
+    "isolatedModules": false,
+    "module": "esnext"
   }
 }
