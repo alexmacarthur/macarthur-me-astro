@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Title from '../components/Title.astro';
+const { frontmatter } = Astro.props;
+---
+
+<Layout title={frontmatter.title} pageType={"normal"}>
+  <Title>
+    {frontmatter.title}
+  </Title>
+
+  <div class="prose lg:prose-md">
+    <slot />
+  </div>
+</Layout>
