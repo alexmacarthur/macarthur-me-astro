@@ -1,0 +1,15 @@
+---
+import { POST_PAGE_PAGE } from '../../../constants';
+import PaginatedPosts from '../../../layouts/PaginatedPosts.astro';
+import cmsService from '../../../lib/CMSService';
+
+export async function getStaticPaths({ paginate }) {
+  const posts = await cmsService.getAllPosts();
+
+  return paginate(posts, { pageSize: POST_PAGE_PAGE });
+};
+
+const { page } = Astro.props;
+---
+
+<PaginatedPosts page={page} />

@@ -26,6 +26,7 @@
     "nodemailer": "^6.8.0",
     "notion-to-md": "^2.5.5",
     "octonode": "^0.10.2",
+    "quicklink": "^2.3.0",
     "rehype-autolink-headings": "^6.1.1",
     "rehype-slug": "^5.1.0",
     "remark": "^14.0.2",

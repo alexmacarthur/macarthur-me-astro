@@ -1,0 +1,30 @@
+---
+import type { Page } from 'astro';
+import Title from '../components/Title.astro';
+import Layout from './Layout.astro';
+import PostList from '../components/PostList.astro';
+import Pagination from '../components/Pagination.astro';
+import type { BlogPost } from '../types/types';
+
+export interface Props {
+  page: Partial<Page<BlogPost>>;
+}
+
+const { page } = Astro.props;
+
+---
+
+<Layout title="Posts" pageType="narrow">
+  <Title>
+    Posts
+  </Title>
+
+  <PostList posts={page.data} />
+
+  <Pagination
+    totalPages={page.lastPage as number}
+    currentPage={page.currentPage as number}
+    nextUrl={(page.url as Page["url"]).next}
+    prevUrl={(page.url as Page["url"]).prev}
+  />
+</Layout>

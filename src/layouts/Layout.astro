@@ -30,11 +30,20 @@ const mainClass = (() => {
 	</head>
 	<body>
     <Nav />
-    <main class={`mx-auto w-full ${mainClass}`}>
+    <main class={`px-4 md:px-6 mx-auto w-full ${mainClass}`}>
 		  <slot />
     </main>
+    <footer class="px-4 md:px-6 py-6">
+
+    </footer>
 	</body>
 </html>
+
+<script>
+  import { listen } from "quicklink";
+
+  listen();
+</script>
 
 <style is:global>
   * {

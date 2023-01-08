@@ -5,6 +5,7 @@ import type { BlogPost, ContentEntity } from "../types/types";
 
 class CMS {
   provider: NotionService;
+  posts: BlogPost[] = [];
 
   constructor() {
     this.provider = new NotionService();
@@ -18,6 +19,11 @@ class CMS {
   }
 
   async getAllPosts(hydrate: boolean = true): Promise<BlogPost[]> {
+    if(this.posts.length) {
+      console.log("Using cached posts...");
+      return this.posts;
+    }
+
     let posts = [];
     let startCursor: any = undefined;
     let hasMore = true;
@@ -36,68 +42,52 @@ class CMS {
       startCursor = response.nextCursor;
     }
 
+    this.posts = posts;
+
     return posts;
   }
 
-  async getPosts({
-    pageNumber,
-    propertiesToExclude = [],
-  }: {
-    pageNumber: number;
-    propertiesToExclude?: (keyof ContentEntity)[];
-  }): Promise<{
-    posts: ContentEntity[];
-    hasMore: boolean;
-    hasPrevious: boolean;
-  }> {
-    let allPosts: ContentEntity[] = [];
-    let nextCursor;
-    let hasMore = false;
+  // async getPosts({
+    // pageNumber
+  // }): Promise<BlogPost[]> {
+    // const allPosts = await this.getAllPosts();
 
-    for (let i = 0; i < pageNumber; i++) {
-      let {
-        posts,
-        nextCursor: next_cursor,
-        hasMore: has_more,
-      } = await this.provider.getPublishedBlogPosts({
-        startCursor: nextCursor,
-      });
+    // let allPosts: ContentEntity[] = [];
+    // let nextCursor;
+    // let hasMore = false;
 
-      allPosts = allPosts.concat(posts as BlogPost[]);
-      nextCursor = next_cursor;
-      hasMore = has_more;
+    // for (let i = 0; i < pageNumber; i++) {
+    //   let {
+    //     posts,
+    //     nextCursor: next_cursor,
+    //     hasMore: has_more,
+    //   } = await this.provider.getPublishedBlogPosts({
+    //     startCursor: nextCursor,
+    //   });
 
-      // Don't bother trying to query the next page if there's nothing there.
-      if (!hasMore) {
-        break;
-      }
-    }
+    //   allPosts = allPosts.concat(posts as BlogPost[]);
+    //   nextCursor = next_cursor;
+    //   hasMore = has_more;
 
-    let chunks = chunk(allPosts, POSTS_PER_PAGE);
-    let chunkIndex = pageNumber - 1;
-    let posts = chunks[chunkIndex] ?? chunks.flat();
+    //   // Don't bother trying to query the next page if there's nothing there.
+    //   if (!hasMore) {
+    //     break;
+    //   }
+    // }
 
-    return {
-      posts: posts.map((p) => {
-        propertiesToExclude.forEach((property) => {
-          delete p[property];
-        });
+    // let chunks = chunk(allPosts, POSTS_PER_PAGE);
+    // let chunkIndex = pageNumber - 1;
+    // let posts = chunks[chunkIndex] ?? chunks.flat();
 
-        return p;
-      }),
-      hasMore,
-      hasPrevious: pageNumber > 1,
-    };
-  }
+    // return {
+    //   posts,
+    //   hasMore,
+    //   hasPrevious: pageNumber > 1,
+    // };
+  // }
 
-  async getPost(slug: string, propertiesToExclude = []) {
-    const post = await this.provider.getSingleBlogPost(slug);
-
-    propertiesToExclude.forEach((property) => {
-      delete post[property];
-    });
-
-    return post;
+  async getPost(slug: string) {
+    return this.provider.getSingleBlogPost(slug);
   }
 }
 

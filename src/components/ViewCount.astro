@@ -16,13 +16,14 @@ const { value, disableAnimation = false, slug } = Astro.props;
   title={`${value} analytics views`}
   class="flex items-center gap-0.5 text-gray-500 text-sm"
 >
-  <Eye class="h-4 w-4" />
+  <Eye class="h-4 w-4 text-blue" />
 
-  <span class="text-gray-500" data-view-count-stat>
+  <span class="text-gray-500 text-sm" data-view-count-stat>
     {!value ? (
       "-"
     ) : (
       <Counter
+        classes="text-inherit"
         value={value}
         disableAnimation={disableAnimation}
       />
@@ -33,3 +34,9 @@ const { value, disableAnimation = false, slug } = Astro.props;
 <script>
   import "../scripts/analytics.js";
 </script>
+
+<style>
+  svg {
+    stroke: theme('colors.gray.500');
+  }
+</style>
