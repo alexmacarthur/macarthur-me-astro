@@ -47,47 +47,10 @@ class CMS {
     return posts;
   }
 
-  // async getPosts({
-    // pageNumber
-  // }): Promise<BlogPost[]> {
-    // const allPosts = await this.getAllPosts();
-
-    // let allPosts: ContentEntity[] = [];
-    // let nextCursor;
-    // let hasMore = false;
-
-    // for (let i = 0; i < pageNumber; i++) {
-    //   let {
-    //     posts,
-    //     nextCursor: next_cursor,
-    //     hasMore: has_more,
-    //   } = await this.provider.getPublishedBlogPosts({
-    //     startCursor: nextCursor,
-    //   });
-
-    //   allPosts = allPosts.concat(posts as BlogPost[]);
-    //   nextCursor = next_cursor;
-    //   hasMore = has_more;
-
-    //   // Don't bother trying to query the next page if there's nothing there.
-    //   if (!hasMore) {
-    //     break;
-    //   }
-    // }
-
-    // let chunks = chunk(allPosts, POSTS_PER_PAGE);
-    // let chunkIndex = pageNumber - 1;
-    // let posts = chunks[chunkIndex] ?? chunks.flat();
-
-    // return {
-    //   posts,
-    //   hasMore,
-    //   hasPrevious: pageNumber > 1,
-    // };
-  // }
-
   async getPost(slug: string) {
-    return this.provider.getSingleBlogPost(slug);
+    return (await this.getAllPosts()).find((post) => post.slug === slug);
+
+    // return this.provider.getSingleBlogPost(slug);
   }
 }
 

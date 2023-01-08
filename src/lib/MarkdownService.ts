@@ -1,9 +1,5 @@
-import matter from "gray-matter";
 import path, { join } from "path";
-import fs from "fs";
-// import getConfig from "next/config";
-import type { ContentEntity } from "../types/types";
-import { externalMarkdownLinks, generateExcerptFromMarkdown } from "./markdown";
+import { externalMarkdownLinks } from "./markdown";
 import { PluggableList, Preset, unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkPrism from "remark-prism";
@@ -12,8 +8,6 @@ import remarkEmbedder from "@remark-embedder/core";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import remarkHtml from "remark-html";
-
-// const { serverRuntimeConfig } = getConfig();
 
 if (process.platform === "win32") {
   import.meta.env.ESBUILD_BINARY_PATH = path.join(
@@ -56,12 +50,6 @@ const CodepenTransformer = {
 };
 
 class MarkdownSerivce {
-  // pageDirectory: string;
-
-  constructor() {
-    // this.pageDirectory = join(serverRuntimeConfig.PROJECT_ROOT, `_pages`);
-  }
-
   async processMarkdown(rawMarkdown: string): Promise<{
     code: string;
   }> {
@@ -80,31 +68,6 @@ class MarkdownSerivce {
       code: String(file),
     };
   }
-
-  // getPage(slug: string): ContentEntity {
-  //   const fullPath = join(this.pageDirectory, `${slug}.md`);
-  //   const fileContents = fs.readFileSync(fullPath, "utf8");
-  //   const { data: frontmatterData, content } = matter(fileContents);
-
-  //   return {
-  //     slug,
-  //     markdown: content,
-  //     description: generateExcerptFromMarkdown(content),
-  //     title: frontmatterData.title,
-  //     subtitle: frontmatterData.subTitle || "",
-  //     openGraphImage: frontmatterData.openGraphImage || "",
-  //   };
-  // }
-
-  // getAllPageSlugs(): string[] {
-  //   const pageFiles = fs.readdirSync(this.pageDirectory);
-
-  //   return pageFiles.map((file) => file.replace(/.md$/, ""));
-  // }
-
-  // async getAllPages(): Promise<ContentEntity[]> {
-  //   return this.getAllPageSlugs().map(this.getPage.bind(this));
-  // }
 }
 
 export default MarkdownSerivce;
