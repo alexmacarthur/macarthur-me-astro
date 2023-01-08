@@ -1,5 +1,5 @@
 ---
-import Logo from "./Logo.astro";
+import GradientText from "./GradientText.astro";
 import MenuToggle from "./MenuToggle.astro";
 
 const navItems = [
@@ -27,9 +27,9 @@ const navItems = [
 ---
 
 <nav class="p-6 flex justify-between">
-  <Logo>
+  <GradientText>
     <a href="/">AM</a>
-  </Logo>
+  </GradientText>
 
   <ul class="gap-6 items-center hidden md:flex">
     {navItems.map((item) => (

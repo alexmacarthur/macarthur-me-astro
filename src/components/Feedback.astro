@@ -1,0 +1,51 @@
+---
+export interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+---
+
+<div class="mt-16">
+  <hr class="divider" />
+
+  <div class="flex flex-col md:flex-row justify-center items-center py-14 md:space-x-6">
+    <span class="text-center md:text-left block prose">
+      <feedback-component data-slug={slug}>
+        <span slot="cta">Was this post helpful?</span>
+        <span slot="confirmation">Thanks for the feedback!</span>
+      </feedback-component>
+    </span>
+  </div>
+
+  <hr class="divider" />
+</div>
+
+<script>
+  declare global {
+    interface Window {
+      feedbackHandler: (e: CustomEvent) => void;
+    }
+  }
+
+  import "@ramseyinhouse/feedback-component/dist/index.umd.js";
+
+  window.feedbackHandler = window.feedbackHandler || ((e) => {
+    const slug = (e!.target as HTMLElement).dataset!.slug;
+
+    const {
+      detail: { value },
+    } = e;
+
+    fetch(`/api/feedback`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ slug, value }),
+    });
+  });
+
+  // @ts-ignore
+  document.addEventListener("feedback:interaction", window.feedbackHandler);
+</script>

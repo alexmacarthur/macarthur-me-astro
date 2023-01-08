@@ -1,5 +1,9 @@
 ---
+import Bio from '../../components/Bio.astro';
+import DateFormatter from '../../components/DateFormatter.astro';
+import Feedback from '../../components/Feedback.astro';
 import Title from '../../components/Title.astro';
+import ViewCount from '../../components/ViewCount.astro';
 import Layout from '../../layouts/Layout.astro';
 import cmsService from '../../lib/CMSService';
 import MarkdownService from '../../lib/MarkdownService';
@@ -23,5 +27,25 @@ const { code: markdownCode } = await (new MarkdownService()).processMarkdown(
     {post.title}
   </Title>
 
+  <div class="flex gap-4 mb-6 -mt-10">
+    <DateFormatter
+      date={post.date}
+      prettyDate={post.prettyDate}
+      className="inline-block"
+    >
+      {post.lastUpdated && "Originally posted on"}
+    </DateFormatter>
+
+    <ViewCount
+      count={""}
+      slug={post.slug}
+      disableAnimation={true}
+    />
+  </div>
+
   <div class="prose lg:prose-md" set:html={markdownCode}></div>
+
+  <Feedback slug={post.slug} />
+
+  <Bio />
 </Layout>
