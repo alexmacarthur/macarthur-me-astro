@@ -8,13 +8,14 @@ const { posts } = Astro.props;
 
 <ul class="space-y-10">
   {posts.map((post) => {
-    const postPath = `/posts/${post.slug}`;
+    const postPath = post.externalUrl || `/posts/${post.slug}`;
+    const target = post.externalUrl ? "_blank" : "_self";
 
     return (
       <li>
         <article>
           <h2 class="text-2xl font-bold">
-            <a href={`/posts/${post.slug}`}>{post.title}</a>
+            <a href={postPath} target={target}>{post.title}</a>
           </h2>
 
           <div class="flex items-center mb-3 gap-3 text-base">
@@ -49,7 +50,7 @@ const { posts } = Astro.props;
 
           <small class="block text-gray-500 mb-2">{post.description}</small>
 
-          <ButtonLink href={postPath} withArrow={true}>
+          <ButtonLink href={postPath} target={target} withArrow={true}>
             Read It
           </ButtonLink>
         </article>

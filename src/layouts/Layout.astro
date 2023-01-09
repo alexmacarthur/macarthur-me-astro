@@ -81,4 +81,22 @@ const currentPath = getCurrentPath(Astro);
   main {
     grid-area: main;
   }
+
+  form input, form textarea {
+    @apply border border-gray-300 rounded-sm w-full px-2 py-2 text-base;
+  }
+
+  label {
+    @apply mb-2 inline-block;
+  }
+
+  .password-wrapper {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+  }
+
+  .button {
+    @apply border-2 text-lg border-purple-500 rounded-3xl px-5 py-1 bg-purple-500 text-white hover:bg-white hover:text-purple-500 transition-colors duration-200;
+  }
 </style>

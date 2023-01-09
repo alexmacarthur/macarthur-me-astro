@@ -4,14 +4,16 @@ import ArrowSmallRight from 'astro-heroicons/outline/ArrowSmallRight.astro';
 export interface Props {
   href: string;
   withArrow: boolean;
+  target: string;
 }
 
-const { href, withArrow } = Astro.props;
+const { href, target = "_self" } = Astro.props;
 ---
 
 <a
   class="text-purple-500 hover:text-purple-400 inline-flex items-center gap-1 p-2 -m-2"
   href={href}
+  target={target}
   >
   <slot />
 

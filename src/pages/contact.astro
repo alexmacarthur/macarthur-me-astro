@@ -1,0 +1,159 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Title from '../components/Title.astro';
+---
+
+<Layout title="Contact Me" pageType="normal">
+  <Title>
+    Contact
+  </Title>
+
+  <div class="prose lg:prose-md mb-12">
+    <p>If you have a question about something I've built, have an issue with me at a deep, personal level, or are interested in hiring me for a project, get in touch!</p>
+  </div>
+
+  <div class="mx-auto max-w-2xl">
+    <span
+      id="message"
+      style="display: none;"
+      class={
+        "block text-base md:text-xl bg-green-200 text-green-700 px-3 py-2 rounded-md mb-10 text-center"
+      }
+    >
+      Something went wrong!
+    </span>
+
+    <form
+      id="contactForm"
+      name="contact"
+      method="post"
+      action="/api/email"
+    >
+      <p class="mb-4 password-wrapper">
+        <label class="block">
+          Password:
+          <br />
+          <input
+            type="text"
+            name="password"
+            tab-index="-1"
+            auto-complete="off"
+          />
+        </label>
+      </p>
+
+      <p class="mb-4">
+        <label class="block">
+          Your name:
+          <br />
+          <input required type="text" name="name" />
+        </label>
+      </p>
+
+      <p class="mb-4">
+        <label class="block">
+          Your email:
+          <br />
+          <input required type="email" name="email" />
+        </label>
+      </p>
+
+      <p class="mb-4">
+        <label class="block">
+          Message:
+          <br />
+          <textarea required name="message" rows={4} />
+        </label>
+      </p>
+
+      <p class="mt-6">
+        <button type="submit" class="button">
+          Send
+        </button>
+      </p>
+    </form>
+  </div>
+</Layout>
+
+<style>
+  .is-disabled {
+    opacity: .6;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  const form = (document.getElementById("contactForm") as HTMLFormElement);
+  const submitButton = form.querySelector("button[type=submit]") as HTMLButtonElement;
+  const messageEl = document.getElementById("message") as HTMLSpanElement;
+  let timer = 0;
+
+  const getTimeInMilliseconds = (): number => new Date().getTime();
+
+  const getInputs = (): HTMLInputElement[] => {
+    return Array.from(form.querySelectorAll("input, textarea"));
+  };
+
+  const setStartTime = () => {
+    timer = getTimeInMilliseconds();
+    removeSetStartTime();
+  };
+
+  const removeSetStartTime = () => {
+    getInputs().forEach((input) => {
+      input.removeEventListener("focus", setStartTime);
+    });
+  };
+
+  const setValidationMessage = (message: string) => {
+    messageEl.innerText = message;
+    messageEl.style.display = "block";
+  }
+
+  const onSubmitSuccess = () => {
+    form.reset();
+    setValidationMessage("Message successfully sent!");
+    setCanSubmit(true);
+  };
+
+  const setCanSubmit = (canSubmit: boolean) => {
+    if(canSubmit) {
+      form.classList.remove('is-disabled');
+      return submitButton.removeAttribute("disabled");
+    }
+
+    form.classList.add('is-disabled');
+    submitButton.setAttribute("disabled", "true");
+  }
+
+  getInputs().forEach((input) => {
+    input.addEventListener("focus", setStartTime);
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const differenceInSeconds: number =
+      (getTimeInMilliseconds() - timer) / 1000;
+
+    if (differenceInSeconds < 3) {
+      onSubmitSuccess();
+      return;
+    }
+
+    setCanSubmit(false);
+    const formData = new FormData(e.target as HTMLFormElement);
+    const response = await fetch(`${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/contact`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "x-completion-time": String(differenceInSeconds),
+        "x-is-trusted": e.isTrusted ? "1" : "0",
+      },
+      body: new URLSearchParams(formData as any).toString(),
+    });
+
+    await response.json();
+
+    onSubmitSuccess();
+  });
+</script>

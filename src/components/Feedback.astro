@@ -37,7 +37,7 @@ const { slug } = Astro.props;
       detail: { value },
     } = e;
 
-    fetch(`/api/feedback`, {
+    fetch(`${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/feedback`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
