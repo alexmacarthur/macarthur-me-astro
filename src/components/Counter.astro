@@ -1,8 +1,12 @@
 ---
+export interface Props {
+  classes?: string;
+  value?: string;
+  disableAnimation?: boolean;
+}
 
 const { classes = "", value = "0", disableAnimation = false } = Astro.props;
 const formattedValue = value.replace(/\,/g, "");
-
 ---
 
 <span

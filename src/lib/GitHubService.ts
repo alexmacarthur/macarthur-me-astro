@@ -10,22 +10,29 @@ type ProjectRepo = {
 class GitHubService {
   client: any;
   repos: any[];
+  followerCount: number = 0;
 
   constructor() {
     this.repos = [];
     this.client = gitHub.client(import.meta.env.GITHUB_ACCESS_TOKEN);
   }
 
-  async getUserData() {
+  async getFollowerCount() {
+    if (this.followerCount) {
+      return this.followerCount;
+    }
+
+    const data = await this.getUserData();
+
+    this.followerCount = data.followers;
+
+    return data.followers;
+  }
+
+  private async getUserData() {
     const [, data] = await this.client.getAsync("/users/alexmacarthur");
 
     return data;
-  }
-
-  async getFollowerCount() {
-    const data = await this.getUserData();
-
-    return data.followers;
   }
 
   async getRepos(): Promise<any[]> {

@@ -17,4 +17,4 @@ class GoogleSearchService {
   }
 }
 
-export default GoogleSearchService;
+export default new GoogleSearchService();

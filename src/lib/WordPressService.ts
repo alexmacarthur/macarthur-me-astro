@@ -13,4 +13,4 @@ class WordPressService {
   }
 }
 
-export default WordPressService;
+export default new WordPressService();

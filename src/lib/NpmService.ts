@@ -29,4 +29,4 @@ class NpmService {
   }
 }
 
-export default NpmService;
+export default new NpmService();

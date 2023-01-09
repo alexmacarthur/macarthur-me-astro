@@ -1,4 +1,4 @@
-import SupabaseService from "./SupabaseService";
+import supabaseService from "./SupabaseService";
 
 class StravaService {
   accessToken: string = "";
@@ -6,7 +6,7 @@ class StravaService {
   db;
 
   constructor() {
-    this.db = new SupabaseService();
+    this.db = supabaseService;
   }
 
   async getTotalRunMiles(): Promise<number> {
@@ -88,4 +88,4 @@ class StravaService {
   }
 }
 
-export default StravaService;
+export default new StravaService();

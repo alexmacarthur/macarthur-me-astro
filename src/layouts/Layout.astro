@@ -1,13 +1,21 @@
 ---
 import Nav from '../components/Nav.astro';
 import { getCurrentPath } from '../utils';
+import { DESCRIPTION, MY_NAME, TITLE, TWITTER_HANDLE } from '../lib/constants';
+import type { WebSite, WithContext } from "schema-dts";
+import { SEO } from "astro-seo";
 
 export interface Props {
 	title: string;
+  description?: string;
+  openGraphImage?: string;
   pageType?: `narrow` | `normal` | 'open';
+  subtitle?: string;
+  schema?: WithContext<any>;
 }
 
-const { title, pageType = 'normal' } = Astro.props;
+const { title, description = '', pageType = '', openGraphImage = '', subtitle = '', schema } = Astro.props;
+
 const mainClass = (() => {
   switch (pageType) {
     case 'narrow':
@@ -21,7 +29,22 @@ const mainClass = (() => {
   }
 })();
 
+const defaultSchema: WithContext<WebSite> = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  url: import.meta.env.SITE_URL,
+  name: TITLE,
+  alternateName: subtitle,
+  description: DESCRIPTION,
+  author: {
+    "@type": "Person",
+    name: MY_NAME,
+    url: import.meta.env.SITE_URL,
+  },
+};
+
 const currentPath = getCurrentPath(Astro);
+const image = openGraphImage || import.meta.env.SITE_URL + '/open-graph.jpg';
 ---
 
 <!DOCTYPE html>
@@ -29,9 +52,69 @@ const currentPath = getCurrentPath(Astro);
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href="/favicon/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+
+    <script
+      type="application/ld+json"
+      key="ld+json"
+      set:html={JSON.stringify(schema || defaultSchema)}
+    ></script>
+
+    <SEO
+      title={title || TITLE}
+      description={description || DESCRIPTION}
+      openGraph={{
+        basic: {
+          title: title || TITLE,
+          type: "website",
+          url: Astro.request.url,
+          image
+        }
+      }}
+      twitter={{
+        creator: TWITTER_HANDLE
+      }}
+      extend={{
+        link: [{ rel: "icon", href: "/favicon.ico" },
+      {
+        rel: "apple-touch-icon",
+        sizes: "180x180" as unknown as DOMTokenList,
+        href: "/favicon/apple-touch-icon.png",
+      }, {
+        rel: "icon",
+        type: "image/png",
+        sizes: "32x32" as unknown as DOMTokenList,
+        href: "/favicon/favicon-32x32.png",
+      }, {
+        rel: "icon",
+        type: "image/png",
+        sizes: "16x16" as unknown as DOMTokenList,
+        href: "/favicon/favicon-16x16.png",
+      }, {
+        rel: "manifest",
+        href: "/favicon/site.webmanifest",
+      }],
+        meta: [
+          {
+            name: "twitter:image",
+            content: image
+          },
+          { name: "twitter:title", content: title || TITLE },
+          { name: "twitter:description", content: description || DESCRIPTION },
+          {
+            name: "msapplication-TileColor",
+            content: "#000000",
+          }, {
+            name: "theme-color",
+            content: "#000000",
+          }, {
+            name: "msapplication-config",
+            content: "/favicon/browserconfig.xml",
+          }
+        ],
+      }}
+    />
 	</head>
 	<body>
     <Nav />

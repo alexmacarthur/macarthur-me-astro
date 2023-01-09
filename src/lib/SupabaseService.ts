@@ -75,4 +75,4 @@ class SupabaseService {
   }
 }
 
-export default SupabaseService;
+export default new SupabaseService();
