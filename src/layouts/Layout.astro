@@ -7,13 +7,15 @@ export interface Props {
   pageType?: `narrow` | `normal` | 'open';
 }
 
-const { title, pageType = 'open' } = Astro.props;
+const { title, pageType = 'normal' } = Astro.props;
 const mainClass = (() => {
   switch (pageType) {
     case 'narrow':
       return 'max-w-screen-sm';
     case 'normal':
       return 'max-w-screen-md';
+    case 'open':
+      return 'max-w-screen-lg';
     default:
       return '';
   }
@@ -98,5 +100,9 @@ const currentPath = getCurrentPath(Astro);
 
   .button {
     @apply border-2 text-lg border-purple-500 rounded-3xl px-5 py-1 bg-purple-500 text-white hover:bg-white hover:text-purple-500 transition-colors duration-200;
+  }
+
+  .card {
+    @apply border-2 border-gray-200 rounded-lg p-6 md:p-8;
   }
 </style>
