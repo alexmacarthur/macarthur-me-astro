@@ -52,11 +52,11 @@ if (post.lastUpdated) {
 ---
 
 <Layout title={post.title} pageType={"normal"} schema={postSchema}>
-  <Title>
+  <Title headingClasses={"text-3xl md:text-6xl"}>
     {post.title}
   </Title>
 
-  <div class="flex gap-4 mb-6 -mt-10">
+  <div class="flex gap-4 mb-6 -mt-6 md:-mt-10">
     <DateFormatter
       date={post.date}
       prettyDate={post.prettyDate}

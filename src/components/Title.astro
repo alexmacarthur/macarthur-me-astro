@@ -1,9 +1,15 @@
 ---
 import GradientText from "./GradientText.astro";
 
+export interface Props {
+  headingClasses?: string;
+}
+
+const { headingClasses = "text-4xl md:text-6xl" } = Astro.props;
+
 ---
 
-<h1 class="text-4xl md:text-6xl font-extrabold pb-2 gradient-text inline-block leading-none mb-2 md:mb-6">
+<h1 class={`${headingClasses} font-extrabold pb-2 gradient-text inline-block leading-none mb-2 md:mb-6`}>
   <GradientText>
     <slot />
   </GradientText>
