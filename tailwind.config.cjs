@@ -5,7 +5,31 @@ module.exports = {
 		extend: {
       fontSize: {
         mega: '6rem'
-      }
+      },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            img: {
+              margin: '0 auto'
+            },
+            code: {
+              fontWeight: 'inherit',
+              color: theme('colors.gray.700'),
+              borderRadius: theme('border.sm'),
+              padding: theme('padding.1'),
+              fontFamily: "'Public Sans', sans-serif",
+              background: theme('colors.gray.200'),
+              fontSize: '.9em !important'
+            },
+            'code::before': {
+              content: 'none',
+            },
+            'code::after': {
+              content: 'none',
+            },
+          },
+        }
+      }),
     },
 	},
 	plugins: [

@@ -75,7 +75,7 @@ class NotionService {
   }): Promise<{
     posts: Partial<BlogPost>[];
     nextCursor: string | null;
-    hasMore;
+    hasMore: boolean;
   }> {
     const cacheKey = `${startCursor}__${perPageOverride}__${hydrate}`;
     const cachedData = await multiplePostsCache.get(cacheKey);
@@ -122,11 +122,12 @@ class NotionService {
     const data = {
       posts,
       nextCursor: next_cursor,
-      hasMore: has_more,
+      hasMore: Boolean(has_more),
     };
 
     await multiplePostsCache.put(cacheKey, data);
 
+    // @ts-ignore
     return data;
   }
 
