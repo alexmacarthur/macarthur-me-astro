@@ -19,7 +19,7 @@ class CMS {
   }
 
   async getAllPosts(hydrate: boolean = true): Promise<BlogPost[]> {
-    if(this.posts.length) {
+    if (this.posts.length) {
       console.log("Using cached posts...");
       return this.posts;
     }
@@ -54,4 +54,4 @@ class CMS {
   }
 }
 
-export default new CMS;
+export default new CMS();

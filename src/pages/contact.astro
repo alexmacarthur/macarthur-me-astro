@@ -1,34 +1,29 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Title from '../components/Title.astro';
+import Layout from "../layouts/Layout.astro";
+import Title from "../components/Title.astro";
 ---
 
 <Layout title="Contact Me" pageType="normal">
-  <Title>
-    Contact
-  </Title>
+  <Title>Contact</Title>
 
-  <div class="prose lg:prose-md mb-12">
-    <p>If you have a question about something I've built, have an issue with me at a deep, personal level, or are interested in hiring me for a project, get in touch!</p>
+  <div class="prose lg:prose-md mb-12 mx-auto">
+    <p>
+      If you have a question about something I've built, have an issue with me
+      at a deep, personal level, or are interested in hiring me for a project,
+      get in touch!
+    </p>
   </div>
 
   <div class="mx-auto max-w-2xl">
     <span
       id="message"
       style="display: none;"
-      class={
-        "block text-base md:text-xl bg-green-200 text-green-700 px-3 py-2 rounded-md mb-10 text-center"
-      }
+      class={"block text-base md:text-xl bg-green-200 text-green-700 px-3 py-2 rounded-md mb-10 text-center"}
     >
       Something went wrong!
     </span>
 
-    <form
-      id="contactForm"
-      name="contact"
-      method="post"
-      action="/api/email"
-    >
+    <form id="contactForm" name="contact" method="post" action="/api/email">
       <p class="mb-4 password-wrapper">
         <label class="block">
           Password:
@@ -62,14 +57,12 @@ import Title from '../components/Title.astro';
         <label class="block">
           Message:
           <br />
-          <textarea required name="message" rows={4} />
+          <textarea required name="message" rows={4}></textarea>
         </label>
       </p>
 
       <p class="mt-6">
-        <button type="submit" class="button">
-          Send
-        </button>
+        <button type="submit" class="button"> Send</button>
       </p>
     </form>
   </div>
@@ -77,14 +70,16 @@ import Title from '../components/Title.astro';
 
 <style>
   .is-disabled {
-    opacity: .6;
+    opacity: 0.6;
     pointer-events: none;
   }
 </style>
 
 <script>
-  const form = (document.getElementById("contactForm") as HTMLFormElement);
-  const submitButton = form.querySelector("button[type=submit]") as HTMLButtonElement;
+  const form = document.getElementById("contactForm") as HTMLFormElement;
+  const submitButton = form.querySelector(
+    "button[type=submit]"
+  ) as HTMLButtonElement;
   const messageEl = document.getElementById("message") as HTMLSpanElement;
   let timer = 0;
 
@@ -108,7 +103,7 @@ import Title from '../components/Title.astro';
   const setValidationMessage = (message: string) => {
     messageEl.innerText = message;
     messageEl.style.display = "block";
-  }
+  };
 
   const onSubmitSuccess = () => {
     form.reset();
@@ -117,20 +112,20 @@ import Title from '../components/Title.astro';
   };
 
   const setCanSubmit = (canSubmit: boolean) => {
-    if(canSubmit) {
-      form.classList.remove('is-disabled');
+    if (canSubmit) {
+      form.classList.remove("is-disabled");
       return submitButton.removeAttribute("disabled");
     }
 
-    form.classList.add('is-disabled');
+    form.classList.add("is-disabled");
     submitButton.setAttribute("disabled", "true");
-  }
+  };
 
   getInputs().forEach((input) => {
     input.addEventListener("focus", setStartTime);
   });
 
-  form.addEventListener('submit', async (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const differenceInSeconds: number =
       (getTimeInMilliseconds() - timer) / 1000;
@@ -142,15 +137,18 @@ import Title from '../components/Title.astro';
 
     setCanSubmit(false);
     const formData = new FormData(e.target as HTMLFormElement);
-    const response = await fetch(`${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/contact`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "x-completion-time": String(differenceInSeconds),
-        "x-is-trusted": e.isTrusted ? "1" : "0",
-      },
-      body: new URLSearchParams(formData as any).toString(),
-    });
+    const response = await fetch(
+      `${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/contact`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "x-completion-time": String(differenceInSeconds),
+          "x-is-trusted": e.isTrusted ? "1" : "0",
+        },
+        body: new URLSearchParams(formData as any).toString(),
+      }
+    );
 
     await response.json();
 

@@ -9,7 +9,9 @@ const { slug } = Astro.props;
 <div class="mt-16">
   <hr class="divider" />
 
-  <div class="flex flex-col md:flex-row justify-center items-center py-14 md:space-x-6">
+  <div
+    class="flex flex-col md:flex-row justify-center items-center py-14 md:space-x-6"
+  >
     <span class="text-center md:text-left block prose">
       <feedback-component data-slug={slug}>
         <span slot="cta">Was this post helpful?</span>
@@ -30,21 +32,23 @@ const { slug } = Astro.props;
 
   import "@ramseyinhouse/feedback-component/dist/index.umd.js";
 
-  window.feedbackHandler = window.feedbackHandler || ((e) => {
-    const slug = (e!.target as HTMLElement).dataset!.slug;
+  window.feedbackHandler =
+    window.feedbackHandler ||
+    ((e) => {
+      const slug = (e!.target as HTMLElement).dataset!.slug;
 
-    const {
-      detail: { value },
-    } = e;
+      const {
+        detail: { value },
+      } = e;
 
-    fetch(`${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/feedback`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ slug, value }),
+      fetch(`${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/feedback`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ slug, value }),
+      });
     });
-  });
 
   // @ts-ignore
   document.addEventListener("feedback:interaction", window.feedbackHandler);

@@ -1,7 +1,9 @@
 class GoogleSearchService {
   async search(query: string, cx: string): Promise<any> {
     const response = await fetch(
-      `https://www.googleapis.com/customsearch/v1?key=${import.meta.env.GOOGLE_CUSTOM_SEARCH_API_KEY}&cx=${cx}&q=${query}`
+      `https://www.googleapis.com/customsearch/v1?key=${
+        import.meta.env.GOOGLE_CUSTOM_SEARCH_API_KEY
+      }&cx=${cx}&q=${query}`
     );
 
     return await response.json();

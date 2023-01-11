@@ -1,26 +1,26 @@
 ---
-import type { BlogPosting, WithContext } from 'schema-dts';
-import Bio from '../../components/Bio.astro';
-import DateFormatter from '../../components/DateFormatter.astro';
-import Feedback from '../../components/Feedback.astro';
-import Title from '../../components/Title.astro';
-import ViewCount from '../../components/ViewCount.astro';
-import Layout from '../../layouts/Layout.astro';
-import cmsService from '../../lib/CMSService';
-import { MY_NAME } from '../../lib/constants';
-import MarkdownService from '../../lib/MarkdownService';
-import type { BlogPost } from '../../types/types';
+import type { BlogPosting, WithContext } from "schema-dts";
+import Bio from "../../components/Bio.astro";
+import DateFormatter from "../../components/DateFormatter.astro";
+import Feedback from "../../components/Feedback.astro";
+import Title from "../../components/Title.astro";
+import ViewCount from "../../components/ViewCount.astro";
+import Layout from "../../layouts/Layout.astro";
+import cmsService from "../../lib/CMSService";
+import { MY_NAME } from "../../lib/constants";
+import MarkdownService from "../../lib/MarkdownService";
+import type { BlogPost } from "../../types/types";
 
 export async function getStaticPaths() {
-  return (await cmsService.getAllPosts()).map(post => ({
+  return (await cmsService.getAllPosts()).map((post) => ({
     params: { slug: post.slug },
   }));
-};
+}
 
 const { slug } = Astro.params;
-const post = await cmsService.getPost(slug as string) as BlogPost;
+const post = (await cmsService.getPost(slug as string)) as BlogPost;
 
-const { code: markdownCode } = await (new MarkdownService()).processMarkdown(
+const { code: markdownCode } = await new MarkdownService().processMarkdown(
   post.markdown as string
 );
 
@@ -30,7 +30,7 @@ let postSchema: WithContext<BlogPosting> = {
   datePublished: post.date,
   mainEntityOfPage: {
     "@type": "WebPage",
-    "@id": Astro.request.url
+    "@id": Astro.request.url,
   },
   headline: post.title,
   isFamilyFriendly: true,
@@ -66,14 +66,10 @@ if (post.lastUpdated) {
       {post.lastUpdated && "Originally posted on"}
     </DateFormatter>
 
-    <ViewCount
-      count={""}
-      slug={post.slug}
-      disableAnimation={true}
-    />
+    <ViewCount count={""} slug={post.slug} disableAnimation={true} />
   </div>
 
-  <div class="prose lg:prose-md" set:html={markdownCode}></div>
+  <div class="prose lg:prose-md mx-auto" set:html={markdownCode} />
 
   <Feedback slug={post.slug} />
 

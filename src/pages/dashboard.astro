@@ -1,16 +1,16 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Title from '../components/Title.astro';
-import analyticsService from '../lib/AnalyticsService';
-import ghService from '../lib/GitHubService';
-import supService from '../lib/SupabaseService';
-import stravaService from '../lib/StravaService';
-import npmService from '../lib/NpmService';
-import gsService from '../lib/GoogleSearchService';
-import wpService from '../lib/WordPressService';
-import twitterService from '../lib/TwitterService';
-import Counter from '../components/Counter.astro';
-import ArrowTopRightOnSquare from 'astro-heroicons/outline/ArrowTopRightOnSquare.astro';
+import Layout from "../layouts/Layout.astro";
+import Title from "../components/Title.astro";
+import analyticsService from "../lib/AnalyticsService";
+import ghService from "../lib/GitHubService";
+import supService from "../lib/SupabaseService";
+import stravaService from "../lib/StravaService";
+import npmService from "../lib/NpmService";
+import gsService from "../lib/GoogleSearchService";
+import wpService from "../lib/WordPressService";
+import twitterService from "../lib/TwitterService";
+import Counter from "../components/Counter.astro";
+import ArrowTopRightOnSquare from "astro-heroicons/outline/ArrowTopRightOnSquare.astro";
 
 type State = {
   title: string;
@@ -99,9 +99,7 @@ for (let stat of stats) {
     result = await stat.value;
 
     if (!result) {
-      console.log(
-        `DASHBOARD - Stat value was empty: ${stat.title}, ${result}`
-      );
+      console.log(`DASHBOARD - Stat value was empty: ${stat.title}, ${result}`);
     }
 
     stat.value = Number(result).toLocaleString();
@@ -112,42 +110,46 @@ for (let stat of stats) {
     stat.value = null;
   }
 }
-
 ---
 
 <Layout title="Personal Dashboard" pageType={"normal"}>
-  <Title>
-    Dashboard
-  </Title>
+  <Title>Dashboard</Title>
 
   <div class="post-content mx-auto prose max-w-none md:prose-lg mb-12">
-    <p>
-      Most of these statistics are sourced from third-party APIs.
-    </p>
+    <p>Most of these statistics are sourced from third-party APIs.</p>
   </div>
 
   <ul class="grid grid-cols-1 md:grid-cols-2 gap-8">
-    {stats.filter(s => !!s.value).map((stat) => {
-      return (
-        <li>
-          <div class="flex items-center">
-            <h2 set:html={stat.title}></h2>
+    {
+      stats
+        .filter((s) => !!s.value)
+        .map((stat) => {
+          return (
+            <li>
+              <div class="flex items-center">
+                <h2 set:html={stat.title} />
 
-            {stat.link && (
-              <a href={stat.link} class="inline-block ml-3" target="_blank" rel="noreferrer">
-                <ArrowTopRightOnSquare class="h-4 w-4" />
-              </a>
-            )}
-          </div>
-          <span class="text-sm italic text-gray-500 block mb-3">
-            {stat.subTitle}
-          </span>
-          <Counter
-            value={String(stat.value)}
-            classes="text-4xl md:text-5xl font-black"
-          />
-        </li>
-      );
-    })}
+                {stat.link && (
+                  <a
+                    href={stat.link}
+                    class="inline-block ml-3"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <ArrowTopRightOnSquare class="h-4 w-4" />
+                  </a>
+                )}
+              </div>
+              <span class="text-sm italic text-gray-500 block mb-3">
+                {stat.subTitle}
+              </span>
+              <Counter
+                value={String(stat.value)}
+                classes="text-4xl md:text-5xl font-black"
+              />
+            </li>
+          );
+        })
+    }
   </ul>
 </Layout>

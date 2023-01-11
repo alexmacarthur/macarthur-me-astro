@@ -1,6 +1,6 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Title from '../components/Title.astro';
+import Layout from "../layouts/Layout.astro";
+import Title from "../components/Title.astro";
 const { frontmatter } = Astro.props;
 ---
 
@@ -9,7 +9,7 @@ const { frontmatter } = Astro.props;
     {frontmatter.title}
   </Title>
 
-  <div class="prose lg:prose-md">
+  <div class="prose lg:prose-md mx-auto">
     <slot />
   </div>
 </Layout>

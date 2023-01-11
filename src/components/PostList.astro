@@ -1,60 +1,66 @@
 ---
-import DateFormatter from './DateFormatter.astro';
-import ViewCount from './ViewCount.astro';
-import ButtonLink from './ButtonLink.astro';
+import DateFormatter from "./DateFormatter.astro";
+import ViewCount from "./ViewCount.astro";
+import ButtonLink from "./ButtonLink.astro";
 
 const { posts } = Astro.props;
 ---
 
 <ul class="space-y-10">
-  {posts.map((post) => {
-    const postPath = post.externalUrl || `/posts/${post.slug}`;
-    const target = post.externalUrl ? "_blank" : "_self";
+  {
+    posts.map((post) => {
+      const postPath = post.externalUrl || `/posts/${post.slug}`;
+      const target = post.externalUrl ? "_blank" : "_self";
 
-    return (
-      <li>
-        <article>
-          <h2 class="text-2xl font-bold">
-            <a href={postPath} target={target}>{post.title}</a>
-          </h2>
+      return (
+        <li>
+          <article>
+            <h2 class="text-2xl font-bold">
+              <a href={postPath} target={target}>
+                {post.title}
+              </a>
+            </h2>
 
-          <div class="flex items-center mb-3 gap-3 text-base">
-            {post.lastUpdated && (
-              <>
-                <DateFormatter
-                  date={post.lastUpdated}
-                  prettyDate={post.prettyLastUpdated}
-                  className="inline-block"
-                >
-                  Updated on
-                </DateFormatter>
+            <div class="flex items-center mb-3 gap-3 text-base">
+              {post.lastUpdated && (
+                <>
+                  <DateFormatter
+                    date={post.lastUpdated}
+                    prettyDate={post.prettyLastUpdated}
+                    className="inline-block"
+                  >
+                    Updated on
+                  </DateFormatter>
 
-                <small>/</small>
-              </>
-            )}
+                  <small>/</small>
+                </>
+              )}
 
-            <DateFormatter
-              date={post.date}
-              prettyDate={post.prettyDate}
-              className="inline-block"
-            >
-              {post.lastUpdated && "Originally posted on"}
-            </DateFormatter>
+              <DateFormatter
+                date={post.date}
+                prettyDate={post.prettyDate}
+                className="inline-block"
+              >
+                {post.lastUpdated && "Originally posted on"}
+              </DateFormatter>
 
-            {!post.externalUrl && <ViewCount
-              count={""}
-              slug={post.slug}
-              disableAnimation={true}
-            />}
-          </div>
+              {!post.externalUrl && (
+                <ViewCount
+                  count={""}
+                  slug={post.slug}
+                  disableAnimation={true}
+                />
+              )}
+            </div>
 
-          <small class="block text-gray-500 mb-2">{post.description}</small>
+            <small class="block text-gray-500 mb-2">{post.description}</small>
 
-          <ButtonLink href={postPath} target={target} withArrow={true}>
-            Read It
-          </ButtonLink>
-        </article>
-      </li>
-    );
-  })}
+            <ButtonLink href={postPath} target={target} withArrow={true}>
+              Read It
+            </ButtonLink>
+          </article>
+        </li>
+      );
+    })
+  }
 </ul>

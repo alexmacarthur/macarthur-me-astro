@@ -1,31 +1,38 @@
 ---
-import Nav from '../components/Nav.astro';
-import { getCurrentPath } from '../utils';
-import { DESCRIPTION, MY_NAME, TITLE, TWITTER_HANDLE } from '../lib/constants';
+import Nav from "../components/Nav.astro";
+import { getCurrentPath } from "../utils";
+import { DESCRIPTION, MY_NAME, TITLE, TWITTER_HANDLE } from "../lib/constants";
 import type { WebSite, WithContext } from "schema-dts";
 import { SEO } from "astro-seo";
 
 export interface Props {
-	title: string;
+  title: string;
   description?: string;
   openGraphImage?: string;
-  pageType?: `narrow` | `normal` | 'open';
+  pageType?: `narrow` | `normal` | "open";
   subtitle?: string;
   schema?: WithContext<any>;
 }
 
-const { title, description = '', pageType = '', openGraphImage = '', subtitle = '', schema } = Astro.props;
+const {
+  title,
+  description = "",
+  pageType = "",
+  openGraphImage = "",
+  subtitle = "",
+  schema,
+} = Astro.props;
 
 const mainClass = (() => {
   switch (pageType) {
-    case 'narrow':
-      return 'max-w-screen-sm';
-    case 'normal':
-      return 'max-w-screen-md';
-    case 'open':
-      return 'max-w-screen-lg';
+    case "narrow":
+      return "max-w-screen-sm";
+    case "normal":
+      return "max-w-screen-md";
+    case "open":
+      return "max-w-screen-lg";
     default:
-      return '';
+      return "";
   }
 })();
 
@@ -44,16 +51,21 @@ const defaultSchema: WithContext<WebSite> = {
 };
 
 const currentPath = getCurrentPath(Astro);
-const image = openGraphImage || import.meta.env.SITE_URL + '/open-graph.jpg';
+const image = openGraphImage || import.meta.env.SITE_URL + "/open-graph.jpg";
 ---
 
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <script
+      defer
+      data-domain="macarthur.me"
+      src="https://analytics.macarthur.me/js/plausible.js"
+    ></script>
 
     <script
       type="application/ld+json"
@@ -69,128 +81,150 @@ const image = openGraphImage || import.meta.env.SITE_URL + '/open-graph.jpg';
           title: title || TITLE,
           type: "website",
           url: Astro.request.url,
-          image
-        }
+          image,
+        },
       }}
       twitter={{
-        creator: TWITTER_HANDLE
+        creator: TWITTER_HANDLE,
       }}
       extend={{
-        link: [{ rel: "icon", href: "/favicon.ico" },
-      {
-        rel: "apple-touch-icon",
-        sizes: "180x180" as unknown as DOMTokenList,
-        href: "/favicon/apple-touch-icon.png",
-      }, {
-        rel: "icon",
-        type: "image/png",
-        sizes: "32x32" as unknown as DOMTokenList,
-        href: "/favicon/favicon-32x32.png",
-      }, {
-        rel: "icon",
-        type: "image/png",
-        sizes: "16x16" as unknown as DOMTokenList,
-        href: "/favicon/favicon-16x16.png",
-      }, {
-        rel: "manifest",
-        href: "/favicon/site.webmanifest",
-      }],
+        link: [
+          { rel: "icon", href: "/favicon.ico" },
+          {
+            rel: "apple-touch-icon",
+            sizes: "180x180" as unknown as DOMTokenList,
+            href: "/favicon/apple-touch-icon.png",
+          },
+          {
+            rel: "icon",
+            type: "image/png",
+            sizes: "32x32" as unknown as DOMTokenList,
+            href: "/favicon/favicon-32x32.png",
+          },
+          {
+            rel: "icon",
+            type: "image/png",
+            sizes: "16x16" as unknown as DOMTokenList,
+            href: "/favicon/favicon-16x16.png",
+          },
+          {
+            rel: "manifest",
+            href: "/favicon/site.webmanifest",
+          },
+        ],
         meta: [
           {
             name: "twitter:image",
-            content: image
+            content: image,
           },
           { name: "twitter:title", content: title || TITLE },
           { name: "twitter:description", content: description || DESCRIPTION },
           {
             name: "msapplication-TileColor",
             content: "#000000",
-          }, {
+          },
+          {
             name: "theme-color",
             content: "#000000",
-          }, {
+          },
+          {
             name: "msapplication-config",
             content: "/favicon/browserconfig.xml",
-          }
+          },
         ],
       }}
     />
-	</head>
-	<body>
+  </head>
+  <body>
     <Nav />
     <main class={`px-4 md:px-6 mx-auto w-full ${mainClass}`}>
-		  <slot />
+      <slot />
     </main>
 
-    { currentPath !== '/' &&
-      <footer class="px-4 md:px-6 py-6 flex justify-center items-center">
-        &copy; {new Date().getFullYear()} Alex MacArthur
-      </footer>
+    {
+      currentPath !== "/" && (
+        <footer class="px-4 md:px-6 py-6 mt-8 flex justify-center items-center">
+          &copy; {new Date().getFullYear()} Alex MacArthur
+        </footer>
+      )
     }
-	</body>
+  </body><script>
+    import "../scripts/link-tracking";
+    import { listen } from "quicklink";
+
+    listen();
+  </script>
+
+  <style is:global>
+    @import "prismjs/themes/prism-okaidia.css";
+    *:not(pre, pre *) {
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @apply text-gray-900;
+    }
+
+    :not(h1, h2, h3, h4, h5, h6, pre, pre *) {
+      @apply text-gray-600 font-light;
+    }
+
+    body {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+      grid-template-areas:
+        "nav"
+        "main";
+      height: 100vh;
+      max-width: 100vw;
+    }
+
+    nav {
+      grid-area: nav;
+    }
+
+    main {
+      grid-area: main;
+    }
+
+    form input,
+    form textarea {
+      @apply border border-gray-300 rounded-sm w-full px-2 py-2 text-base;
+    }
+
+    label {
+      @apply mb-2 inline-block;
+    }
+
+    .password-wrapper {
+      position: absolute;
+      z-index: -1;
+      opacity: 0;
+    }
+
+    .button {
+      @apply border-2 text-lg border-purple-500 rounded-3xl px-5 py-1 bg-purple-500 text-white hover:bg-white hover:text-purple-500 transition-colors duration-200;
+    }
+
+    .button svg {
+      stroke: white;
+    }
+
+    .card {
+      @apply border-2 border-gray-200 rounded-lg p-6 md:p-8;
+    }
+
+    *:focus-visible {
+      outline: theme("colors.purple.500") auto 1px;
+    }
+  </style>
 </html>
-
-<script>
-  import { listen } from "quicklink";
-
-  listen();
-</script>
-
-<style is:global>
-  @import "prismjs/themes/prism-okaidia.css";
-  *:not(pre, pre *) {
-    font-family: ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    @apply text-gray-800;
-  }
-
-  :not(h1, h2, h3, h4, h5, h6, pre, pre *) {
-    @apply text-gray-600 font-light;
-  }
-
-  body {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
-    grid-template-areas:
-        'nav'
-        'main';
-    height: 100vh;
-  }
-
-  nav {
-    grid-area: nav;
-  }
-
-  main {
-    grid-area: main;
-  }
-
-  form input, form textarea {
-    @apply border border-gray-300 rounded-sm w-full px-2 py-2 text-base;
-  }
-
-  label {
-    @apply mb-2 inline-block;
-  }
-
-  .password-wrapper {
-    position: absolute;
-    z-index: -1;
-    opacity: 0;
-  }
-
-  .button {
-    @apply border-2 text-lg border-purple-500 rounded-3xl px-5 py-1 bg-purple-500 text-white hover:bg-white hover:text-purple-500 transition-colors duration-200;
-  }
-
-  .card {
-    @apply border-2 border-gray-200 rounded-lg p-6 md:p-8;
-  }
-
-  *:focus-visible {
-    outline: theme('colors.purple.500') auto 1px;
-  }
-</style>

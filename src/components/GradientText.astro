@@ -1,7 +1,9 @@
 ---
 ---
 
-<span class="block z-30 text-gray-900 left-0 top-0 gradient-text font-extrabold p-0">
+<span
+  class="block z-30 text-gray-900 left-0 top-0 gradient-text font-extrabold p-0"
+>
   <slot />
 </span>
 
@@ -22,26 +24,26 @@
   };
 
   /**
-  * Get the current custom property value for the gradient angle.
-  */
+   * Get the current custom property value for the gradient angle.
+   */
   const getCurrentAngle = (): number => {
-    const rawValue = getComputedStyle(document.documentElement).getPropertyValue(
-      "--gradient-angle"
-    );
+    const rawValue = getComputedStyle(
+      document.documentElement
+    ).getPropertyValue("--gradient-angle");
 
     return Number(rawValue.replace("deg", ""));
   };
 
   /**
-  * Ensures that a degree value falls in the 0-360 range.
-  */
+   * Ensures that a degree value falls in the 0-360 range.
+   */
   const toDegreeableValue = (value: number): number => {
     return ((value % 360) + 360) % 360;
   };
 
   /**
-  * Given an angle, find the next range the logo should rotate toward.
-  */
+   * Given an angle, find the next range the logo should rotate toward.
+   */
   const selectRange = (angle: number): Array<any> => {
     const ranges = [
       [0, 20],
@@ -107,8 +109,12 @@
 <style>
   .gradient-text {
     padding: 1rem 0;
-    transition: background .15s ease-in-out;
-    background: linear-gradient(var(--gradient-angle), theme('colors.gray.500') 50%, theme('colors.gray.800') 50%);
+    transition: background 0.15s ease-in-out;
+    background: linear-gradient(
+      var(--gradient-angle),
+      theme("colors.gray.500") 50%,
+      theme("colors.gray.800") 50%
+    );
     background-clip: text;
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;

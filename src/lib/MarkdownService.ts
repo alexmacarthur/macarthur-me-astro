@@ -1,5 +1,5 @@
-import path, { join } from "path";
-import { externalMarkdownLinks } from "./markdown";
+import path from "path";
+import { externalMarkdownLinks, lazyLoadImages } from "./markdown";
 import { PluggableList, Preset, unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkPrism from "remark-prism";
@@ -60,6 +60,7 @@ class MarkdownSerivce {
       .use(remarkEmbedder, { transformers: [CodepenTransformer] })
       .use(rehypeSlug)
       .use(externalMarkdownLinks)
+      .use(lazyLoadImages)
       .use(rehypeAutolinkHeadings as Preset | PluggableList)
       .use(remarkHtml, { sanitize: false })
       .process(rawMarkdown);

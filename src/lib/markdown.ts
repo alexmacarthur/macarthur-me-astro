@@ -40,3 +40,14 @@ export function externalMarkdownLinks() {
     visit(ast, "link", visitor);
   };
 }
+
+export function lazyLoadImages() {
+  return (ast) => {
+    visit(ast, "image", (node) => {
+      const html = `<img src='${node.url}' alt='${node.alt}' loading='lazy' />`;
+      node.type = "html";
+      node.children = undefined;
+      node.value = html;
+    });
+  };
+}

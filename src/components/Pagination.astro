@@ -6,16 +6,15 @@ export interface Props {
   prevUrl: string | undefined;
 }
 
-const { totalPages, currentPage, nextUrl, prevUrl} = Astro.props;
+const { totalPages, currentPage, nextUrl, prevUrl } = Astro.props;
 
 const getLinkClasses = (link) => {
-  if(!link) {
-    return "pointer-events-none opacity-50"
+  if (!link) {
+    return "pointer-events-none opacity-50";
   }
 
   return "";
-}
-
+};
 ---
 
 <div class="flex flex-col items-center justify-center mt-16">
@@ -27,12 +26,18 @@ const getLinkClasses = (link) => {
 
   <ul class="flex space-x-6">
     <li>
-      <a href={prevUrl} class={`text-base font-light ${getLinkClasses(prevUrl)}`}>
+      <a
+        href={prevUrl}
+        class={`text-base font-light ${getLinkClasses(prevUrl)}`}
+      >
         Previous
       </a>
     </li>
     <li>
-      <a href={nextUrl} class={`text-base font-light ${getLinkClasses(nextUrl)}`}>
+      <a
+        href={nextUrl}
+        class={`text-base font-light ${getLinkClasses(nextUrl)}`}
+      >
         Next
       </a>
     </li>

@@ -2,7 +2,9 @@ import S3 from "aws-sdk/clients/s3.js";
 import sharp from "sharp";
 
 const s3 = new S3({
-  endpoint: `https://${import.meta.env.CLOUDFLARE_ACCOUNT_KEY}.r2.cloudflarestorage.com`,
+  endpoint: `https://${
+    import.meta.env.CLOUDFLARE_ACCOUNT_KEY
+  }.r2.cloudflarestorage.com`,
   accessKeyId: import.meta.env.CLOUDFLARE_ACCESS_KEY_ID,
   secretAccessKey: import.meta.env.CLOUDFLARE_SECRET_ACCESS_KEY,
   signatureVersion: "v4",
@@ -30,16 +32,11 @@ class R2Service {
   }
 
   async optimizeImageBlob(blob: ArrayBuffer, isGif: boolean) {
-    if(isGif) {
-      return sharp(blob, { animated: true })
-        .gif()
-        .toBuffer();
+    if (isGif) {
+      return sharp(blob, { animated: true }).gif().toBuffer();
     }
 
-    return sharp(blob)
-      .resize({ width: 900 })
-      .webp({ quality: 100 })
-      .toBuffer();
+    return sharp(blob).resize({ width: 900 }).webp({ quality: 100 }).toBuffer();
   }
 
   async uploadImage({ imageUrl, key }: { imageUrl: string; key: string }) {
@@ -54,7 +51,7 @@ class R2Service {
         Bucket: BUCKET_NAME,
         Key: key,
         Body: imageBuffer,
-        ContentType: isGif ? "image/gif" : "image/webp"
+        ContentType: isGif ? "image/gif" : "image/webp",
       })
       .promise();
   }

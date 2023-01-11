@@ -1,6 +1,6 @@
 ---
 import Counter from "./Counter.astro";
-import Eye from 'astro-heroicons/outline/Eye.astro';
+import Eye from "astro-heroicons/outline/Eye.astro";
 
 export interface Props {
   count: string;
@@ -19,24 +19,41 @@ const { value, disableAnimation = false, slug } = Astro.props;
   <Eye class="h-4 w-4 text-blue" />
 
   <span class="text-gray-500 text-sm" data-view-count-stat>
-    {!value ? (
-      "-"
-    ) : (
-      <Counter
-        classes="text-inherit"
-        value={value}
-        disableAnimation={disableAnimation}
-      />
-    )}
+    {
+      !value ? (
+        "-"
+      ) : (
+        <Counter
+          classes="text-inherit"
+          value={value}
+          disableAnimation={disableAnimation}
+        />
+      )
+    }
   </span>
 </span>
 
 <script>
-  import "../scripts/analytics.js";
+  const viewCounts = document.querySelectorAll("[data-view-count-slug]");
+
+  viewCounts.forEach((viewCount) => {
+    const slug = (viewCount as HTMLElement).dataset.viewCountSlug;
+    const statEl = viewCount.querySelector(
+      "[data-view-count-stat]"
+    ) as HTMLElement;
+
+    setTimeout(() => {
+      fetch(`https://macarthur-me-api.vercel.app/api/stats?slug=${slug}`)
+        .then((response) => response.json())
+        .then(({ views }) => {
+          statEl.textContent = views;
+        });
+    }, 500);
+  });
 </script>
 
 <style>
   svg {
-    stroke: theme('colors.gray.500');
+    stroke: theme("colors.gray.500");
   }
 </style>
