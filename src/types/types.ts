@@ -1,52 +1,31 @@
-interface MarkdownLayoutProps<T> {
-  pageData: T;
-  isPost: boolean;
-  commentData?: any | null;
-  markdownCode: string;
-  views?: string;
+export interface NotionProperties {
+  title: Property;
+  date: Property;
+  externalUrl: Property;
+  lastUpdated: Property;
+  subtitle: Property;
+  slug: Property;
 }
 
-interface PostListLayoutProps {
-  posts: PostData[];
-  nextPage: number;
-  previousPage: number;
-  currentPage: number;
-  totalPages: number;
-}
-
-export interface ContentEntity {
-  title: string;
-  subtitle?: string;
-  description: string;
-  slug: string;
-  markdown?: string;
-  openGraphImage?: string;
-}
-
-export interface BlogPost extends ContentEntity {
+export type NotionPage = {
+  [key in keyof NotionProperties]: any;
+} & {
   id: string;
-  date: string;
-  prettyDate: string;
-  lastUpdated?: string;
-  prettyLastUpdated?: string;
-  externalUrl?: string;
-  externalHost?: string;
+  markdown: string;
+  externalHost: string;
+};
+export interface BlogPost extends NotionPage {
+  html: string;
   views?: string;
+  prettyDate: string;
+  description: string;
+  openGraphImage?: string;
+  prettyLastUpdated?: string;
 }
 
 type PropertyTypes = `title` | `rich_text` | `date`;
 
-export interface NotionProperties {
-  [k: string]: {
-    property: any;
-    type: PropertyTypes;
-  };
-}
-
-interface PaginationProps {
-  hasMore: boolean;
-  hasPrevious: boolean;
-  nextPage: number;
-  previousPage: number;
-  currentPage: number;
-}
+type Property = {
+  property: any;
+  type: PropertyTypes;
+};

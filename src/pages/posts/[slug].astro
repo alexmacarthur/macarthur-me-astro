@@ -8,7 +8,6 @@ import ViewCount from "../../components/ViewCount.astro";
 import Layout from "../../layouts/Layout.astro";
 import cmsService from "../../lib/CMSService";
 import { MY_NAME } from "../../lib/constants";
-import MarkdownService from "../../lib/MarkdownService";
 import type { BlogPost } from "../../types/types";
 
 export async function getStaticPaths() {
@@ -19,10 +18,6 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params;
 const post = (await cmsService.getPost(slug as string)) as BlogPost;
-
-const { code: markdownCode } = await new MarkdownService().processMarkdown(
-  post.markdown as string
-);
 
 let postSchema: WithContext<BlogPosting> = {
   "@context": "https://schema.org",
@@ -52,7 +47,15 @@ if (post.lastUpdated) {
 }
 ---
 
-<Layout title={post.title} pageType={"normal"} schema={postSchema}>
+<Layout
+  title={post.title}
+  pageType={"normal"}
+  schema={postSchema}
+  postData={{
+    date: post.date,
+    lastUpdated: post.lastUpdated,
+  }}
+>
   <Title headingClasses={"text-3xl md:text-6xl"}>
     {post.title}
   </Title>
@@ -69,7 +72,7 @@ if (post.lastUpdated) {
     <ViewCount count={""} slug={post.slug} disableAnimation={true} />
   </div>
 
-  <div class="prose lg:prose-md mx-auto" set:html={markdownCode} />
+  <div class="prose lg:prose-md mx-auto" set:html={post.html} />
 
   <Feedback slug={post.slug} />
 

@@ -1,4 +1,3 @@
-import path from "path";
 import { externalMarkdownLinks, lazyLoadImages } from "./markdown";
 import { PluggableList, Preset, unified } from "unified";
 import remarkParse from "remark-parse";
@@ -8,23 +7,6 @@ import remarkEmbedder from "@remark-embedder/core";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import remarkHtml from "remark-html";
-
-if (process.platform === "win32") {
-  import.meta.env.ESBUILD_BINARY_PATH = path.join(
-    process.cwd(),
-    "node_modules",
-    "esbuild",
-    "esbuild.exe"
-  );
-} else {
-  import.meta.env.ESBUILD_BINARY_PATH = path.join(
-    process.cwd(),
-    "node_modules",
-    "esbuild",
-    "bin",
-    "esbuild"
-  );
-}
 
 const CodepenTransformer = {
   name: "Codepen",
@@ -50,9 +32,7 @@ const CodepenTransformer = {
 };
 
 class MarkdownSerivce {
-  async processMarkdown(rawMarkdown: string): Promise<{
-    code: string;
-  }> {
+  async processMarkdown(rawMarkdown: string): Promise<string> {
     const file = await unified()
       .use(remarkParse)
       .use(remarkGfm)
@@ -60,15 +40,13 @@ class MarkdownSerivce {
       .use(remarkEmbedder, { transformers: [CodepenTransformer] })
       .use(rehypeSlug)
       .use(externalMarkdownLinks)
-      .use(lazyLoadImages)
+      .use(lazyLoadImages as Preset | PluggableList)
       .use(rehypeAutolinkHeadings as Preset | PluggableList)
       .use(remarkHtml, { sanitize: false })
       .process(rawMarkdown);
 
-    return {
-      code: String(file),
-    };
+    return String(file);
   }
 }
 
-export default MarkdownSerivce;
+export default new MarkdownSerivce();

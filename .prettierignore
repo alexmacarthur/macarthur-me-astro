@@ -1,0 +1,5 @@
+public
+package-lock.json
+dist
+.vercel
+.vscode

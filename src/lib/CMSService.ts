@@ -1,14 +1,18 @@
-import NotionService from "./NotionService";
+import notionService from "./NotionService";
+import markdownService from "./MarkdownService";
 import chunk from "lodash.chunk";
 import { POSTS_PER_PAGE } from "./constants";
-import type { BlogPost, ContentEntity } from "../types/types";
+import type { BlogPost } from "../types/types";
+import { generateExcerptFromMarkdown } from "./markdown";
 
 class CMS {
-  provider: NotionService;
+  provider;
+  markdownService;
   posts: BlogPost[] = [];
 
   constructor() {
-    this.provider = new NotionService();
+    this.provider = notionService;
+    this.markdownService = markdownService;
   }
 
   async getTotalPages(): Promise<number> {
@@ -24,7 +28,7 @@ class CMS {
       return this.posts;
     }
 
-    let posts = [];
+    let posts: BlogPost[] = [];
     let startCursor: any = undefined;
     let hasMore = true;
 
@@ -42,15 +46,36 @@ class CMS {
       startCursor = response.nextCursor;
     }
 
-    this.posts = posts;
+    const builtPosts = posts.map<Promise<BlogPost>>(async (p) => {
+      return {
+        ...p,
+        description: generateExcerptFromMarkdown(p.markdown),
+        html: await this.markdownService.processMarkdown(p.markdown),
+        prettyDate: this.prettifyDate(p.date),
+        prettyLastUpdated: p.lastUpdated
+          ? this.prettifyDate(p.lastUpdated)
+          : "",
+      };
+    });
 
-    return posts;
+    this.posts = await Promise.all(builtPosts);
+
+    return this.posts;
   }
 
-  async getPost(slug: string) {
+  async getPost(slug: string): Promise<BlogPost | undefined> {
     return (await this.getAllPosts()).find((post) => post.slug === slug);
+  }
 
-    // return this.provider.getSingleBlogPost(slug);
+  private prettifyDate(dateString: string): string {
+    const date = new Date(dateString);
+
+    return date.toLocaleString("en-US", {
+      month: "long",
+      day: "2-digit",
+      year: "numeric",
+      timeZone: "UTC",
+    });
   }
 }
 

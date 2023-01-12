@@ -12,6 +12,10 @@ export interface Props {
   pageType?: `narrow` | `normal` | "open";
   subtitle?: string;
   schema?: WithContext<any>;
+  postData?: {
+    date: string;
+    lastUpdated: string;
+  };
 }
 
 const {
@@ -21,6 +25,7 @@ const {
   openGraphImage = "",
   subtitle = "",
   schema,
+  postData,
 } = Astro.props;
 
 const mainClass = (() => {
@@ -52,6 +57,13 @@ const defaultSchema: WithContext<WebSite> = {
 
 const currentPath = getCurrentPath(Astro);
 const image = openGraphImage || import.meta.env.SITE_URL + "/open-graph.jpg";
+const articleOgData = postData
+  ? {
+      publishedTime: postData.date,
+      modifiedTime: postData.lastUpdated,
+      authors: [MY_NAME],
+    }
+  : {};
 ---
 
 <!DOCTYPE html>
@@ -77,11 +89,19 @@ const image = openGraphImage || import.meta.env.SITE_URL + "/open-graph.jpg";
       title={title || TITLE}
       description={description || DESCRIPTION}
       openGraph={{
+        article: articleOgData,
+        image: {
+          alt: "",
+        },
+        optional: {
+          siteName: "Alex MacArthur",
+          description: description || DESCRIPTION,
+        },
         basic: {
           title: title || TITLE,
           type: "website",
-          url: Astro.request.url,
           image,
+          url: Astro.request.url,
         },
       }}
       twitter={{
@@ -110,6 +130,12 @@ const image = openGraphImage || import.meta.env.SITE_URL + "/open-graph.jpg";
           {
             rel: "manifest",
             href: "/favicon/site.webmanifest",
+          },
+          {
+            rel: "alternate",
+            type: "application/rss+xml",
+            title: "RSS 2.0 Feed",
+            href: `${import.meta.env.SITE_URL}/rss.xml`,
           },
         ],
         meta: [
@@ -148,83 +174,84 @@ const image = openGraphImage || import.meta.env.SITE_URL + "/open-graph.jpg";
         </footer>
       )
     }
-  </body><script>
-    import "../scripts/link-tracking";
-    import { listen } from "quicklink";
+    <script>
+      import "../scripts/link-tracking";
+      import { listen } from "quicklink";
 
-    listen();
-  </script>
+      listen();
+    </script>
 
-  <style is:global>
-    @import "prismjs/themes/prism-okaidia.css";
-    *:not(pre, pre *) {
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-        "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-        "Noto Color Emoji";
-    }
+    <style is:global>
+      @import "prismjs/themes/prism-okaidia.css";
+      *:not(pre, pre *) {
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+          "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+          "Noto Color Emoji";
+      }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      @apply text-gray-900;
-    }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        @apply text-gray-900;
+      }
 
-    :not(h1, h2, h3, h4, h5, h6, pre, pre *) {
-      @apply text-gray-600 font-light;
-    }
+      :not(h1, h2, h3, h4, h5, h6, pre, pre *) {
+        @apply text-gray-600 font-light;
+      }
 
-    body {
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-template-rows: auto 1fr;
-      grid-template-areas:
-        "nav"
-        "main";
-      height: 100vh;
-      max-width: 100vw;
-    }
+      body {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        grid-template-areas:
+          "nav"
+          "main";
+        height: 100vh;
+        max-width: 100vw;
+      }
 
-    nav {
-      grid-area: nav;
-    }
+      nav {
+        grid-area: nav;
+      }
 
-    main {
-      grid-area: main;
-    }
+      main {
+        grid-area: main;
+      }
 
-    form input,
-    form textarea {
-      @apply border border-gray-300 rounded-sm w-full px-2 py-2 text-base;
-    }
+      form input,
+      form textarea {
+        @apply border border-gray-300 rounded-sm w-full px-2 py-2 text-base;
+      }
 
-    label {
-      @apply mb-2 inline-block;
-    }
+      label {
+        @apply mb-2 inline-block;
+      }
 
-    .password-wrapper {
-      position: absolute;
-      z-index: -1;
-      opacity: 0;
-    }
+      .password-wrapper {
+        position: absolute;
+        z-index: -1;
+        opacity: 0;
+      }
 
-    .button {
-      @apply border-2 text-lg border-purple-500 rounded-3xl px-5 py-1 bg-purple-500 text-white hover:bg-white hover:text-purple-500 transition-colors duration-200;
-    }
+      .button {
+        @apply border-2 text-lg border-purple-500 rounded-3xl px-5 py-1 bg-purple-500 text-white hover:bg-white hover:text-purple-500 transition-colors duration-200;
+      }
 
-    .button svg {
-      stroke: white;
-    }
+      .button svg {
+        stroke: white;
+      }
 
-    .card {
-      @apply border-2 border-gray-200 rounded-lg p-6 md:p-8;
-    }
+      .card {
+        @apply border-2 border-gray-200 rounded-lg p-6 md:p-8;
+      }
 
-    *:focus-visible {
-      outline: theme("colors.purple.500") auto 1px;
-    }
-  </style>
+      *:focus-visible {
+        outline: theme("colors.purple.500") auto 1px;
+      }
+    </style>
+  </body>
 </html>

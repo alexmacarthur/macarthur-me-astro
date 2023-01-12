@@ -3,7 +3,7 @@ import { NotionToMarkdown } from "notion-to-md";
 import { POSTS_PER_PAGE } from "./constants";
 import { extractUrl, generateExcerptFromMarkdown } from "./markdown";
 import StaticAssetService from "./StaticAssetService";
-import type { BlogPost, NotionProperties } from "../types/types";
+import type { BlogPost, NotionPage, NotionProperties } from "../types/types";
 import DbCacheService from "./DbCacheService";
 
 interface MdBlock {
@@ -73,7 +73,7 @@ class NotionService {
     perPageOverride?: number;
     hydrate?: boolean;
   }): Promise<{
-    posts: Partial<BlogPost>[];
+    posts: NotionPage[];
     nextCursor: string | null;
     hasMore: boolean;
   }> {
@@ -249,30 +249,12 @@ class NotionService {
 
     return {
       id: page.id,
-      excerpt: "",
       markdown,
       views: "",
       externalHost,
-      description: generateExcerptFromMarkdown(markdown),
-      openGraphImage: cover,
-      prettyDate: this.prettifyDate(postProperties.date),
-      prettyLastUpdated: postProperties.lastUpdated
-        ? this.prettifyDate(postProperties.lastUpdated)
-        : "",
       ...postProperties,
     };
   }
-
-  private prettifyDate(dateString: string): string {
-    const date = new Date(dateString);
-
-    return date.toLocaleString("en-US", {
-      month: "long",
-      day: "2-digit",
-      year: "numeric",
-      timeZone: "UTC",
-    });
-  }
 }
 
-export default NotionService;
+export default new NotionService();
