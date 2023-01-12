@@ -2,13 +2,14 @@
 ---
 
 <span
-  class="block z-30 text-gray-900 left-0 top-0 gradient-text font-extrabold p-0"
+  class="block z-30 text-gray-900 left-0 top-0 gradient-text font-extrabold p-0 gradient-text"
 >
   <slot />
 </span>
 
 <script>
   import BezierEasing from "bezier-easing";
+  const gradientTextNodes = document.querySelectorAll(".gradient-text");
 
   const prefersReducedMotion = () => {
     if (typeof window == undefined) return false;
@@ -102,6 +103,9 @@
   };
 
   if (!prefersReducedMotion()) {
+    gradientTextNodes.forEach((el) => {
+      el.classList.add("gradient-is-initialized");
+    });
     gradientEffect();
   }
 </script>
@@ -116,7 +120,10 @@
       theme("colors.gray.800") 50%
     );
     background-clip: text;
-    -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
+  }
+
+  .gradient-is-initialized {
+    -webkit-text-fill-color: transparent;
   }
 </style>

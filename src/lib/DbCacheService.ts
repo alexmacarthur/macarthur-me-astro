@@ -1,6 +1,6 @@
 import { client } from "./SupabaseService";
 
-const EXPIRATION_MINUTES = 0;
+const EXPIRATION_MINUTES = 10;
 
 class DbCacheService {
   table: string;
