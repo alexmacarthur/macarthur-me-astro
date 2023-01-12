@@ -22,7 +22,7 @@ class CMS {
     return postChunks.length;
   }
 
-  async getAllPosts(hydrate: boolean = true): Promise<BlogPost[]> {
+  async getAllPosts(): Promise<BlogPost[]> {
     if (this.posts.length) {
       console.log("Using cached posts...");
       return this.posts;
@@ -36,7 +36,6 @@ class CMS {
       let response = await this.provider.getPublishedBlogPosts({
         startCursor,
         perPageOverride: 100,
-        hydrate,
       });
 
       console.log(`Fetched ${response.posts.length} posts...`);

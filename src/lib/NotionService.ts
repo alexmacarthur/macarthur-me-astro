@@ -28,56 +28,18 @@ class NotionService {
     this.staticAssetService = new StaticAssetService();
   }
 
-  async getSingleBlogPost(slug: string): Promise<BlogPost> {
-    const cachedData = await singlePostCache.get(slug);
-
-    if (cachedData) return cachedData as any;
-
-    const database = import.meta.env.NOTION_DATABASE_ID ?? "";
-
-    const response = await this.client.databases.query({
-      database_id: database,
-      page_size: 1,
-      filter: {
-        property: "Slug",
-        rich_text: {
-          equals: slug,
-        },
-      },
-      sorts: [
-        {
-          property: "Date",
-          direction: "descending",
-        },
-      ],
-    });
-
-    if (!response.results[0]) {
-      throw "Post not found!";
-    }
-
-    const page = response.results[0];
-    const data = await this.pageToPostTransformer(page);
-
-    await singlePostCache.put(slug, data);
-
-    return data;
-  }
-
   async getPublishedBlogPosts({
     startCursor,
     perPageOverride,
-    hydrate = true,
   }: {
     startCursor?: string;
     perPageOverride?: number;
-    hydrate?: boolean;
   }): Promise<{
     posts: NotionPage[];
     nextCursor: string | null;
     hasMore: boolean;
   }> {
-    const cacheKey = `${startCursor}__${perPageOverride}__${hydrate}`;
+    const cacheKey = `${startCursor}__${perPageOverride}`;
     const cachedData = await multiplePostsCache.get(cacheKey);
 
     if (cachedData) return cachedData as any;
@@ -104,19 +66,7 @@ class NotionService {
 
     const { next_cursor, has_more } = response;
     const posts = await Promise.all(
-      response.results.map((res) => {
-        // Don't query for all block data. Just get the slug.
-        if (!hydrate) {
-          return new Promise(async (resolve) => {
-            // This is gross... yeah.
-            resolve({
-              slug: (res as any).properties.Slug.rich_text[0].plain_text,
-            });
-          });
-        }
-
-        return this.pageToPostTransformer(res);
-      })
+      response.results.map((res) => this.pageToPostTransformer(res))
     );
 
     const data = {
@@ -252,6 +202,7 @@ class NotionService {
       markdown,
       views: "",
       externalHost,
+      openGraphImage: cover,
       ...postProperties,
     };
   }

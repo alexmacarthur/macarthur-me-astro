@@ -1,0 +1,12 @@
+name: Rebuild Astro Site
+on:
+  schedule:
+    - cron: "0 */2 * * *"
+
+jobs:
+  trigger_build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Trigger Webhook
+        run: |
+          curl -X POST ${{secrets.WEBHOOK_URL}}
