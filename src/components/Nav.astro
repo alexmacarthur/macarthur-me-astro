@@ -55,7 +55,7 @@ const navItems = [
   />
 
   <div
-    class="md:hidden flex items-center opacity-0 w-full h-screen bg-gray-700 -z-10 fixed top-0 left-0 -translate-x-full px-8"
+    class="md:hidden flex items-center opacity-0 w-full h-screen bg-gray-700 z-40 fixed top-0 left-0 -translate-x-full px-8"
     id="mobileNav"
   >
     <ul class="gap-1 flex flex-col">
@@ -85,7 +85,7 @@ const navItems = [
     transition: transform 0.15s ease-in-out, opacity 0.1s ease-in-out 0.05s;
   }
   #menuToggle:checked ~ #mobileNav {
-    @apply opacity-100 translate-x-0 z-50;
+    @apply opacity-100 translate-x-0;
   }
 
   #menuToggle:checked ~ #menuToggleLabel li {
