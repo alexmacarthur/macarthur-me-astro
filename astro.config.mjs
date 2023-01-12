@@ -10,9 +10,23 @@ import image from "@astrojs/image";
 import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
+import compress from "astro-compress";
+
+// https://astro.build/config
 export default defineConfig({
   site: "https://macarthur.me",
-  integrations: [tailwind(), image(), sitemap()],
+  integrations: [
+    tailwind(),
+    image(),
+    sitemap(),
+    compress({
+      css: false,
+      html: true,
+      img: true,
+      js: false,
+      svg: true,
+    }),
+  ],
   markdown: {
     // syntaxHighlight: 'prism',
     shikiConfig: {

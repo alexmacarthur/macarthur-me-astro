@@ -21,6 +21,7 @@
     "@remark-embedder/core": "^3.0.1",
     "@supabase/supabase-js": "^2.4.0",
     "astro": "^1.9.1",
+    "astro-compress": "^1.1.25",
     "astro-heroicons": "^0.3.0",
     "astro-seo": "^0.6.1",
     "aws-sdk": "^2.1292.0",
