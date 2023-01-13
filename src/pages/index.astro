@@ -52,7 +52,7 @@ const featuredBlogPosts = (await Promise.all(
 
               <DateFormatter date={post.date}>{post.prettyDate}</DateFormatter>
 
-              <div class="mt-4 flex justify-between items-center">
+              <div class="mt-4 flex sm:gap-1 md:justify-between md:items-center flex-col md:flex-row">
                 <ButtonLink
                   href={url}
                   target={post.externalUrl ? "_blank" : "_self"}
@@ -62,7 +62,7 @@ const featuredBlogPosts = (await Promise.all(
                 </ButtonLink>
 
                 {post.externalHost && (
-                  <small class="ml-2 text-gray-400 text-sm">
+                  <small class="text-gray-400 text-sm">
                     {post.externalHost}
                   </small>
                 )}
