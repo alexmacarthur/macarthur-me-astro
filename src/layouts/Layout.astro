@@ -56,7 +56,8 @@ const defaultSchema: WithContext<WebSite> = {
 };
 
 const currentPath = getCurrentPath(Astro);
-const image = openGraphImage || import.meta.env.SITE_URL + "/default-open-graph.jpg";
+const image =
+  openGraphImage || import.meta.env.SITE_URL + "/default-open-graph.jpg";
 const articleOgData = postData
   ? {
       publishedTime: postData.date,
@@ -197,7 +198,7 @@ const articleOgData = postData
       h4,
       h5,
       h6 {
-        @apply text-gray-900;
+        @apply text-gray-800;
       }
 
       :not(h1, h2, h3, h4, h5, h6, pre, pre *) {
@@ -228,7 +229,11 @@ const articleOgData = postData
       }
 
       .button {
-        @apply border-2 text-lg border-purple-500 rounded-3xl px-5 py-1 bg-purple-500 text-white hover:bg-white hover:text-purple-500 transition-colors duration-200;
+        @apply border-2 text-lg border-purple-500 rounded-3xl px-5 py-1 bg-purple-500 text-white hover:bg-white hover:text-purple-500 transition-colors duration-200 cursor-pointer;
+      }
+
+      .button.light {
+        @apply border-white;
       }
 
       .button svg {

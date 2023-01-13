@@ -4,9 +4,10 @@ import ArrowSmallRight from "astro-heroicons/outline/ArrowSmallRight.astro";
 export interface Props {
   href: string;
   withArrow?: boolean;
-  target: string;
+  target?: string;
   linkId?: string;
   asButton?: boolean;
+  classes?: string;
 }
 
 const {
@@ -15,13 +16,14 @@ const {
   withArrow = false,
   target = "_self",
   asButton = false,
+  classes = "",
 } = Astro.props;
 ---
 
 <a
   class={`text-purple-500 hover:text-purple-400 inline-flex items-center gap-1 p-2 -m-2 ${
     asButton ? "button" : ""
-  }`}
+  } ${classes}`}
   href={href}
   data-link-id={linkId}
   target={target}

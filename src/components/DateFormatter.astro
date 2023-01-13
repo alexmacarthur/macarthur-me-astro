@@ -5,7 +5,7 @@ const { date, prettyDate, className = "" } = Astro.props;
 <span class:list={["text-sm", "text-gray-500", className]}>
   <slot />
 
-  <time dateTime={date} class="text-inherit">
+  <time datetime={date} class="text-inherit">
     {prettyDate}
   </time>
 </span>

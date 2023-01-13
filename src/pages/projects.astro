@@ -38,7 +38,7 @@ const specialProjects: SpecialProject[] = [
   <Title>Projects</Title>
 
   <div class="mb-12">
-    <h2 class="text-4xl font-semibold mb-6">Some Special Ones</h2>
+    <h2 class="text-3xl font-semibold mb-6">Some Special Ones</h2>
 
     <div class="mb-12">
       <p class="prose md:prose-lg max-w-none">
@@ -80,6 +80,7 @@ const specialProjects: SpecialProject[] = [
                       href={link}
                       target="_blank"
                       asButton={true}
+                      withArrow={true}
                     >
                       {link.replace(/https:\/\//, "")}
                     </ButtonLink>
@@ -104,7 +105,11 @@ const specialProjects: SpecialProject[] = [
     <ul class="grid grid-cols-1 md:grid-cols-2 gap-8">
       {
         repos.map((repo) => {
-          const linkProps = { href: repo.html_url, target: "_blank" };
+          const linkProps = {
+            href: repo.html_url,
+            target: "_blank",
+            withArrow: true,
+          };
 
           return (
             <li class="card">

@@ -1,0 +1,40 @@
+---
+import ButtonLink from "./ButtonLink.astro";
+---
+
+<div class="bg-purple-500 p-6 rounded-md w-full">
+  <p class="prose text-white mb-4">
+    Be the first to know when I publish a new post or project.
+  </p>
+
+  <p class="prose text-white mb-6">
+    I'm working on getting a fancier form up & running, but for now, you can
+    sign up here:
+  </p>
+
+  <ButtonLink
+    href="https://eepurl.com/iid0YT"
+    target="_blank"
+    asButton={true}
+    classes="light"
+  >
+    Sign Up
+  </ButtonLink>
+
+  <!-- <form id="signUpForm">
+    <p class="mb-4">
+      <input type="email" placeholder="Email" class="">
+    </p>
+    <input type="submit" value="Subscribe" class="button light">
+  </form> -->
+</div>
+
+<script>
+  // const form = document.getElementById('signUpForm');
+
+  // form!!.addEventListener('submit', async (e) => {
+  //   e.preventDefault();
+
+  //   console.log('submit');
+  // });
+</script>

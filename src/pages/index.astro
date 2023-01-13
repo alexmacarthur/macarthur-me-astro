@@ -1,19 +1,72 @@
 ---
+import ButtonLink from "../components/ButtonLink.astro";
 import GradientText from "../components/GradientText.astro";
+import SignupForm from "../components/SignupForm.astro";
+import DateFormatter from "../components/DateFormatter.astro";
 import Layout from "../layouts/Layout.astro";
+import cmsService from "../lib/CMSService";
+import type { BlogPost } from "../types/types";
+
+const featuredBlogPosts = (await Promise.all(
+  [
+    "when-dom-updates-appear-to-be-asynchronous",
+    "use-web-workers-for-your-event-listeners",
+    "send-an-http-request-on-page-exit",
+    "when-a-weakmap-came-in-handy",
+  ].map((slug) => cmsService.getPost(slug))
+)) as BlogPost[];
 ---
 
 <Layout title="I'm Alex MacArthur">
-  <div class="grid place-items-center h-full p-6">
-    <div class="mt-16 md:mt-32">
+  <div class="max-w-5xl mx-auto mb-20">
+    <div class="pt-12 mb-28">
       <GradientText>
         <h1 class="text-4xl md:text-5xl lg:text-mega font-light mb-2">
           I'm Alex MacArthur,
         </h1>
       </GradientText>
-      <span class="block -mt-4 md:-mt-6 leading-tight text-md md:text-xl"
-        >a sofware engineer bossing around computers in made-up languages.</span
-      >
+      <span class="block -mt-4 md:-mt-6 leading-tight text-md md:text-xl">
+        a sofware engineer bossing around computers in made-up languages.
+      </span>
     </div>
+
+    <ul class="list-none grid grid-cols-3 gap-4 mb-4">
+      <li class="col-span-2">
+        <h2 class="text-2xl text-gray-600 font-light">Featured Posts</h2>
+      </li>
+      <li class="hidden md:block">
+        <h2 class="text-2xl text-gray-600 font-light">Get Updated</h2>
+      </li>
+    </ul>
+    <ul class="list-none grid grid-cols-2 sm:grid-cols-3 gap-4 featured-blocks">
+      {
+        featuredBlogPosts.map((post) => {
+          const url = `/posts/${post.slug}`;
+          return (
+            <li class="border-2 p-4 rounded-md">
+              <h3>
+                <a class="font-light" href={url}>
+                  {post.title}
+                </a>
+              </h3>
+
+              <DateFormatter date={post.date}>{post.prettyDate}</DateFormatter>
+
+              <div class="mt-4">
+                <ButtonLink href={url} withArrow={true}>
+                  Read It
+                </ButtonLink>
+              </div>
+            </li>
+          );
+        })
+      }
+
+      <li
+        class="signup-form grid row-auto col-span-full sm:row-span-2 sm:col-start-3 sm:row-start-1"
+      >
+        <SignupForm />
+      </li>
+    </ul>
   </div>
 </Layout>
