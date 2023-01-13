@@ -41,7 +41,7 @@ const featuredBlogPosts = (await Promise.all(
     <ul class="list-none grid grid-cols-2 sm:grid-cols-3 gap-4 featured-blocks">
       {
         featuredBlogPosts.map((post) => {
-          const url = `/posts/${post.slug}`;
+          const url = post.externalUrl || `/posts/${post.slug}`;
           return (
             <li class="border-2 p-4 rounded-md">
               <h3>
@@ -52,10 +52,20 @@ const featuredBlogPosts = (await Promise.all(
 
               <DateFormatter date={post.date}>{post.prettyDate}</DateFormatter>
 
-              <div class="mt-4">
-                <ButtonLink href={url} withArrow={true}>
+              <div class="mt-4 flex justify-between items-center">
+                <ButtonLink
+                  href={url}
+                  target={post.externalUrl ? "_blank" : "_self"}
+                  withArrow={Boolean(post.externalUrl)}
+                >
                   Read It
                 </ButtonLink>
+
+                {post.externalHost && (
+                  <small class="ml-2 text-gray-400 text-sm">
+                    {post.externalHost}
+                  </small>
+                )}
               </div>
             </li>
           );
