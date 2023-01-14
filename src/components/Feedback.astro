@@ -6,11 +6,11 @@ export interface Props {
 const { slug } = Astro.props;
 ---
 
-<div class="mt-16">
+<div class="mt-12">
   <hr class="divider" />
 
   <div
-    class="flex flex-col md:flex-row justify-center items-center py-14 md:space-x-6"
+    class="flex flex-col md:flex-row justify-center items-center py-8 md:space-x-6"
   >
     <span class="text-center md:text-left block prose">
       <feedback-component data-slug={slug}>
@@ -22,6 +22,13 @@ const { slug } = Astro.props;
 
   <hr class="divider" />
 </div>
+
+<style>
+  :root {
+    --feedback-component-font-size: theme("fontSize.sm");
+    --feedback-component-button-size: 1.75rem;
+  }
+</style>
 
 <script>
   declare global {

@@ -1,40 +1,104 @@
 ---
-import ButtonLink from "./ButtonLink.astro";
+export interface Props {
+  isHorizontal?: boolean;
+}
+
+const { isHorizontal = false } = Astro.props;
 ---
 
-<div class="bg-purple-500 p-6 rounded-md w-full">
-  <p class="prose text-white mb-4">
-    Be the first to know when I publish a new post or project.
-  </p>
-
-  <p class="prose text-white mb-6">
-    I'm working on getting a fancier form up & running, but for now, you can
-    sign up here:
-  </p>
-
-  <ButtonLink
-    href="https://eepurl.com/iid0YT"
-    target="_blank"
-    asButton={true}
-    classes="light"
-  >
-    Sign Up
-  </ButtonLink>
-
-  <!-- <form id="signUpForm">
-    <p class="mb-4">
-      <input type="email" placeholder="Email" class="">
+<div
+  class={`bg-purple-500 p-6 rounded-md w-full ${
+    isHorizontal ? "grid md:grid-cols-5 gap-3" : ""
+  }`}
+>
+  <div class="mb-5 md:col-span-3">
+    <p class="text-white mb-3">
+      Be the first to know when I publish a new post or project.
     </p>
-    <input type="submit" value="Subscribe" class="button light">
-  </form> -->
+    <small class="text-purple-200 leading-snug block">
+      I won't send you spam. Unsubscribe at any time.
+    </small>
+  </div>
+
+  <div class="flex flex-col justify-center flex-auto md:col-span-2">
+    <form
+      id="signUpForm"
+      class={`flexx ${isHorizontal ? "is-horizontal" : ""}`}
+    >
+      <div class="mb-4">
+        <input type="email" name="email" placeholder="Email" required />
+      </div>
+      <div>
+        <input
+          type="submit"
+          value="Subscribe"
+          class="button light disabled:pointer-events-none disabled:opacity-50"
+          autocomplete="off"
+        />
+      </div>
+    </form>
+
+    <p
+      class="text-white px-1 py-2 text-center border-white hidden is-error"
+      id="resultMessage"
+    >
+    </p>
+  </div>
 </div>
 
+<style>
+  .is-error {
+    @apply bg-pink-600 border-2 border-white mt-3;
+  }
+</style>
+
 <script>
-  // const form = document.getElementById('signUpForm');
+  import { sendEvent } from "../utils.ts";
 
-  // form!!.addEventListener('submit', async (e) => {
-  //   e.preventDefault();
+  const form = document.getElementById("signUpForm") as HTMLFormElement;
+  const resultMessage = document.getElementById(
+    "resultMessage"
+  ) as HTMLParagraphElement;
+  const button = form.querySelector('input[type="submit"]') as HTMLInputElement;
 
-  //   console.log('submit');
-  // });
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    button.disabled = true;
+
+    // Reset classes in case this is a second submission on the same page load.
+    resultMessage.classList.add("is-error", "hidden");
+    const email = (
+      form.querySelector('input[name="email"]') as HTMLInputElement
+    ).value as string;
+    const response = await fetch(
+      `${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/sign-up`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      }
+    );
+
+    resultMessage.classList.remove("hidden");
+
+    if (!response.ok) {
+      if (response.status === 409) {
+        resultMessage.innerText = "Looks like you're already subscribed!";
+      } else {
+        resultMessage.innerText = "Oh no! Something went wrong.";
+      }
+
+      button.disabled = false;
+      return;
+    }
+
+    form.reset();
+    resultMessage.classList.remove("is-error");
+    resultMessage.innerText = "You're in. Thanks! 🎉";
+    form.remove();
+    sendEvent("email_signup");
+  });
 </script>

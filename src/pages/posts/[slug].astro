@@ -11,6 +11,7 @@ import cmsService from "../../lib/CMSService";
 import { MY_NAME } from "../../lib/constants";
 import type { BlogPost } from "../../types/types";
 import { getCurrentPath } from "../../utils";
+import SignupForm from "../../components/SignupForm.astro";
 
 export async function getStaticPaths() {
   return (await cmsService.getAllPosts()).map((post) => ({
@@ -79,6 +80,9 @@ if (post.lastUpdated) {
 
   <Feedback slug={post.slug} />
 
-  <JamComments path={getCurrentPath} />
+  <SignupForm isHorizontal={true} />
+
   <Bio />
+
+  <JamComments path={getCurrentPath} />
 </Layout>
