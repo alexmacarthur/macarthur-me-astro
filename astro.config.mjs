@@ -1,24 +1,22 @@
 import { defineConfig } from "astro/config";
-
-// https://astro.build/config
 import tailwind from "@astrojs/tailwind";
-
-// https://astro.build/config
 import image from "@astrojs/image";
-
-// https://astro.build/config
 import sitemap from "@astrojs/sitemap";
-
-// https://astro.build/config
 import compress from "astro-compress";
+import robotsTxt from "astro-robots-txt";
 
-// https://astro.build/config
 export default defineConfig({
   site: "https://macarthur.me",
   integrations: [
     tailwind(),
     image(),
     sitemap(),
+    robotsTxt({
+      policy: [
+        { allow: "/", userAgent: "*" },
+        { disallow: "/proxy/", userAgent: "*" },
+      ],
+    }),
     compress({
       css: false,
       html: true,
@@ -28,7 +26,6 @@ export default defineConfig({
     }),
   ],
   markdown: {
-    // syntaxHighlight: 'prism',
     shikiConfig: {
       // Choose from Shiki's built-in themes (or add your own)
       // https://github.com/shikijs/shiki/blob/main/docs/themes.md
