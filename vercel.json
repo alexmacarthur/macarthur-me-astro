@@ -1,0 +1,34 @@
+{
+  "redirects": [
+    {
+      "source": "/sitemap.xml",
+      "destination": "/sitemap-index.xml",
+      "permanent": true
+    },
+    {
+      "source": "/typeit",
+      "destination": "https://typeitjs.com",
+      "permanent": true
+    },
+    {
+      "source": "/posts/as-an-engineer-write",
+      "destination": "https://www.ramseyinhouse.com/blog/as-an-engineer-write",
+      "permanent": true
+    },
+    {
+      "source": "/posts/send-an-http-request-on-page-exit",
+      "destination": "https://css-tricks.com/send-an-http-request-on-page-exit",
+      "permanent": true
+    },
+    {
+      "source": "/posts/avoid-heavy-babel-transformations-by-sometimes-not-writing-modern-javascript",
+      "destination": "https://css-tricks.com/avoid-heavy-babel-transformations-by-sometimes-not-writing-modern-javascript",
+      "permanent": true
+    },
+    {
+      "source": "/posts/why-using-reduce-to-sequentially-resolve-promises-works",
+      "destination": "https://css-tricks.com/why-using-reduce-to-sequentially-resolve-promises-works",
+      "permanent": true
+    }
+  ]
+}
