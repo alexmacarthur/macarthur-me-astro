@@ -1,5 +1,6 @@
 ---
 import type { BlogPosting, WithContext } from "schema-dts";
+// @ts-ignore
 import JamComments from "@jam-comments/astro";
 import Bio from "../../components/Bio.astro";
 import DateFormatter from "../../components/DateFormatter.astro";
@@ -60,11 +61,11 @@ if (post.lastUpdated) {
     lastUpdated: post.lastUpdated,
   }}
 >
-  <Title headingClasses={"text-3xl md:text-6xl"}>
+  <Title headingClasses={"text-3xl md:text-6xl"} subtitle={post.subtitle}>
     {post.title}
   </Title>
 
-  <div class="flex gap-4 mb-6 -mt-6 md:-mt-10">
+  <div class={`flex gap-4 mb-6 ${post.subtitle ? "" : "-mt-4"}`}>
     <DateFormatter
       date={post.date}
       prettyDate={post.prettyDate}
@@ -73,7 +74,7 @@ if (post.lastUpdated) {
       {post.lastUpdated && "Originally posted on"}
     </DateFormatter>
 
-    <ViewCount count={""} slug={post.slug} disableAnimation={true} />
+    <ViewCount value={""} slug={post.slug} disableAnimation={true} />
   </div>
 
   <div class="prose lg:prose-md mx-auto" set:html={post.html} />
