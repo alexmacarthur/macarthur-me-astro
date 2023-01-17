@@ -25,7 +25,7 @@
     "astro-compress": "^1.1.27",
     "astro-heroicons": "^0.3.0",
     "astro-robots-txt": "^0.3.11",
-    "astro-seo": "^0.6.1",
+    "astro-seo": "^0.7.0",
     "aws-sdk": "^2.1295.0",
     "bezier-easing": "^2.1.0",
     "countup.js": "^2.3.2",
