@@ -30,5 +30,15 @@
       "destination": "https://css-tricks.com/why-using-reduce-to-sequentially-resolve-promises-works",
       "permanent": true
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/js/numbers.js",
+      "destination": "https://analytics.macarthur.me/js/plausible.js"
+    },
+    {
+      "source": "/api/event",
+      "destination": "https://analytics.macarthur.me/api/event"
+    }
   ]
 }
