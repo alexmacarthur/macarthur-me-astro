@@ -1,0 +1,49 @@
+---
+const socialLinks = [
+  {
+    name: "Twitter",
+    href: "https://twitter.com/amacarthur",
+  },
+  {
+    name: "GitHub",
+    href: "https://github.com/alexmacarthur",
+  },
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/in/alexmacarthur/",
+  },
+];
+---
+
+<footer
+  class="px-4 md:px-6 py-6 mt-12 flex flex-col justify-center items-center"
+>
+  <hr class="bg-gray-200 h-px w-full max-w-5xl mb-6" />
+
+  <div class="mb-4 grid gap-6 grid-cols-1">
+    <ul class="flex flex-wrap gap-8 justify-center">
+      <li class="w-full sm:w-auto text-center order-last sm:order-first">
+        &copy; {new Date().getFullYear()} Alex MacArthur
+      </li>
+      <li class="hidden sm:block">//</li>
+      {
+        socialLinks.map((link) => {
+          return (
+            <li>
+              <a href={link.href} target="_blank">
+                {link.name}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</footer>
+
+<style>
+  ul li,
+  ul li a {
+    @apply text-sm text-gray-500;
+  }
+</style>
