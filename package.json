@@ -20,13 +20,13 @@
     "@notionhq/client": "^2.2.3",
     "@ramseyinhouse/feedback-component": "^1.0.3",
     "@remark-embedder/core": "^3.0.1",
-    "@supabase/supabase-js": "^2.4.0",
+    "@supabase/supabase-js": "^2.4.1",
     "astro": "^1.9.2",
-    "astro-compress": "^1.1.27",
+    "astro-compress": "^1.1.28",
     "astro-heroicons": "^0.3.0",
     "astro-robots-txt": "^0.3.11",
     "astro-seo": "^0.7.0",
-    "aws-sdk": "^2.1297.0",
+    "aws-sdk": "^2.1299.0",
     "bezier-easing": "^2.1.0",
     "countup.js": "^2.3.2",
     "date-fns": "^2.29.3",
@@ -51,12 +51,12 @@
     "@tailwindcss/typography": "^0.5.9",
     "@types/lodash.chunk": "^4.2.7",
     "@types/node": "^18.11.18",
-    "@vercel/node": "^2.8.14",
+    "@vercel/node": "^2.8.15",
     "install": "^0.13.0",
     "npm": "^9.3.1",
     "postcss-nested": "^6.0.0",
     "prettier": "^2.8.3",
     "prettier-plugin-astro": "^0.7.2",
-    "vercel": "^28.12.8"
+    "vercel": "^28.13.0"
   }
 }
