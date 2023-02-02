@@ -4,13 +4,16 @@ import chunk from "lodash.chunk";
 import { POSTS_PER_PAGE } from "./constants";
 import type { BlogPost } from "../types/types";
 import { generateExcerptFromMarkdown } from "./markdown";
+import DbCacheService from "./DbCacheService";
 
 class CMS {
+  dbCache: DbCacheService;
   provider;
   markdownService;
   posts: BlogPost[] = [];
 
   constructor() {
+    this.dbCache = new DbCacheService();
     this.provider = notionService;
     this.markdownService = markdownService;
   }
@@ -23,9 +26,10 @@ class CMS {
   }
 
   async getAllPosts(): Promise<BlogPost[]> {
-    if (this.posts.length) {
-      console.log("Using cached posts...");
-      return this.posts;
+    const localPosts = await this.dbCache.readPosts();
+
+    if(localPosts.length > 0) {
+      return localPosts;
     }
 
     let posts: BlogPost[] = [];
@@ -57,9 +61,11 @@ class CMS {
       };
     });
 
-    this.posts = await Promise.all(builtPosts);
+    const resolvedPosts = await Promise.all(builtPosts);
 
-    return this.posts;
+    this.dbCache.savePosts(resolvedPosts);
+
+    return resolvedPosts;
   }
 
   async getPost(slug: string): Promise<BlogPost | undefined> {

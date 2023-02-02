@@ -1,21 +1,15 @@
 import { Client } from "@notionhq/client";
 import { NotionToMarkdown } from "notion-to-md";
 import { POSTS_PER_PAGE } from "./constants";
-import { extractUrl, generateExcerptFromMarkdown } from "./markdown";
+import { extractUrl } from "./markdown";
 import StaticAssetService from "./StaticAssetService";
 import type { BlogPost, NotionPage, NotionProperties } from "../types/types";
-import DbCacheService from "./DbCacheService";
 
 interface MdBlock {
   type: string;
   parent: string;
   children: MdBlock[];
 }
-
-const multiplePostsCache = new DbCacheService(
-  "notion_requests__published_posts"
-);
-const singlePostCache = new DbCacheService("notion_requests__single_posts");
 
 class NotionService {
   client: Client;
@@ -39,11 +33,6 @@ class NotionService {
     nextCursor: string | null;
     hasMore: boolean;
   }> {
-    const cacheKey = `${startCursor}__${perPageOverride}`;
-    const cachedData = await multiplePostsCache.get(cacheKey);
-
-    if (cachedData) return cachedData as any;
-
     const database = import.meta.env.NOTION_DATABASE_ID ?? "";
 
     const response = await this.client.databases.query({
@@ -75,9 +64,6 @@ class NotionService {
       hasMore: Boolean(has_more),
     };
 
-    await multiplePostsCache.put(cacheKey, data);
-
-    // @ts-ignore
     return data;
   }
 

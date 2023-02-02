@@ -1,47 +1,65 @@
-import { client } from "./SupabaseService";
+import { join, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { Low } from 'lowdb'
+import { JSONFile } from 'lowdb/node'
+import type { BlogPost } from '../types/types'
 
-const EXPIRATION_MINUTES = import.meta.env.CACHE_TIMEOUT_IN_MINUTES || 0;
+type Data = {
+  posts: BlogPost[];
+  github: {
+    totalStars: number;
+    followerCount: number;
+    projectRepos: {
+      html_url: string;
+      description: string;
+      name: string;
+      stargazers_count: number;
+    }[];
+  }
+}
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 class DbCacheService {
-  table: string;
+  db;
 
-  constructor(table: string) {
-    this.table = table;
+  constructor() {
+    const file = join(__dirname, 'db.json');
+    const adapter = new JSONFile<Data>(file);
+    this.db = new Low<Data>(adapter);
   }
 
-  async get(key: string) {
-    const { data } = await client.from(this.table).select().eq("key", key);
+  async read(): Promise<void> {
+    await this.db.read();
 
-    if (!data.length) {
-      return null;
-    }
-
-    if (this.isExpired(data[0].created_at)) {
-      console.log(`Wiping expired cache for: ${key}`);
-
-      await client.from(this.table).delete().match({ id: data[0].id });
-
-      return null;
-    }
-
-    console.log(`Using cache for: ${key}`);
-    return data[0].data;
+    this.db.data ||= { posts: [], github: {} };
   }
 
-  async put(key: string, data: any) {
-    return client.from(this.table).insert([
-      {
-        key,
-        data,
-      },
-    ]);
+  async readPosts(): Promise<BlogPost[]> {
+    await this.read();
+
+    return this.db.data.posts;
   }
 
-  private isExpired(createdAt: string) {
-    const then = new Date(createdAt);
-    const minutesAgo = new Date(Date.now() - 1000 * (60 * EXPIRATION_MINUTES));
+  async savePosts(posts: BlogPost[]) {
+    this.db.data.posts = posts;
 
-    return then < minutesAgo;
+    return this.db.write();
+  }
+
+  async readGitHubData(): Promise<Data['github']> {
+    await this.read();
+
+    return this.db.data.github;
+  }
+
+  async saveGitHubData(data: Partial<Data['github']>) {
+    this.db.data.github = {
+      ...this.db.data.github,
+      ...data,
+    };
+
+    return this.db.write();
   }
 }
 
