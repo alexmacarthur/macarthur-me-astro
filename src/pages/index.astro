@@ -12,7 +12,7 @@ const featuredBlogPosts = (await Promise.all(
     "when-dom-updates-appear-to-be-asynchronous",
     "use-web-workers-for-your-event-listeners",
     "send-an-http-request-on-page-exit",
-    "when-a-weakmap-came-in-handy",
+    "options-for-removing-event-listeners",
   ].map((slug) => cmsService.getPost(slug))
 )) as BlogPost[];
 ---

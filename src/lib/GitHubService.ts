@@ -22,8 +22,8 @@ class GitHubService {
   }
 
   async getFollowerCount(): Promise<number> {
-    if(this.cachedData.followerCount) {
-      return this.cachedData.followerCount
+    if (this.cachedData.followerCount) {
+      return this.cachedData.followerCount;
     }
 
     const data = await this.getUserData();
@@ -36,15 +36,18 @@ class GitHubService {
   }
 
   async getTotalStars(): Promise<number> {
-    if(this.cachedData.totalStars) {
-      return this.cachedData.totalStars
+    if (this.cachedData.totalStars) {
+      return this.cachedData.totalStars;
     }
 
-    const totalStars = (await this.getRepos()).reduce((total, { stargazers_count }) => {
-      total = total + (stargazers_count || 0);
+    const totalStars = (await this.getRepos()).reduce(
+      (total, { stargazers_count }) => {
+        total = total + (stargazers_count || 0);
 
-      return total;
-    }, 0);
+        return total;
+      },
+      0
+    );
 
     this.dbCache.saveGitHubData({ totalStars });
 
@@ -52,7 +55,7 @@ class GitHubService {
   }
 
   async getProjectReposData(): Promise<ProjectRepo[]> {
-    if(this.cachedData.projectRepos) {
+    if (this.cachedData.projectRepos) {
       return this.cachedData.projectRepos;
     }
 
@@ -61,40 +64,40 @@ class GitHubService {
     const tagData = await this.getTags(repoData);
 
     const mashedRepoData = repoData // Only permit those with stars
-        .filter((repo) => repo.stargazers_count > 0)
+      .filter((repo) => repo.stargazers_count > 0)
 
-        // Only permit those with commits made in the last two years.
-        .filter((repo) => {
-          const commit = commitData[repo.name];
+      // Only permit those with commits made in the last two years.
+      .filter((repo) => {
+        const commit = commitData[repo.name];
 
-          if (!commit) {
-            return false;
-          }
+        if (!commit) {
+          return false;
+        }
 
-          const lastCommitDate = commit?.commit?.author?.date;
-          const updatedDate = new Date(lastCommitDate);
+        const lastCommitDate = commit?.commit?.author?.date;
+        const updatedDate = new Date(lastCommitDate);
 
-          const nowDate = new Date();
-          const pastTime = nowDate.setMonth(nowDate.getMonth() - 36);
+        const nowDate = new Date();
+        const pastTime = nowDate.setMonth(nowDate.getMonth() - 36);
 
-          return updatedDate.getTime() > pastTime;
-        })
+        return updatedDate.getTime() > pastTime;
+      })
 
-        // Only those that have a tag/release.
-        .filter((repo) => !!tagData[repo.name])
+      // Only those that have a tag/release.
+      .filter((repo) => !!tagData[repo.name])
 
-        // Only those that are not archived.
-        .filter((repo) => !repo.archived)
+      // Only those that are not archived.
+      .filter((repo) => !repo.archived)
 
-        // Normalize the data.
-        .map((repo) => {
-          return {
-            html_url: repo.html_url,
-            description: repo.description.trim(),
-            name: repo.name,
-            stargazers_count: repo.stargazers_count,
-          };
-        });
+      // Normalize the data.
+      .map((repo) => {
+        return {
+          html_url: repo.html_url,
+          description: repo.description.trim(),
+          name: repo.name,
+          stargazers_count: repo.stargazers_count,
+        };
+      });
 
     this.dbCache.saveGitHubData({ projectRepos: mashedRepoData });
 

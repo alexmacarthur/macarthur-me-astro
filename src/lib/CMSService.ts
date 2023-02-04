@@ -28,7 +28,7 @@ class CMS {
   async getAllPosts(): Promise<BlogPost[]> {
     const localPosts = await this.dbCache.readPosts();
 
-    if(localPosts.length > 0) {
+    if (localPosts.length > 0) {
       return localPosts;
     }
 
