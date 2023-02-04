@@ -7,32 +7,35 @@ const { isHorizontal = false } = Astro.props;
 ---
 
 <div
-  class={`bg-purple-500 p-6 rounded-md w-full ${
-    isHorizontal ? "grid md:grid-cols-5 gap-3" : ""
+  class={`bg-gradient-to-br from-[#8d44d3] to-[#933ce3] p-6 rounded-md w-full ${
+    isHorizontal ? "grid md:grid-cols-5 gap-10 py-11" : ""
   }`}
 >
   <div class="mb-5 md:col-span-3">
-    <p class="text-white mb-3">
-      Be the first to know when I publish a new post or project.
+    <p class="text-white mb-3 font-semibold">
+      Get an email whenever I publish a new post or project.
     </p>
-    <small class="text-purple-200 leading-snug block">
-      I won't send you spam. Unsubscribe at any time.
-    </small>
+    <span class="text-purple-200 leading-snug block">
+      I won't send you spam. Unsubscribe whenever.
+    </span>
   </div>
 
   <div class="flex flex-col justify-center flex-auto md:col-span-2">
-    <form
-      id="signUpForm"
-      class={`flexx ${isHorizontal ? "is-horizontal" : ""}`}
-    >
+    <form id="signUpForm" class={`${isHorizontal ? "is-horizontal" : ""}`}>
       <div class="mb-4">
-        <input type="email" name="email" placeholder="Email" required />
+        <input
+          class="border-none"
+          type="email"
+          name="email"
+          placeholder="Email"
+          required
+        />
       </div>
       <div>
         <input
           type="submit"
           value="Subscribe"
-          class="button light disabled:pointer-events-none disabled:opacity-50"
+          class="button naked submit bg-none light disabled:pointer-events-none disabled:opacity-50"
           autocomplete="off"
         />
       </div>
