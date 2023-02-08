@@ -16,7 +16,7 @@
     "@astrojs/rss": "^2.1.0",
     "@astrojs/sitemap": "^1.0.1",
     "@astrojs/tailwind": "^3.0.1",
-    "@jam-comments/astro": "^0.0.6",
+    "@jam-comments/astro": "^1.0.0-beta.3",
     "@notionhq/client": "^2.2.3",
     "@ramseyinhouse/feedback-component": "^1.0.3",
     "@remark-embedder/core": "^3.0.1",
