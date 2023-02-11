@@ -56,7 +56,6 @@ const defaultSchema: WithContext<WebSite> = {
   },
 };
 
-const currentPath = getCurrentPath(Astro);
 const image =
   openGraphImage || import.meta.env.SITE_URL + "/default-open-graph.jpg";
 const articleOgData = postData

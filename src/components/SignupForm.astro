@@ -1,22 +1,28 @@
 ---
 export interface Props {
+  heading?: string;
+  description?: string;
   isHorizontal?: boolean;
 }
 
-const { isHorizontal = false } = Astro.props;
+const {
+  heading = "Get irregular updates about new blog posts or projects.",
+  description = "I won't send you spam. Unsubscribe whenever.",
+  isHorizontal = false,
+} = Astro.props;
 ---
 
 <div
-  class={`bg-gradient-to-br from-[#8d44d3] to-[#933ce3] p-6 rounded-md w-full ${
+  class={`bg-gradient-to-br from-purple-600 to-purple-600 p-6 rounded-md w-full ${
     isHorizontal ? "grid md:grid-cols-5 gap-10 py-11" : ""
   }`}
 >
   <div class="mb-5 md:col-span-3">
     <p class="text-white mb-3 font-semibold">
-      Get an email whenever I publish a new post or project.
+      {heading}
     </p>
     <span class="text-purple-200 leading-snug block">
-      I won't send you spam. Unsubscribe whenever.
+      {description}
     </span>
   </div>
 
@@ -74,6 +80,7 @@ const { isHorizontal = false } = Astro.props;
     const email = (
       form.querySelector('input[name="email"]') as HTMLInputElement
     ).value as string;
+    const path = window.location.pathname;
     const response = await fetch(
       `${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/sign-up`,
       {
@@ -81,7 +88,7 @@ const { isHorizontal = false } = Astro.props;
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, path }),
       }
     );
 
@@ -102,6 +109,6 @@ const { isHorizontal = false } = Astro.props;
     resultMessage.classList.remove("is-error");
     resultMessage.innerText = "You're in. Thanks! 🎉";
     form.remove();
-    sendEvent("email_signup");
+    sendEvent("email_signup", { path });
   });
 </script>
