@@ -140,6 +140,7 @@ import Title from "../components/Title.astro";
     const response = await fetch(
       `${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/contact`,
       {
+        keepalive: true,
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

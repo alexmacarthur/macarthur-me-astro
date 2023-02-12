@@ -84,6 +84,7 @@ const {
     const response = await fetch(
       `${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/sign-up`,
       {
+        keepalive: true,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
