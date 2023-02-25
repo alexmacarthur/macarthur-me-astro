@@ -9,10 +9,10 @@ import type { BlogPost } from "../types/types";
 
 const featuredBlogPosts = (await Promise.all(
   [
+    "options-for-removing-event-listeners",
+    "send-an-http-request-on-page-exit",
     "when-dom-updates-appear-to-be-asynchronous",
     "use-web-workers-for-your-event-listeners",
-    "send-an-http-request-on-page-exit",
-    "options-for-removing-event-listeners",
   ].map((slug) => cmsService.getPost(slug))
 )) as BlogPost[];
 ---

@@ -21,6 +21,7 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params;
 const post = (await cmsService.getPost(slug as string)) as BlogPost;
+const computedDescription = post.subtitle || post.description;
 
 let postSchema: WithContext<BlogPosting> = {
   "@context": "https://schema.org",
@@ -32,7 +33,7 @@ let postSchema: WithContext<BlogPosting> = {
   },
   headline: post.title,
   isFamilyFriendly: true,
-  description: post.description,
+  description: computedDescription,
   image: post.openGraphImage,
   author: {
     "@type": "Person",
@@ -54,7 +55,7 @@ if (post.lastUpdated) {
   title={post.title}
   pageType={"normal"}
   schema={postSchema}
-  description={post.description}
+  description={computedDescription}
   openGraphImage={post.openGraphImage}
   postData={{
     date: post.date,
@@ -85,55 +86,60 @@ if (post.lastUpdated) {
 
   <Bio />
 
-  <JamComments path={getCurrentPath(Astro)} />
-</Layout>
+  {
+    (
+      // @ts-ignore }
+      <JamComments path={getCurrentPath(Astro)} />
+    )
+  }
 
-<script>
-  const observer = new IntersectionObserver((entries, o) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.classList.add("is-visible");
-        }, 500);
-        observer.unobserve(entry.target);
-      }
+  <script>
+    const observer = new IntersectionObserver((entries, o) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add("is-visible");
+          }, 500);
+          observer.unobserve(entry.target);
+        }
+      });
     });
-  });
 
-  document.querySelectorAll(".remark-highlight").forEach((code) => {
-    observer.observe(code);
-  });
-</script>
+    document.querySelectorAll(".remark-highlight").forEach((code) => {
+      observer.observe(code);
+    });
+  </script>
 
-<style is:global>
-  @keyframes slide {
-    0% {
-      transform: translateX(0);
+  <style is:global>
+    @keyframes slide {
+      0% {
+        transform: translateX(0);
+      }
+
+      50% {
+        transform: translateX(-0.5rem);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
     }
 
-    50% {
-      transform: translateX(-0.5rem);
-    }
-
-    100% {
-      transform: translateX(0);
-    }
-  }
-
-  .remark-highlight:after {
-    display: block;
-    content: "scroll →";
-    @apply text-gray-400 text-sm -mt-1 text-right;
-  }
-
-  .remark-highlight.is-visible:after {
-    animation: slide 0.75s infinite ease-in-out alternate;
-    animation-iteration-count: 2;
-  }
-
-  @media screen(sm) {
     .remark-highlight:after {
-      display: none;
+      display: block;
+      content: "scroll →";
+      @apply text-gray-400 text-sm -mt-1 text-right;
     }
-  }
-</style>
+
+    .remark-highlight.is-visible:after {
+      animation: slide 0.75s infinite ease-in-out alternate;
+      animation-iteration-count: 2;
+    }
+
+    @media screen(sm) {
+      .remark-highlight:after {
+        display: none;
+      }
+    }
+  </style>
+</Layout>
