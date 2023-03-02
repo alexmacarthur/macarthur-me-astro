@@ -44,6 +44,8 @@ class DbCacheService {
   async savePosts(posts: BlogPost[]) {
     this.db.data.posts = posts;
 
+    console.log("Writing local store of posts...");
+
     return this.db.write();
   }
 

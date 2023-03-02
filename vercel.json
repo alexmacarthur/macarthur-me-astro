@@ -30,6 +30,11 @@
       "source": "/posts/why-using-reduce-to-sequentially-resolve-promises-works",
       "destination": "https://css-tricks.com/why-using-reduce-to-sequentially-resolve-promises-works",
       "permanent": true
+    },
+    {
+      "source": "/posts/develop-spa-against-remote-page",
+      "destination": "posts/project-local-spa-onto-production-page",
+      "permanent": true
     }
   ],
   "rewrites": [
