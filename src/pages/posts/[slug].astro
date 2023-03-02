@@ -66,14 +66,28 @@ if (post.lastUpdated) {
     {post.title}
   </Title>
 
-  <div class={`flex gap-4 mb-6 ${post.subtitle ? "" : "-mt-4"}`}>
-    <DateFormatter
-      date={post.date}
-      prettyDate={post.prettyDate}
-      className="inline-block"
-    >
-      {post.lastUpdated && "Originally posted on"}
-    </DateFormatter>
+  <div class={`flex items-start gap-4 mb-6 ${post.subtitle ? "" : "-mt-4"}`}>
+    <div class="flex flex-col md:flex-row gap-1 md:gap-4">
+      <DateFormatter
+        date={post.date}
+        prettyDate={post.prettyDate}
+        className="inline-block"
+      >
+        {post.lastUpdated && "Posted on"}
+      </DateFormatter>
+
+      {
+        post.prettyLastUpdated && (
+          <DateFormatter
+            date={post.lastUpdated}
+            prettyDate={post.prettyLastUpdated}
+            className="inline-block"
+          >
+            Updated on
+          </DateFormatter>
+        )
+      }
+    </div>
 
     <ViewCount value={""} slug={post.slug} disableAnimation={true} />
   </div>
