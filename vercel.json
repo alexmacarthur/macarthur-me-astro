@@ -33,7 +33,7 @@
     },
     {
       "source": "/posts/develop-spa-against-remote-page",
-      "destination": "posts/project-local-spa-onto-production-page",
+      "destination": "/posts/project-local-spa-onto-production-page",
       "permanent": true
     }
   ],
