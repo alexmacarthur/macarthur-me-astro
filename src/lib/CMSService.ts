@@ -63,7 +63,7 @@ class CMS {
 
     const resolvedPosts = await Promise.all(builtPosts);
 
-    this.dbCache.savePosts(resolvedPosts);
+    await this.dbCache.savePosts(resolvedPosts);
 
     return resolvedPosts;
   }

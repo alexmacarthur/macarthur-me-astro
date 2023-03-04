@@ -21,6 +21,8 @@
     "@ramseyinhouse/feedback-component": "^1.0.3",
     "@remark-embedder/core": "^3.0.1",
     "@supabase/supabase-js": "^2.10.0",
+    "@tryghost/admin-api": "^1.13.2",
+    "@tryghost/content-api": "^1.11.5",
     "astro": "^2.0.16",
     "astro-compress": "^1.1.35",
     "astro-heroicons": "^0.3.0",
