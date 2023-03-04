@@ -1,5 +1,9 @@
 import { SITE_URL } from "./lib/constants";
 
+export const isProduction = () => {
+  return import.meta.env.NODE_ENV === "production";
+};
+
 export const randomInRange = (min, max): number => {
   min = Math.ceil(min);
   max = Math.floor(max);

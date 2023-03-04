@@ -4,8 +4,12 @@ import GradientText from "../components/GradientText.astro";
 import SignupForm from "../components/SignupForm.astro";
 import DateFormatter from "../components/DateFormatter.astro";
 import Layout from "../layouts/Layout.astro";
-import cmsService from "../lib/CMSService";
-import type { BlogPost } from "../types/types";
+import contentService, {
+  isExternal,
+  extractUrlFromBookmark,
+  extractHostFromUrl,
+} from "../lib/ContentService";
+import type { GhostPost } from "../types/types";
 
 const featuredBlogPosts = (await Promise.all(
   [
@@ -13,8 +17,8 @@ const featuredBlogPosts = (await Promise.all(
     "send-an-http-request-on-page-exit",
     "when-dom-updates-appear-to-be-asynchronous",
     "use-web-workers-for-your-event-listeners",
-  ].map((slug) => cmsService.getPost(slug))
-)) as BlogPost[];
+  ].map((slug) => contentService.getPost(slug))
+)) as GhostPost[];
 ---
 
 <Layout title="I'm Alex MacArthur">
@@ -41,7 +45,11 @@ const featuredBlogPosts = (await Promise.all(
     <ul class="list-none grid grid-cols-2 sm:grid-cols-3 gap-4 featured-blocks">
       {
         featuredBlogPosts.map((post) => {
-          const url = post.externalUrl || `/posts/${post.slug}`;
+          const external = isExternal(post);
+          const url = external
+            ? extractUrlFromBookmark(post.html)
+            : `/posts/${post.slug}`;
+
           return (
             <li class="border-2 p-4 rounded-md">
               <h3>
@@ -50,20 +58,20 @@ const featuredBlogPosts = (await Promise.all(
                 </a>
               </h3>
 
-              <DateFormatter date={post.date}>{post.prettyDate}</DateFormatter>
+              <DateFormatter date={post.published_at} />
 
               <div class="mt-4 flex sm:gap-1 md:justify-between md:items-center flex-col md:flex-row">
                 <ButtonLink
                   href={url}
-                  target={post.externalUrl ? "_blank" : "_self"}
-                  withArrow={Boolean(post.externalUrl)}
+                  target={external ? "_blank" : "_self"}
+                  withArrow={external}
                 >
                   Read It
                 </ButtonLink>
 
-                {post.externalHost && (
+                {external && (
                   <small class="text-gray-400 text-sm">
-                    {post.externalHost}
+                    {extractHostFromUrl(url)}
                   </small>
                 )}
               </div>

@@ -4,10 +4,10 @@ import Title from "../components/Title.astro";
 import Layout from "./Layout.astro";
 import PostList from "../components/PostList.astro";
 import Pagination from "../components/Pagination.astro";
-import type { BlogPost } from "../types/types";
+import type { GhostPost } from "../types/types";
 
 export interface Props {
-  page: Partial<Page<BlogPost>>;
+  page: Partial<Page<GhostPost>>;
 }
 
 const { page } = Astro.props;

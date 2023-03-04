@@ -1,5 +1,5 @@
 import gitHub from "octonode";
-import DbCacheService from "./DbCacheService";
+import DbCacheService, { Data } from "./DbCacheService";
 
 type ProjectRepo = {
   html_url: string;
@@ -10,20 +10,21 @@ type ProjectRepo = {
 
 class GitHubService {
   dbCache: DbCacheService;
-  cachedData: any;
+  cachedData: Data["github"] | undefined = undefined;
   client: any;
   repos: any[];
 
   constructor() {
     this.dbCache = new DbCacheService();
-    this.cachedData = this.dbCache.readGitHubData();
     this.repos = [];
     this.client = gitHub.client(import.meta.env.GITHUB_ACCESS_TOKEN);
   }
 
   async getFollowerCount(): Promise<number> {
-    if (this.cachedData.followerCount) {
-      return this.cachedData.followerCount;
+    const cachedData = await this.getCachedData();
+
+    if (cachedData.followerCount) {
+      return cachedData.followerCount;
     }
 
     const data = await this.getUserData();
@@ -36,8 +37,10 @@ class GitHubService {
   }
 
   async getTotalStars(): Promise<number> {
-    if (this.cachedData.totalStars) {
-      return this.cachedData.totalStars;
+    const cachedData = await this.getCachedData();
+
+    if (cachedData.totalStars) {
+      return cachedData.totalStars;
     }
 
     const totalStars = (await this.getRepos()).reduce(
@@ -55,8 +58,10 @@ class GitHubService {
   }
 
   async getProjectReposData(): Promise<ProjectRepo[]> {
-    if (this.cachedData.projectRepos) {
-      return this.cachedData.projectRepos;
+    const cachedData = await this.getCachedData();
+
+    if (cachedData.projectRepos) {
+      return cachedData.projectRepos;
     }
 
     const repoData = await this.getRepos();
@@ -214,6 +219,16 @@ class GitHubService {
         stargazers_count: repo.stargazers_count,
       };
     });
+  }
+
+  private async getCachedData(): Promise<Data["github"]> {
+    if (this.cachedData) {
+      return this.cachedData as Data["github"];
+    }
+
+    this.cachedData = await this.dbCache.readGitHubData();
+
+    return this.cachedData;
   }
 }
 

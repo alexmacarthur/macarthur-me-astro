@@ -7,26 +7,28 @@ import Feedback from "../../components/Feedback.astro";
 import Title from "../../components/Title.astro";
 import ViewCount from "../../components/ViewCount.astro";
 import Layout from "../../layouts/Layout.astro";
-import cmsService from "../../lib/CMSService";
 import { MY_NAME } from "../../lib/constants";
-import type { BlogPost } from "../../types/types";
 import { getCurrentPath } from "../../utils";
 import SignupForm from "../../components/SignupForm.astro";
+import contentService, { computeDescription } from "../../lib/ContentService";
 
 export async function getStaticPaths() {
-  return (await cmsService.getAllPosts()).map((post) => ({
-    params: { slug: post.slug },
-  }));
+  return (await contentService.getAllPosts()).map((post) => {
+    return {
+      params: { slug: post.slug },
+    };
+  });
 }
 
 const { slug } = Astro.params;
-const post = (await cmsService.getPost(slug as string)) as BlogPost;
-const computedDescription = post.subtitle || post.description;
+
+const post = await contentService.getPost(slug as string);
+const computedDescription = computeDescription(post);
 
 let postSchema: WithContext<BlogPosting> = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  datePublished: post.date,
+  datePublished: post.published_at,
   mainEntityOfPage: {
     "@type": "WebPage",
     "@id": Astro.request.url,
@@ -34,7 +36,7 @@ let postSchema: WithContext<BlogPosting> = {
   headline: post.title,
   isFamilyFriendly: true,
   description: computedDescription,
-  image: post.openGraphImage,
+  image: post.og_image || post.feature_image,
   author: {
     "@type": "Person",
     name: MY_NAME,
@@ -42,12 +44,8 @@ let postSchema: WithContext<BlogPosting> = {
   },
 };
 
-if (post.subtitle) {
-  postSchema.alternativeHeadline = post.subtitle;
-}
-
-if (post.lastUpdated) {
-  postSchema.dateModified = post.lastUpdated;
+if (post.updated_at) {
+  postSchema.dateModified = post.updated_at;
 }
 ---
 
@@ -56,40 +54,27 @@ if (post.lastUpdated) {
   pageType={"normal"}
   schema={postSchema}
   description={computedDescription}
-  openGraphImage={post.openGraphImage}
+  openGraphImage={post.og_image || post.feature_image}
+  openGraphAlt={post.feature_image_caption}
   postData={{
-    date: post.date,
-    lastUpdated: post.lastUpdated,
+    date: post.published_at,
+    lastUpdated: post.updated_at,
   }}
 >
-  <Title headingClasses={"text-3xl md:text-6xl"} subtitle={post.subtitle}>
+  <Title headingClasses={"text-3xl md:text-6xl"} subtitle={post.custom_excerpt}>
     {post.title}
   </Title>
 
-  <div class={`flex items-start gap-4 mb-6 ${post.subtitle ? "" : "-mt-4"}`}>
-    <div class="flex flex-col md:flex-row gap-1 md:gap-4">
-      <DateFormatter
-        date={post.date}
-        prettyDate={post.prettyDate}
-        className="inline-block"
-      >
-        {post.lastUpdated && "Posted on"}
-      </DateFormatter>
+  <div
+    class={`flex items-start gap-4 mb-6 ${post.custom_excerpt ? "" : "-mt-4"}`}
+  >
+    <div class="flex flex-wrap gap-x-3">
+      <DateFormatter date={post.published_at} className="inline-block" />
 
-      {
-        post.prettyLastUpdated && (
-          <DateFormatter
-            date={post.lastUpdated}
-            prettyDate={post.prettyLastUpdated}
-            className="inline-block"
-          >
-            Updated on
-          </DateFormatter>
-        )
-      }
+      <small>/</small>
+
+      <ViewCount value={""} slug={post.slug} disableAnimation={true} />
     </div>
-
-    <ViewCount value={""} slug={post.slug} disableAnimation={true} />
   </div>
 
   <div class="prose lg:prose-lg mx-auto" set:html={post.html} />
@@ -102,7 +87,7 @@ if (post.lastUpdated) {
 
   {
     (
-      // @ts-ignore }
+      // @ts-ignore
       <JamComments path={getCurrentPath(Astro)} />
     )
   }
@@ -119,7 +104,7 @@ if (post.lastUpdated) {
       });
     });
 
-    document.querySelectorAll(".remark-highlight").forEach((code) => {
+    document.querySelectorAll(".code-block").forEach((code) => {
       observer.observe(code);
     });
   </script>
@@ -139,19 +124,19 @@ if (post.lastUpdated) {
       }
     }
 
-    .remark-highlight:after {
+    .code-block:after {
       display: block;
       content: "scroll →";
       @apply text-gray-400 text-sm -mt-1 text-right;
     }
 
-    .remark-highlight.is-visible:after {
+    .code-block.is-visible:after {
       animation: slide 0.75s infinite ease-in-out alternate;
       animation-iteration-count: 2;
     }
 
     @media screen(sm) {
-      .remark-highlight:after {
+      .code-block:after {
         display: none;
       }
     }

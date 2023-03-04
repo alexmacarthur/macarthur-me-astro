@@ -1,6 +1,5 @@
 ---
 import Nav from "../components/Nav.astro";
-import { getCurrentPath } from "../utils";
 import { DESCRIPTION, MY_NAME, TITLE, TWITTER_HANDLE } from "../lib/constants";
 import type { WebSite, WithContext } from "schema-dts";
 import { SEO } from "astro-seo";
@@ -10,6 +9,7 @@ export interface Props {
   title: string;
   description?: string;
   openGraphImage?: string;
+  openGraphAlt?: string;
   pageType?: `narrow` | `normal` | "open";
   subtitle?: string;
   schema?: WithContext<any>;
@@ -24,6 +24,7 @@ const {
   description = "",
   pageType = "",
   openGraphImage = "",
+  openGraphAlt = "",
   subtitle = "",
   schema,
   postData,
@@ -83,12 +84,12 @@ const articleOgData = postData
     ></script>
 
     <SEO
-      title={title || TITLE}
+      title={title ? `${title} | Alex MacArthur` : TITLE}
       description={description || DESCRIPTION}
       openGraph={{
         article: articleOgData,
         image: {
-          alt: "",
+          alt: openGraphAlt || "open graph image",
         },
         optional: {
           siteName: "Alex MacArthur",

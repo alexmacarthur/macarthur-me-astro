@@ -2,10 +2,8 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Low } from "lowdb";
 import { JSONFile } from "lowdb/node";
-import type { BlogPost } from "../types/types";
 
-type Data = {
-  posts: BlogPost[];
+export type Data = {
   github: {
     totalStars: number;
     followerCount: number;
@@ -32,21 +30,7 @@ class DbCacheService {
   async read(): Promise<void> {
     await this.db.read();
 
-    this.db.data ||= { posts: [], github: {} };
-  }
-
-  async readPosts(): Promise<BlogPost[]> {
-    await this.read();
-
-    return this.db.data.posts;
-  }
-
-  async savePosts(posts: BlogPost[]) {
-    this.db.data.posts = posts;
-
-    console.log("Writing local store of posts...");
-
-    return this.db.write();
+    this.db.data ||= { github: {} };
   }
 
   async readGitHubData(): Promise<Data["github"]> {

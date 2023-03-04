@@ -1,0 +1,29 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Title from "../components/Title.astro";
+import contentService, { computeDescription } from "../lib/ContentService";
+
+export async function getStaticPaths() {
+  return (await contentService.getAllPages()).map((page) => {
+    return {
+      params: { slug: page.slug },
+    };
+  });
+}
+
+const { slug } = Astro.params;
+
+const page = await contentService.getPage(slug as string);
+---
+
+<Layout
+  description={computeDescription(page)}
+  openGraphImage={page.og_image || page.feature_image}
+  openGraphAlt={page.feature_image_caption}
+  pageType="normal"
+  title={page.title}
+>
+  <Title>{page.title}</Title>
+
+  <div class="prose lg:prose-lg mx-auto" set:html={page.html} />
+</Layout>

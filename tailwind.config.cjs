@@ -15,15 +15,14 @@ module.exports = {
             },
             "h1, h2, h3, h4, h5, h6": {
               color: theme("colors.gray.900"),
+              marginBottom: theme("margin.3"),
             },
             code: {
               fontWeight: "inherit",
               color: theme("colors.gray.700"),
               borderRadius: theme("border.sm"),
               padding: theme("padding.1"),
-              fontFamily: "'Public Sans', sans-serif",
               background: theme("colors.gray.200"),
-              fontSize: ".9em !important",
             },
             "code::before": {
               content: "none",

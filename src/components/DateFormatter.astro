@@ -1,5 +1,11 @@
 ---
-const { date, prettyDate, className = "" } = Astro.props;
+const { date, className = "" } = Astro.props;
+
+const prettyDate = new Date(date).toLocaleDateString("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+});
 ---
 
 <span class:list={["text-sm", "text-gray-500", className]}>

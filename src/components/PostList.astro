@@ -2,6 +2,17 @@
 import DateFormatter from "./DateFormatter.astro";
 import ViewCount from "./ViewCount.astro";
 import ButtonLink from "./ButtonLink.astro";
+import type { GhostPost } from "../types/types";
+import {
+  isExternal,
+  computeDescription,
+  extractUrlFromBookmark,
+  extractHostFromUrl,
+} from "../lib/ContentService";
+
+interface Props {
+  posts: GhostPost[];
+}
 
 const { posts } = Astro.props;
 ---
@@ -9,8 +20,12 @@ const { posts } = Astro.props;
 <ul class="space-y-10">
   {
     posts.map((post) => {
-      const postPath = post.externalUrl || `/posts/${post.slug}`;
-      const target = post.externalUrl ? "_blank" : "_self";
+      const description = computeDescription(post);
+      const external = isExternal(post);
+      const postPath = external
+        ? extractUrlFromBookmark(post.html)
+        : `/posts/${post.slug}`;
+      const target = external ? "_blank" : "_self";
 
       return (
         <li>
@@ -21,30 +36,17 @@ const { posts } = Astro.props;
               </a>
             </h2>
 
-            <div class="flex items-center mb-3 gap-3 text-base">
-              {post.lastUpdated && (
-                <>
-                  <DateFormatter
-                    date={post.lastUpdated}
-                    prettyDate={post.prettyLastUpdated}
-                    className="inline-block"
-                  >
-                    Updated on
-                  </DateFormatter>
-
-                  <small>/</small>
-                </>
-              )}
-
+            <div class="flex flex-wrap items-center mb-3 gap-x-3 text-base text-gray-500">
               <DateFormatter
-                date={post.date}
-                prettyDate={post.prettyDate}
+                date={post.published_at}
                 className="inline-block"
-              >
-                {post.lastUpdated && "Originally posted on"}
-              </DateFormatter>
+              />
 
-              {!post.externalUrl && (
+              <small>/</small>
+
+              {external ? (
+                extractHostFromUrl(postPath)
+              ) : (
                 <ViewCount
                   value={""}
                   slug={post.slug}
@@ -53,7 +55,7 @@ const { posts } = Astro.props;
               )}
             </div>
 
-            <small class="block text-gray-500 mb-2">{post.description}</small>
+            <p class="block text-gray-500 mb-2">{description}</p>
 
             <ButtonLink href={postPath} target={target} withArrow={true}>
               Read It
