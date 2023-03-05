@@ -4,9 +4,8 @@ import GradientText from "../components/GradientText.astro";
 import SignupForm from "../components/SignupForm.astro";
 import DateFormatter from "../components/DateFormatter.astro";
 import Layout from "../layouts/Layout.astro";
-import cmsService from "../lib/CMSService";
-import type { BlogPost } from "../types/types";
 import contentService from "../lib/ContentService";
+import type { GhostPost } from "../types/types";
 
 const featuredBlogPosts = (await Promise.all(
   [
@@ -14,10 +13,8 @@ const featuredBlogPosts = (await Promise.all(
     "send-an-http-request-on-page-exit",
     "when-dom-updates-appear-to-be-asynchronous",
     "use-web-workers-for-your-event-listeners",
-  ].map((slug) => cmsService.getPost(slug))
-)) as BlogPost[];
-
-// console.log(await contentService.getPosts());
+  ].map((slug) => contentService.getPost(slug))
+)) as GhostPost[];
 ---
 
 <Layout title="I'm Alex MacArthur">

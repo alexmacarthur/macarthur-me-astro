@@ -1,8 +1,8 @@
 import rss from "@astrojs/rss";
-import cmsService from "../../lib/CMSService";
+import contentService from "../../lib/ContentService";
 import sanitizeHtml from "sanitize-html";
 
-const posts = await cmsService.getAllPosts();
+const posts = await contentService.getAllPosts();
 
 export const get = () =>
   rss({
@@ -13,7 +13,7 @@ export const get = () =>
     items: posts.map((post) => ({
       link: `${import.meta.env.SITE_URL}/posts/${post.slug}`,
       title: post.title,
-      pubDate: new Date(post.date),
+      pubDate: new Date(post.published_at),
       content: sanitizeHtml(post.html),
     })),
     customData: `<language>en-us</language>`,

@@ -2,6 +2,12 @@
 import DateFormatter from "./DateFormatter.astro";
 import ViewCount from "./ViewCount.astro";
 import ButtonLink from "./ButtonLink.astro";
+import type { GhostPost } from "../types/types";
+import { generateExcerpt } from "../lib/ContentService";
+
+interface Props {
+  posts: GhostPost[];
+}
 
 const { posts } = Astro.props;
 ---
@@ -9,6 +15,7 @@ const { posts } = Astro.props;
 <ul class="space-y-10">
   {
     posts.map((post) => {
+      const description = post.custom_excerpt || generateExcerpt(post.html);
       const postPath = post.externalUrl || `/posts/${post.slug}`;
       const target = post.externalUrl ? "_blank" : "_self";
 
@@ -22,11 +29,10 @@ const { posts } = Astro.props;
             </h2>
 
             <div class="flex items-center mb-3 gap-3 text-base">
-              {post.lastUpdated && (
+              {post.updated_at && (
                 <>
                   <DateFormatter
-                    date={post.lastUpdated}
-                    prettyDate={post.prettyLastUpdated}
+                    date={post.updated_at}
                     className="inline-block"
                   >
                     Updated on
@@ -36,12 +42,8 @@ const { posts } = Astro.props;
                 </>
               )}
 
-              <DateFormatter
-                date={post.date}
-                prettyDate={post.prettyDate}
-                className="inline-block"
-              >
-                {post.lastUpdated && "Originally posted on"}
+              <DateFormatter date={post.published_at} className="inline-block">
+                {post.updated_at && "Originally posted on"}
               </DateFormatter>
 
               {!post.externalUrl && (
@@ -53,7 +55,7 @@ const { posts } = Astro.props;
               )}
             </div>
 
-            <small class="block text-gray-500 mb-2">{post.description}</small>
+            <p class="block text-gray-500 mb-2">{description}</p>
 
             <ButtonLink href={postPath} target={target} withArrow={true}>
               Read It

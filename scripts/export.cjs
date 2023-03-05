@@ -10,9 +10,9 @@ require("dotenv").config();
 
 const getApi = () => {
   return new GhostAdminAPI({
-      url: "https://cms.macarthur.me",
-      key: process.env.GHOST_ADMIN_KEY,
-      version: "v5.0",
+    url: "https://cms.macarthur.me",
+    key: process.env.GHOST_ADMIN_KEY,
+    version: "v5.0",
   });
 };
 
@@ -42,30 +42,33 @@ async function processImagesInHTML(html) {
   var api = getApi();
 
   try {
-  let imageRegex = /<img\s+src='\/proxy\/([^']+)'/gim;
-  let imagePromises = [];
+    let imageRegex = /<img\s+src='\/proxy\/([^']+)'/gim;
+    let imagePromises = [];
 
-  while ((result = imageRegex.exec(html)) !== null) {
-    let file = result[1];
+    while ((result = imageRegex.exec(html)) !== null) {
+      let file = result[1];
 
-    const r2Image = await getImage(file);
-    const extension = /image\/(.*)/.exec(r2Image.ContentType)[1];
-    const filePath = `${path.resolve(__dirname, "./img")}/${file}.${extension}`;
+      const r2Image = await getImage(file);
+      const extension = /image\/(.*)/.exec(r2Image.ContentType)[1];
+      const filePath = `${path.resolve(
+        __dirname,
+        "./img"
+      )}/${file}.${extension}`;
 
-    fs.writeFileSync(filePath, r2Image.Body);
+      fs.writeFileSync(filePath, r2Image.Body);
 
-    imagePromises.push(
-      api.images.upload({
-        ref: `/proxy/${file}`,
-        file: path.resolve(filePath),
-      })
-    );
-  }
+      imagePromises.push(
+        api.images.upload({
+          ref: `/proxy/${file}`,
+          file: path.resolve(filePath),
+        })
+      );
+    }
 
-  return Promise.all(imagePromises).then((images) => {
-    images.forEach((image) => (html = html.replace(image.ref, image.url)));
-    return html;
-  });
+    return Promise.all(imagePromises).then((images) => {
+      images.forEach((image) => (html = html.replace(image.ref, image.url)));
+      return html;
+    });
   } catch (e) {
     console.error("ERROR PROCESSING IMAGES IN HTML!", e);
     return html;
@@ -117,10 +120,9 @@ async function processImagesInHTML(html) {
     try {
       data.html = await processImagesInHTML(html);
 
-      const res = await api.posts
-        .add(data, {
-          source: "html",
-        });
+      const res = await api.posts.add(data, {
+        source: "html",
+      });
 
       count++;
       console.log(`FINISHED: ${res.slug}`);

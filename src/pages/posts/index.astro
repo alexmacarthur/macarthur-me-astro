@@ -1,13 +1,15 @@
 ---
 import type { Page } from "astro";
 import PaginatedPosts from "../../layouts/PaginatedPosts.astro";
-import cmsService from "../../lib/CMSService";
-import type { BlogPost } from "../../types/types";
+import type { GhostPost } from "../../types/types";
+import contentService from "../../lib/ContentService";
 
-const page: Partial<Page<BlogPost>> = {
-  data: (await cmsService.getAllPosts()).slice(0, 10),
+const posts = await contentService.getPosts(1);
+
+const page: Partial<Page<GhostPost>> = {
+  data: posts,
   currentPage: 1,
-  lastPage: await cmsService.getTotalPages(),
+  lastPage: posts.meta.pagination.pages,
   url: {
     prev: undefined,
     next: "/posts/page/2",

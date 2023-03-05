@@ -1,10 +1,10 @@
 ---
-import { POSTS_PER_PAGE } from "../../../lib/constants";
 import PaginatedPosts from "../../../layouts/PaginatedPosts.astro";
-import cmsService from "../../../lib/CMSService";
+import { POSTS_PER_PAGE } from "../../../lib/constants";
+import contentService from "../../../lib/ContentService";
 
 export async function getStaticPaths({ paginate }) {
-  const posts = await cmsService.getAllPosts();
+  const posts = await contentService.getAllPosts();
 
   return paginate(posts, { pageSize: POSTS_PER_PAGE });
 }
