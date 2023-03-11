@@ -16,13 +16,15 @@ const api = new GhostContentAPI({
 });
 
 const removeHtml = (html: string) => {
-  return html
-    // Remove HTML.
-    .replace(/(<[^>]+>[^<]*<\/[^>]+>)/gi, "")
-    // Remove line breaks.
-    .replace(/(\n|\r)/gi, "")
-    // Add space after colon.
-    .replace(/:(?! )/g, ": ")
+  return (
+    html
+      // Remove HTML.
+      .replace(/(<[^>]+>[^<]*<\/[^>]+>)/gi, "")
+      // Remove line breaks.
+      .replace(/(\n|\r)/gi, "")
+      // Add space after colon.
+      .replace(/:(?! )/g, ": ")
+  );
 };
 
 const generateExcerpt = (html: string, wordCount: number = 50) => {

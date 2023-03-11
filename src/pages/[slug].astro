@@ -27,10 +27,3 @@ const page = await contentService.getPage(slug as string);
 
   <div class="prose lg:prose-lg mx-auto" set:html={page.html} />
 </Layout>
-
-<style>
-  // Necessary for Stackblitz embeds.
-  .kg-embed-card iframe {
-    @apply w-full mx-auto;
-  }
-</style>
