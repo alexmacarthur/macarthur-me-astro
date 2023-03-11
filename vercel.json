@@ -45,6 +45,14 @@
     {
       "source": "/api/event",
       "destination": "https://analytics.macarthur.me/api/event"
+    },
+    {
+      "source": "/slide-element",
+      "destination": "https://alexmacarthur.github.io/slide-element"
+    },
+    {
+      "source": "/color",
+      "destination": "https://color-macarthur-me.netlify.app"
     }
   ]
 }
