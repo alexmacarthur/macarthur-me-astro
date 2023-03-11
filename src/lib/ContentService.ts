@@ -15,11 +15,23 @@ const api = new GhostContentAPI({
   version: import.meta.env.GHOST_VERSION,
 });
 
+const removeHtml = (html: string) => {
+  return (
+    html
+      // Remove HTML.
+      .replace(/(<[^>]+>[^<]*<\/[^>]+>)/gi, "")
+      // Remove line breaks.
+      .replace(/(\n|\r)/gi, "")
+      // Add space after colon.
+      .replace(/:(?! )/g, ": ")
+  );
+};
+
 const generateExcerpt = (html: string, wordCount: number = 50) => {
   const dom = new JSDOM(html);
   const text = dom.window.document.body.textContent;
 
-  return text.split(" ").slice(0, wordCount).join(" ");
+  return removeHtml(text.split(" ").slice(0, wordCount).join(" "));
 };
 
 export const computeDescription = (post: GhostPost, wordCount: number = 50) => {

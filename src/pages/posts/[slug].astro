@@ -25,6 +25,8 @@ const { slug } = Astro.params;
 const post = await contentService.getPost(slug as string);
 const computedDescription = computeDescription(post);
 
+console.log(computedDescription);
+
 let postSchema: WithContext<BlogPosting> = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
