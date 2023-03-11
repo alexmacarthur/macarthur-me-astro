@@ -144,7 +144,7 @@ class ContentService {
     const codeBlocks = dom.window.document.querySelectorAll("pre code");
 
     codeBlocks.forEach((block) => {
-      const language = block.classList[0].replace("language-", "");
+      const language = (block.classList[0] || "").replace("language-", "");
       block.parentElement?.classList.add("code-block");
       const code = decode(block.innerHTML);
 
