@@ -1,5 +1,4 @@
 import gitHub from "octonode";
-import DbCacheService, { Data } from "./DbCacheService";
 
 type ProjectRepo = {
   html_url: string;
@@ -9,40 +8,21 @@ type ProjectRepo = {
 };
 
 class GitHubService {
-  dbCache: DbCacheService;
-  cachedData: Data["github"] | undefined = undefined;
   client: any;
   repos: any[];
 
   constructor() {
-    this.dbCache = new DbCacheService();
     this.repos = [];
     this.client = gitHub.client(import.meta.env.GITHUB_ACCESS_TOKEN);
   }
 
   async getFollowerCount(): Promise<number> {
-    const cachedData = await this.getCachedData();
-
-    if (cachedData.followerCount) {
-      return cachedData.followerCount;
-    }
-
     const data = await this.getUserData();
-
-    this.dbCache.saveGitHubData({
-      followerCount: data.followers,
-    });
 
     return data.followers;
   }
 
   async getTotalStars(): Promise<number> {
-    const cachedData = await this.getCachedData();
-
-    if (cachedData.totalStars) {
-      return cachedData.totalStars;
-    }
-
     const totalStars = (await this.getRepos()).reduce(
       (total, { stargazers_count }) => {
         total = total + (stargazers_count || 0);
@@ -52,18 +32,10 @@ class GitHubService {
       0
     );
 
-    this.dbCache.saveGitHubData({ totalStars });
-
     return totalStars;
   }
 
   async getProjectReposData(): Promise<ProjectRepo[]> {
-    const cachedData = await this.getCachedData();
-
-    if (cachedData.projectRepos) {
-      return cachedData.projectRepos;
-    }
-
     const repoData = await this.getRepos();
     const commitData = await this.getCommits(repoData);
     const tagData = await this.getTags(repoData);
@@ -103,8 +75,6 @@ class GitHubService {
           stargazers_count: repo.stargazers_count,
         };
       });
-
-    this.dbCache.saveGitHubData({ projectRepos: mashedRepoData });
 
     return mashedRepoData;
   }
@@ -219,16 +189,6 @@ class GitHubService {
         stargazers_count: repo.stargazers_count,
       };
     });
-  }
-
-  private async getCachedData(): Promise<Data["github"]> {
-    if (this.cachedData) {
-      return this.cachedData as Data["github"];
-    }
-
-    this.cachedData = await this.dbCache.readGitHubData();
-
-    return this.cachedData;
   }
 }
 
