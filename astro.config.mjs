@@ -24,10 +24,5 @@ export default defineConfig({
     svg: true
   })],
   output: "server",
-  adapter: vercel(),
-  vite: {
-    optimizeDeps: {
-      exclude: ['astro']
-    }
-  }
+  adapter: vercel()
 });
