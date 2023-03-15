@@ -1,4 +1,4 @@
-import gitHub from "octonode";
+// import gitHub from "octonode";
 
 type ProjectRepo = {
   html_url: string;
@@ -13,183 +13,186 @@ class GitHubService {
 
   constructor() {
     this.repos = [];
-    this.client = gitHub.client(import.meta.env.GITHUB_ACCESS_TOKEN);
+    // this.client = gitHub.client(import.meta.env.GITHUB_ACCESS_TOKEN);
   }
 
   async getFollowerCount(): Promise<number> {
-    const data = await this.getUserData();
-
-    return data.followers;
+    return Promise.resolve(0);
+    // const data = await this.getUserData();
+    // return data.followers;
   }
 
   async getTotalStars(): Promise<number> {
-    const totalStars = (await this.getRepos()).reduce(
-      (total, { stargazers_count }) => {
-        total = total + (stargazers_count || 0);
+    return Promise.resolve(0);
+    // const totalStars = (await this.getRepos()).reduce(
+    //   (total, { stargazers_count }) => {
+    //     total = total + (stargazers_count || 0);
 
-        return total;
-      },
-      0
-    );
+    //     return total;
+    //   },
+    //   0
+    // );
 
-    return totalStars;
+    // return totalStars;
   }
 
   async getProjectReposData(): Promise<ProjectRepo[]> {
-    const repoData = await this.getRepos();
-    const commitData = await this.getCommits(repoData);
-    const tagData = await this.getTags(repoData);
+    return Promise.resolve([]);
 
-    const mashedRepoData = repoData // Only permit those with stars
-      .filter((repo) => repo.stargazers_count > 0)
+    // const repoData = await this.getRepos();
+    // const commitData = await this.getCommits(repoData);
+    // const tagData = await this.getTags(repoData);
 
-      // Only permit those with commits made in the last two years.
-      .filter((repo) => {
-        const commit = commitData[repo.name];
+    // const mashedRepoData = repoData // Only permit those with stars
+    //   .filter((repo) => repo.stargazers_count > 0)
 
-        if (!commit) {
-          return false;
-        }
+    //   // Only permit those with commits made in the last two years.
+    //   .filter((repo) => {
+    //     const commit = commitData[repo.name];
 
-        const lastCommitDate = commit?.commit?.author?.date;
-        const updatedDate = new Date(lastCommitDate);
+    //     if (!commit) {
+    //       return false;
+    //     }
 
-        const nowDate = new Date();
-        const pastTime = nowDate.setMonth(nowDate.getMonth() - 36);
+    //     const lastCommitDate = commit?.commit?.author?.date;
+    //     const updatedDate = new Date(lastCommitDate);
 
-        return updatedDate.getTime() > pastTime;
-      })
+    //     const nowDate = new Date();
+    //     const pastTime = nowDate.setMonth(nowDate.getMonth() - 36);
 
-      // Only those that have a tag/release.
-      .filter((repo) => !!tagData[repo.name])
+    //     return updatedDate.getTime() > pastTime;
+    //   })
 
-      // Only those that are not archived.
-      .filter((repo) => !repo.archived)
+    //   // Only those that have a tag/release.
+    //   .filter((repo) => !!tagData[repo.name])
 
-      // Normalize the data.
-      .map((repo) => {
-        return {
-          html_url: repo.html_url,
-          description: repo.description.trim(),
-          name: repo.name,
-          stargazers_count: repo.stargazers_count,
-        };
-      });
+    //   // Only those that are not archived.
+    //   .filter((repo) => !repo.archived)
 
-    return mashedRepoData;
+    //   // Normalize the data.
+    //   .map((repo) => {
+    //     return {
+    //       html_url: repo.html_url,
+    //       description: repo.description.trim(),
+    //       name: repo.name,
+    //       stargazers_count: repo.stargazers_count,
+    //     };
+    //   });
+
+    // return mashedRepoData;
   }
 
-  private async getUserData() {
-    const [, data] = await this.client.getAsync("/users/alexmacarthur");
+  // private async getUserData() {
+  //   const [, data] = await this.client.getAsync("/users/alexmacarthur");
 
-    return data;
-  }
+  //   return data;
+  // }
 
-  private async getRepos(): Promise<any[]> {
-    if (this.repos.length) {
-      return this.repos;
-    }
+  // private async getRepos(): Promise<any[]> {
+  //   if (this.repos.length) {
+  //     return this.repos;
+  //   }
 
-    let [, repoData] = await this.client.getAsync(
-      "/users/alexmacarthur/repos",
-      {
-        per_page: 100,
-        type: "public",
-      }
-    );
+  //   let [, repoData] = await this.client.getAsync(
+  //     "/users/alexmacarthur/repos",
+  //     {
+  //       per_page: 100,
+  //       type: "public",
+  //     }
+  //   );
 
-    console.log(`Fetched ${repoData.length} repositories from GitHub...`);
+  //   console.log(`Fetched ${repoData.length} repositories from GitHub...`);
 
-    // Immediately filter out the forks.
-    this.repos = repoData.filter((repo) => !repo.fork);
+  //   // Immediately filter out the forks.
+  //   this.repos = repoData.filter((repo) => !repo.fork);
 
-    return this.repos;
-  }
+  //   return this.repos;
+  // }
 
-  private async getCommits(repoData) {
-    const commitPromises = repoData.map(async (repo) => {
-      return await this.client.getAsync(
-        `/repos/alexmacarthur/${repo.name}/commits`,
-        {
-          per_page: 1,
-        }
-      );
-    });
+  // private async getCommits(repoData) {
+  //   const commitPromises = repoData.map(async (repo) => {
+  //     return await this.client.getAsync(
+  //       `/repos/alexmacarthur/${repo.name}/commits`,
+  //       {
+  //         per_page: 1,
+  //       }
+  //     );
+  //   });
 
-    let commitData = (await Promise.allSettled(
-      commitPromises
-    )) as unknown as any[];
+  //   let commitData = (await Promise.allSettled(
+  //     commitPromises
+  //   )) as unknown as any[];
 
-    console.log("Got commit data...");
+  //   console.log("Got commit data...");
 
-    return commitData
-      .filter((commit) => commit.status === "fulfilled")
-      .map((commit) => commit.value[1][0])
-      .reduce((allCommitData, commit) => {
-        const repoName = commit?.commit.url.match(
-          /alexmacarthur\/(.+)\/git/
-        )[1];
+  //   return commitData
+  //     .filter((commit) => commit.status === "fulfilled")
+  //     .map((commit) => commit.value[1][0])
+  //     .reduce((allCommitData, commit) => {
+  //       const repoName = commit?.commit.url.match(
+  //         /alexmacarthur\/(.+)\/git/
+  //       )[1];
 
-        allCommitData[repoName] = commit;
+  //       allCommitData[repoName] = commit;
 
-        return allCommitData;
-      }, {});
-  }
+  //       return allCommitData;
+  //     }, {});
+  // }
 
-  private async getTags(repoData) {
-    const tagPromises = repoData.map(async (repo) => {
-      return await this.client.getAsync(
-        `/repos/alexmacarthur/${repo.name}/tags`,
-        {
-          per_page: 1,
-        }
-      );
-    });
+  // private async getTags(repoData) {
+  //   const tagPromises = repoData.map(async (repo) => {
+  //     return await this.client.getAsync(
+  //       `/repos/alexmacarthur/${repo.name}/tags`,
+  //       {
+  //         per_page: 1,
+  //       }
+  //     );
+  //   });
 
-    let tagData = (await Promise.allSettled(tagPromises)) as unknown as any[];
+  //   let tagData = (await Promise.allSettled(tagPromises)) as unknown as any[];
 
-    console.log("Got tag data...");
+  //   console.log("Got tag data...");
 
-    return tagData
-      .filter((tag) => tag.status === "fulfilled")
-      .filter((tag) => tag.value[1].length > 0)
-      .map((tag) => tag.value[1][0])
-      .reduce((alltagData, tag) => {
-        const repoName = tag.zipball_url.match(
-          /alexmacarthur\/(.+)\/zipball/
-        )[1];
-        alltagData[repoName] = tag;
+  //   return tagData
+  //     .filter((tag) => tag.status === "fulfilled")
+  //     .filter((tag) => tag.value[1].length > 0)
+  //     .map((tag) => tag.value[1][0])
+  //     .reduce((alltagData, tag) => {
+  //       const repoName = tag.zipball_url.match(
+  //         /alexmacarthur\/(.+)\/zipball/
+  //       )[1];
+  //       alltagData[repoName] = tag;
 
-        return alltagData;
-      }, {});
-  }
+  //       return alltagData;
+  //     }, {});
+  // }
 
-  private async getRIHRepos(): Promise<ProjectRepo[]> {
-    const repoSlugs = [
-      "RamseyInHouse/steppp",
-      "RamseyInHouse/feedback-component",
-    ];
+  // private async getRIHRepos(): Promise<ProjectRepo[]> {
+  //   const repoSlugs = [
+  //     "RamseyInHouse/steppp",
+  //     "RamseyInHouse/feedback-component",
+  //   ];
 
-    const [, repos] = await this.client.getAsync("/orgs/ramseyinhouse/repos", {
-      per_page: 100,
-      type: "public",
-    });
+  //   const [, repos] = await this.client.getAsync("/orgs/ramseyinhouse/repos", {
+  //     per_page: 100,
+  //     type: "public",
+  //   });
 
-    const myRepos = repos.filter((r) => {
-      return repoSlugs.some((slug) => {
-        return new RegExp(slug, "i").test(r.full_name);
-      });
-    });
+  //   const myRepos = repos.filter((r) => {
+  //     return repoSlugs.some((slug) => {
+  //       return new RegExp(slug, "i").test(r.full_name);
+  //     });
+  //   });
 
-    return myRepos.map((repo) => {
-      return {
-        html_url: repo.html_url,
-        description: repo.description.trim(),
-        name: repo.name,
-        stargazers_count: repo.stargazers_count,
-      };
-    });
-  }
+  //   return myRepos.map((repo) => {
+  //     return {
+  //       html_url: repo.html_url,
+  //       description: repo.description.trim(),
+  //       name: repo.name,
+  //       stargazers_count: repo.stargazers_count,
+  //     };
+  //   });
+  // }
 }
 
 export default new GitHubService();

@@ -1,6 +1,6 @@
 ---
 import type { BlogPosting, WithContext } from "schema-dts";
-import JamComments from "@jam-comments/astro";
+// import JamComments from "@jam-comments/astro";
 import Bio from "../../components/Bio.astro";
 import DateFormatter from "../../components/DateFormatter.astro";
 import Feedback from "../../components/Feedback.astro";
@@ -8,7 +8,7 @@ import Title from "../../components/Title.astro";
 import ViewCount from "../../components/ViewCount.astro";
 import Layout from "../../layouts/Layout.astro";
 import { MY_NAME } from "../../lib/constants";
-import { getCurrentPath } from "../../utils";
+// import { getCurrentPath } from "../../utils";
 import SignupForm from "../../components/SignupForm.astro";
 import contentService, { computeDescription } from "../../lib/ContentService";
 
@@ -85,12 +85,6 @@ if (post.updated_at) {
 
   <Bio />
 
-  {
-    (
-      // @ts-ignore
-      <JamComments path={getCurrentPath(Astro)} />
-    )
-  }
 
   <script>
     const observer = new IntersectionObserver((entries, o) => {

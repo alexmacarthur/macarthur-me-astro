@@ -1,5 +1,5 @@
 import GhostContentAPI from "@tryghost/content-api";
-import { JSDOM } from "jsdom";
+// import { JSDOM } from "jsdom";
 import type { GhostPost, GhostPostList } from "../types/types";
 import { POSTS_PER_PAGE } from "./constants";
 import prism from "prismjs";
@@ -28,10 +28,11 @@ const removeHtml = (html: string) => {
 };
 
 const generateExcerpt = (html: string, wordCount: number = 50) => {
-  const dom = new JSDOM(html);
-  const text = dom.window.document.body.textContent;
+  return "excerpt";
+  // const dom = new JSDOM(html);
+  // const text = dom.window.document.body.textContent;
 
-  return removeHtml(text.split(" ").slice(0, wordCount).join(" "));
+  // return removeHtml(text.split(" ").slice(0, wordCount).join(" "));
 };
 
 export const computeDescription = (post: GhostPost, wordCount: number = 50) => {
@@ -51,10 +52,11 @@ export const isExternal = (post: GhostPost): boolean => {
 };
 
 export const extractUrlFromBookmark = (html: string): string => {
-  const dom = new JSDOM(html);
-  const link = dom.window.document.querySelector("a");
+  return "fix later"
+  // const dom = new JSDOM(html);
+  // const link = dom.window.document.querySelector("a");
 
-  return link.href;
+  // return link.href;
 };
 
 export const extractHostFromUrl = (url: string): string => {
@@ -91,75 +93,80 @@ class ContentService {
   }
 
   #proxyImages = (html: string): string => {
-    const dom = new JSDOM(html);
-    const images = dom.window.document.querySelectorAll("img");
+    return html;
+    // const dom = new JSDOM(html);
+    // const images = dom.window.document.querySelectorAll("img");
 
-    images.forEach((image) => {
-      const src = image.getAttribute("src") || "";
+    // images.forEach((image) => {
+    //   const src = image.getAttribute("src") || "";
 
-      if (isProduction() && src.startsWith("https://macarthur-me")) {
-        const path = new URL(src).pathname;
+    //   if (isProduction() && src.startsWith("https://macarthur-me")) {
+    //     const path = new URL(src).pathname;
 
-        image.setAttribute("src", `/proxy-image${path}`);
-      }
-    });
+    //     image.setAttribute("src", `/proxy-image${path}`);
+    //   }
+    // });
 
-    return dom.serialize();
+    // return dom.serialize();
   };
 
   #linkHeadings = (html: string): string => {
-    const dom = new JSDOM(html);
-    const headings = dom.window.document.querySelectorAll("h2, h3, h4, h5, h6");
+    return html;
+    // const dom = new JSDOM(html);
+    // const headings = dom.window.document.querySelectorAll("h2, h3, h4, h5, h6");
 
-    headings.forEach((heading) => {
-      heading.innerHTML = `<a class="no-underline" href="#${heading.id}">${heading.innerHTML}</a>`;
-    });
+    // headings.forEach((heading) => {
+    //   heading.innerHTML = `<a class="no-underline" href="#${heading.id}">${heading.innerHTML}</a>`;
+    // });
 
-    return dom.serialize();
+    // return dom.serialize();
   };
 
   #lazyLoadImages = (html: string): string => {
-    const dom = new JSDOM(html);
-    const images = dom.window.document.querySelectorAll("img");
+    return html;
+    // const dom = new JSDOM(html);
+    // const images = dom.window.document.querySelectorAll("img");
 
-    images.forEach((image) => {
-      image.setAttribute("loading", "lazy");
-    });
+    // images.forEach((image) => {
+    //   image.setAttribute("loading", "lazy");
+    // });
 
-    return dom.serialize();
+    // return dom.serialize();
   };
 
   #openExternalLinksInNewTab = (html: string): string => {
-    const dom = new JSDOM(html);
-    const links = dom.window.document.querySelectorAll("a");
+    return html;
+    // const dom = new JSDOM(html);
+    // const links = dom.window.document.querySelectorAll("a");
 
-    links.forEach((link) => {
-      link.setAttribute("target", "_blank");
-      link.setAttribute("rel", "noopener");
-    });
+    // links.forEach((link) => {
+    //   link.setAttribute("target", "_blank");
+    //   link.setAttribute("rel", "noopener");
+    // });
 
-    return dom.serialize();
+    // return dom.serialize();
   };
 
   #formatCodeBlocks = (html: string): string => {
-    const dom = new JSDOM(html);
-    const codeBlocks = dom.window.document.querySelectorAll("pre code");
+    return html;
+    // const dom = new JSDOM(html);
+    // const codeBlocks = dom.window.document.querySelectorAll("pre code");
 
-    codeBlocks.forEach((block) => {
-      const language = (block.classList[0] || "").replace("language-", "");
-      block.parentElement?.classList.add("code-block");
-      const code = decode(block.innerHTML);
+    // codeBlocks.forEach((block) => {
+    //   const language = (block.classList[0] || "").replace("language-", "");
+    //   block.parentElement?.classList.add("code-block");
+    //   const code = decode(block.innerHTML);
 
-      const html = prism.highlight(
-        code,
-        prism.languages[language] || prism.languages.txt,
-        language || "txt"
-      );
+    //   const html = prism.highlight(
+    //     code,
+    //     prism.languages[language] || prism.languages.txt,
+    //     language || "txt"
+    //   );
 
-      block.innerHTML = html;
-    });
+    //   block.innerHTML = html;
+    // });
 
-    return dom.serialize();
+    // return dom.serialize();
   };
 }
 
