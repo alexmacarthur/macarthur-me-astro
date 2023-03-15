@@ -2,10 +2,10 @@ import rss from "@astrojs/rss";
 import contentService from "../../lib/ContentService";
 import sanitizeHtml from "sanitize-html";
 
-const posts = await contentService.getAllPosts();
+export const get = async () => {
+  const posts = await contentService.getAllPosts();
 
-export const get = () =>
-  rss({
+  return rss({
     title: "Alex MacArthur's Blog",
     description:
       "I'm Alex MacArthur, a software engineer bossing around computers in made-up languages.",
@@ -18,3 +18,4 @@ export const get = () =>
     })),
     customData: `<language>en-us</language>`,
   });
+}
