@@ -2,7 +2,6 @@ import GhostContentAPI from "@tryghost/content-api";
 // import { JSDOM } from "jsdom";
 import type { GhostPost, GhostPostList } from "../types/types";
 import { POSTS_PER_PAGE } from "./constants";
-import Prism from "prismjs";
 import loadLanguages from "prismjs/components/index";
 import { decode } from "html-entities";
 import { isProduction } from "../utils";
