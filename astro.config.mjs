@@ -23,6 +23,10 @@ export default defineConfig({
     js: false,
     svg: true
   })],
+  markdown: {
+    syntaxHighlight: 'prism',
+    gfm: true,
+  },
   output: "server",
   adapter: vercel()
 });
