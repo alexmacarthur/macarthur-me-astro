@@ -17,10 +17,6 @@ export default defineConfig({
       userAgent: "*"
     }]
   })],
-  markdown: {
-    syntaxHighlight: 'prism',
-    gfm: true,
-  },
   output: "server",
   adapter: vercel()
 });
