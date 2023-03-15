@@ -16,12 +16,6 @@ export default defineConfig({
       disallow: "/proxy-image/",
       userAgent: "*"
     }]
-  }), compress({
-    css: false,
-    html: true,
-    img: true,
-    js: false,
-    svg: true
   })],
   markdown: {
     syntaxHighlight: 'prism',
