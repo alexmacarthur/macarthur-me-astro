@@ -97,7 +97,7 @@ class ContentService {
     images.forEach((image) => {
       const src = image.getAttribute("src") || "";
 
-      if (isProduction() && src.startsWith("https://macarthur-me")) {
+      if (isProduction() && src.startsWith("https://cms.macarthur.me")) {
         const path = new URL(src).pathname;
 
         image.setAttribute("src", `/proxy-image${path}`);
@@ -119,47 +119,30 @@ class ContentService {
   };
 
   #lazyLoadImages = (html: string): string => {
-    const dom = new JSDOM(html);
-    const images = dom.window.document.querySelectorAll("img");
-
-    images.forEach((image) => {
-      image.setAttribute("loading", "lazy");
-    });
-
-    return dom.serialize();
+    return html.replace(/<(img)(.*\/?>)/g, '<$1 loading="lazy" $2');
   };
 
   #openExternalLinksInNewTab = (html: string): string => {
-    const dom = new JSDOM(html);
-    const links = dom.window.document.querySelectorAll("a");
-
-    links.forEach((link) => {
-      link.setAttribute("target", "_blank");
-      link.setAttribute("rel", "noopener");
-    });
-
-    return dom.serialize();
+    return html.replace(/(<a .*?)>/g, '$1 target="_blank" rel="noopener">');
   };
 
   #formatCodeBlocks = (html: string): string => {
-    const dom = new JSDOM(html);
-    const codeBlocks = dom.window.document.querySelectorAll("pre code");
+    return html.replace(
+      /(<pre><code class="language-(.*)">)([\s\S]*?)(<\/code><\/pre>)/g,
+      (_wrapper, openingTags, language, codeSnippet, closingTags) => {
+        const decodedSnippet = decode(codeSnippet);
+        const snippet = prism.highlight(
+          decodedSnippet,
+          prism.languages[language],
+          language
+        );
 
-    codeBlocks.forEach((block) => {
-      const language = (block.classList[0] || "").replace("language-", "");
-      block.parentElement?.classList.add("code-block");
-      const code = decode(block.innerHTML);
-
-      const html = prism.highlight(
-        code,
-        prism.languages[language] || prism.languages.txt,
-        language || "txt"
-      );
-
-      block.innerHTML = html;
-    });
-
-    return dom.serialize();
+        return `${openingTags}${snippet}${closingTags}`.replace(
+          /<pre>/,
+          '<pre class="code-block">'
+        );
+      }
+    );
   };
 }
 
