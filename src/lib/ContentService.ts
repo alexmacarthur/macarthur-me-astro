@@ -1,4 +1,5 @@
 import GhostContentAPI from "@tryghost/content-api";
+import { JSDOM } from "jsdom";
 import type { GhostPost, GhostPostList } from "../types/types";
 import { POSTS_PER_PAGE } from "./constants";
 import prism from "prismjs";
@@ -18,7 +19,7 @@ const removeHtml = (html: string) => {
   return (
     html
       // Remove HTML.
-      .replace(/(<[^>]+>)/gi, "")
+      .replace(/(<[^>]+>[^<]*<\/[^>]+>)/gi, "")
       // Remove line breaks.
       .replace(/(\n|\r)/gi, "")
       // Add space after colon.
@@ -27,9 +28,10 @@ const removeHtml = (html: string) => {
 };
 
 const generateExcerpt = (html: string, wordCount: number = 50) => {
-  const text = removeHtml(html);
+  const dom = new JSDOM(html);
+  const text = dom.window.document.body.textContent;
 
-  return text.split(" ").slice(0, wordCount).join(" ");
+  return removeHtml(text.split(" ").slice(0, wordCount).join(" "));
 };
 
 export const computeDescription = (post: GhostPost, wordCount: number = 50) => {
@@ -49,9 +51,10 @@ export const isExternal = (post: GhostPost): boolean => {
 };
 
 export const extractUrlFromBookmark = (html: string): string => {
-  const matches = html.match(/href="([^"]*)"/i);
+  const dom = new JSDOM(html);
+  const link = dom.window.document.querySelector("a");
 
-  return matches ? matches[1] : "";
+  return link.href;
 };
 
 export const extractHostFromUrl = (url: string): string => {
@@ -66,10 +69,10 @@ class ContentService {
   async getPost(slug: string): Promise<GhostPost> {
     const data = (await api.posts.read({ slug, include: "tags" })) as GhostPost;
 
-    data.html = this.#openExternalLinksInNewTab(data.html);
     data.html = this.#formatCodeBlocks(data.html);
     data.html = this.#lazyLoadImages(data.html);
     data.html = this.#linkHeadings(data.html);
+    data.html = this.#openExternalLinksInNewTab(data.html);
     data.html = this.#proxyImages(data.html);
 
     return data;
@@ -88,38 +91,31 @@ class ContentService {
   }
 
   #proxyImages = (html: string): string => {
-    return html.replace(/<img([^>]*)>/gi, (match, attributes) => {
-      const srcMatch = /src="([^"]*)"/i.exec(attributes);
+    const dom = new JSDOM(html);
+    const images = dom.window.document.querySelectorAll("img");
 
-      if (
-        srcMatch &&
-        isProduction() &&
-        srcMatch[1].startsWith("https://cms.macarthur.me")
-      ) {
-        const path = new URL(srcMatch[1]).pathname;
-        return `<img${attributes.replace(
-          srcMatch[0],
-          `src="/proxy-image${path}"`
-        )}>`;
+    images.forEach((image) => {
+      const src = image.getAttribute("src") || "";
+
+      if (isProduction() && src.startsWith("https://cms.macarthur.me")) {
+        const path = new URL(src).pathname;
+
+        image.setAttribute("src", `/proxy-image${path}`);
       }
-
-      return match;
     });
+
+    return dom.serialize();
   };
 
   #linkHeadings = (html: string): string => {
-    return html.replace(
-      /(<h[2-6][^>]*>)([\s\S]*?)(<\/h[2-6]>)/gi,
-      (_wrapper, openingTag, content, closingTag) => {
-        const idMatch = /id="([^"]*)"/i.exec(openingTag);
+    const dom = new JSDOM(html);
+    const headings = dom.window.document.querySelectorAll("h2, h3, h4, h5, h6");
 
-        if (idMatch) {
-          return `${openingTag}<a class="no-underline" href="#${idMatch[1]}">${content}</a>${closingTag}`;
-        }
+    headings.forEach((heading) => {
+      heading.innerHTML = `<a class="no-underline" href="#${heading.id}">${heading.innerHTML}</a>`;
+    });
 
-        return openingTag + content + closingTag;
-      }
-    );
+    return dom.serialize();
   };
 
   #lazyLoadImages = (html: string): string => {
@@ -132,15 +128,13 @@ class ContentService {
 
   #formatCodeBlocks = (html: string): string => {
     return html.replace(
-      /(<pre><code\s+class="language-([^"]*)">)([\s\S]*?)(<\/code><\/pre>)/g,
+      /(<pre><code class="language-(.*)">)([\s\S]*?)(<\/code><\/pre>)/g,
       (_wrapper, openingTags, language, codeSnippet, closingTags) => {
         const decodedSnippet = decode(codeSnippet);
-        const languageLib = prism.languages[language] ?? prism.languages["txt"];
-
         const snippet = prism.highlight(
           decodedSnippet,
-          languageLib,
-          prism.languages[language] ? "txt" : language
+          prism.languages[language],
+          language
         );
 
         return `${openingTags}${snippet}${closingTags}`.replace(
