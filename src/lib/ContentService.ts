@@ -97,7 +97,7 @@ class ContentService {
     images.forEach((image) => {
       const src = image.getAttribute("src") || "";
 
-      if (isProduction() && src.startsWith("https://macarthur-me")) {
+      if (isProduction() && src.startsWith("https://cms.macarthur.me")) {
         const path = new URL(src).pathname;
 
         image.setAttribute("src", `/proxy-image${path}`);
@@ -148,7 +148,7 @@ class ContentService {
     codeBlocks.forEach((block) => {
       const language = (block.classList[0] || "").replace("language-", "");
       block.parentElement?.classList.add("code-block");
-      const code = decode(block.innerHTML);
+      const code = block.textContent;
 
       const html = prism.highlight(
         code,
