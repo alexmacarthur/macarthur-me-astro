@@ -4,7 +4,6 @@ import type { GhostPost, GhostPostList } from "../types/types";
 import { POSTS_PER_PAGE } from "./constants";
 import prism from "prismjs";
 import loadLanguages from "prismjs/components/index";
-import { decode } from "html-entities";
 import { isProduction } from "../utils";
 
 loadLanguages();

@@ -85,12 +85,7 @@ if (post.updated_at) {
 
   <Bio />
 
-  {
-    (
-      // @ts-ignore
-      <JamComments path={getCurrentPath(Astro)} />
-    )
-  }
+  <JamComments path={getCurrentPath(Astro)} />
 
   <script>
     const observer = new IntersectionObserver((entries, o) => {
