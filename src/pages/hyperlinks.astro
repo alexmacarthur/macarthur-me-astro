@@ -1,0 +1,71 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Title from "../components/Title.astro";
+
+const links = [
+  {
+    name: "Newsletter",
+    href: "https://macarthur.me/newsletter",
+  },
+  {
+    name: "Twitter",
+    href: "https://twitter.com/amacarthur",
+  },
+  {
+    name: "GitHub",
+    href: "https://github.com/alexmacarthur",
+  },
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/in/alexmacarthur/",
+  },
+  {
+    name: "JamComments",
+    href: "https://jamcomments.com",
+  },
+  {
+    name: "Contact",
+    href: "https://macarthur.me/contact",
+  },
+];
+---
+
+<Layout
+  title="Alex's Hyperlinks"
+  pageType="normal"
+  description={"A few hyperlinks to spaces on the Internet relevant to me."}
+>
+  <Title>Hyperlinks</Title>
+
+  <div class="prose lg:prose-lg mb-12 mx-auto">
+    <p>A few hyperlinks to spaces on the Internet relevant to me.</p>
+  </div>
+
+  <div class="mx-auto">
+    <ul class="block -m-3">
+      {
+        links.map(({ name, href }) => {
+          return (
+            <li class="sm:inline-block p-3">
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener"
+                class="button large inline-block w-full md:w-auto text-center"
+              >
+                {name}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</Layout>
+
+<style is:global>
+  .social-link,
+  .social-link-separator {
+    display: none;
+  }
+</style>

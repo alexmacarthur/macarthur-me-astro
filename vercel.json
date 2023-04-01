@@ -35,6 +35,11 @@
       "source": "/posts/develop-spa-against-remote-page",
       "destination": "/posts/project-local-spa-onto-production-page",
       "permanent": true
+    },
+    {
+      "source": "/links",
+      "destination": "/hyperlinks",
+      "permanent": true
     }
   ],
   "rewrites": [

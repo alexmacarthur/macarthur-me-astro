@@ -25,11 +25,11 @@ const socialLinks = [
       <li class="w-full sm:w-auto text-center order-last sm:order-first">
         &copy; {new Date().getFullYear()} Alex MacArthur
       </li>
-      <li class="hidden sm:block">//</li>
+      <li class="hidden sm:block social-link-separator">//</li>
       {
         socialLinks.map((link) => {
           return (
-            <li>
+            <li class="social-link">
               <a href={link.href} target="_blank">
                 {link.name}
               </a>
