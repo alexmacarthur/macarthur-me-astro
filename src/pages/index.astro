@@ -16,7 +16,7 @@ const featuredBlogPosts = (await Promise.all(
     "options-for-removing-event-listeners",
     "send-an-http-request-on-page-exit",
     "when-dom-updates-appear-to-be-asynchronous",
-    "use-web-workers-for-your-event-listeners",
+    "navigating-the-event-loop",
   ].map((slug) => contentService.getPost(slug))
 )) as GhostPost[];
 ---
