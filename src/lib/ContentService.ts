@@ -90,17 +90,18 @@ class ContentService {
   }
 
   #proxyImages = (html: string): string => {
+    if (!isProduction()) return html;
+
     const dom = new JSDOM(html);
     const images = dom.window.document.querySelectorAll("img");
 
+    function replace(value) {
+      return value.replace(/https:\/\/cms\.macarthur\.me/g, "/proxy-image");
+    }
+
     images.forEach((image) => {
-      const src = image.getAttribute("src") || "";
-
-      if (isProduction() && src.startsWith("https://cms.macarthur.me")) {
-        const path = new URL(src).pathname;
-
-        image.setAttribute("src", `/proxy-image${path}`);
-      }
+      image.src = replace(image.src);
+      image.srcset = replace(image.srcset);
     });
 
     return dom.serialize();
