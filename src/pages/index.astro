@@ -14,8 +14,8 @@ import type { GhostPost } from "../types/types";
 const featuredBlogPosts = (await Promise.all(
   [
     "options-for-removing-event-listeners",
+    "maps-for-dom-nodes",
     "send-an-http-request-on-page-exit",
-    "when-dom-updates-appear-to-be-asynchronous",
     "navigating-the-event-loop",
   ].map((slug) => contentService.getPost(slug))
 )) as GhostPost[];
