@@ -35,7 +35,7 @@ const mainClass = (() => {
     case "narrow":
       return "max-w-screen-sm";
     case "normal":
-      return "max-w-[900px]";
+      return "max-w-[875px]";
     case "open":
       return "max-w-screen-lg";
     default:
@@ -72,8 +72,9 @@ const articleOgData = postData
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.ico" />
+    <link rel="preconnect" href="https://unpkg.com" />
     <meta name="generator" content={Astro.generator} />
     <script defer data-domain="macarthur.me" src="/js/numbers.js"></script>
 
@@ -222,15 +223,11 @@ const articleOgData = postData
 
       .button,
       .jc-CommentBox-button {
-        @apply border-2 text-lg border-purple-500 rounded-3xl px-5 py-1 bg-purple-500 text-white hover:bg-white hover:text-purple-500 transition-colors duration-200 cursor-pointer;
-      }
-
-      .button.naked {
-        @apply bg-transparent hover:bg-white;
+        @apply border-2 text-white text-lg border-purple-500 rounded-3xl px-5 py-1 bg-purple-500 hover:bg-white hover:text-purple-500 transition-colors duration-200 cursor-pointer !important;
       }
 
       .button.light {
-        @apply border-white;
+        @apply bg-transparent border-white text-white hover:text-purple-500 hover:bg-white !important;
       }
 
       .button.submit {
