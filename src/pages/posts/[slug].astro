@@ -61,7 +61,10 @@ if (post.updated_at) {
     lastUpdated: post.updated_at,
   }}
 >
-  <Title headingClasses={"text-3xl md:text-6xl"} subtitle={post.custom_excerpt}>
+  <Title
+    headingClasses={"text-3xl md:text-6xl mb-5"}
+    subtitle={post.custom_excerpt}
+  >
     {post.title}
   </Title>
 
@@ -92,7 +95,7 @@ if (post.updated_at) {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           setTimeout(() => {
-            entry.target.classList.add("is-visible");
+            entry.target.classList.add("is-in-view");
           }, 500);
           observer.unobserve(entry.target);
         }
@@ -100,6 +103,18 @@ if (post.updated_at) {
     });
 
     document.querySelectorAll(".code-block").forEach((code) => {
+      const codeTag = code.querySelector("code") as HTMLElement;
+      const { paddingLeft, paddingRight } = getComputedStyle(code);
+      const parentWidth =
+        (code as HTMLElement).offsetWidth -
+        parseInt(paddingLeft) -
+        parseInt(paddingRight);
+
+      if (codeTag.offsetWidth > parentWidth) {
+        code.classList.add("is-visible");
+        // console.log(" it is!!!");
+      }
+
       observer.observe(code);
     });
   </script>
@@ -119,22 +134,36 @@ if (post.updated_at) {
       }
     }
 
+    .code-block {
+      @apply relative !important;
+    }
+
     .code-block:after {
       display: block;
       content: "scroll →";
-      @apply text-gray-400 text-sm -mt-1 text-right;
+      opacity: 0;
+      transition: opacity 0.25s ease-in-out;
+      @apply absolute right-5 bottom-3 text-gray-400 text-sm -mt-5 text-right;
+    }
+
+    .code-block.is-visible {
+      @apply pb-8 !important;
     }
 
     .code-block.is-visible:after {
+      opacity: 1;
+    }
+
+    .code-block.is-in-view:after {
       animation: slide 0.75s infinite ease-in-out alternate;
       animation-iteration-count: 2;
     }
 
-    @media screen(sm) {
+    /* @media screen(sm) {
       .code-block:after {
         display: none;
       }
-    }
+    } */
 
     .kg-embed-card iframe {
       @apply w-full mx-auto;

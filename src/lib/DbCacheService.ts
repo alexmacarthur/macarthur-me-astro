@@ -5,9 +5,9 @@ import { JSONFile } from "lowdb/node";
 
 export type Data = {
   github: {
-    totalStars: number;
-    followerCount: number;
-    projectRepos: {
+    totalStars?: number;
+    followerCount?: number;
+    projectRepos?: {
       html_url: string;
       description: string;
       name: string;
@@ -19,12 +19,12 @@ export type Data = {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 class DbCacheService {
-  db;
+  db: any;
 
   constructor() {
     const file = join(__dirname, "db.json");
     const adapter = new JSONFile<Data>(file);
-    this.db = new Low<Data>(adapter);
+    this.db = new Low<Data>(adapter, { github: {} });
   }
 
   async read(): Promise<void> {
