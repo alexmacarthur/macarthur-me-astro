@@ -25,7 +25,6 @@
     "astro-heroicons": "^0.3.0",
     "astro-robots-txt": "^0.5.0",
     "astro-seo": "^0.7.2",
-    "bezier-easing": "^2.1.0",
     "countup.js": "^2.6.0",
     "dotenv": "^16.0.3",
     "jsdom": "^21.1.1",

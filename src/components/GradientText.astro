@@ -2,128 +2,31 @@
 ---
 
 <span
-  class="block z-30 text-gray-800 left-0 top-0 gradient-text font-extrabold p-0 gradient-text"
+  class="block z-30 text-gray-800 left-0 top-0 font-extrabold p-0 gradient-text"
 >
   <slot />
 </span>
 
-<script>
-  import BezierEasing from "bezier-easing";
-  const gradientTextNodes = document.querySelectorAll(".gradient-text");
-
-  const prefersReducedMotion = () => {
-    if (typeof window == undefined) return false;
-
-    return window.matchMedia("(prefers-reduced-motion: reduce)")?.matches;
-  };
-
-  const randomInRange = (min: number, max: number): number => {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
-
-  /**
-   * Get the current custom property value for the gradient angle.
-   */
-  const getCurrentAngle = (): number => {
-    const rawValue = getComputedStyle(
-      document.documentElement
-    ).getPropertyValue("--gradient-angle");
-
-    return Number(rawValue.replace("deg", ""));
-  };
-
-  /**
-   * Ensures that a degree value falls in the 0-360 range.
-   */
-  const toDegreeableValue = (value: number): number => {
-    return ((value % 360) + 360) % 360;
-  };
-
-  /**
-   * Given an angle, find the next range the logo should rotate toward.
-   */
-  const selectRange = (angle: number): Array<any> => {
-    const ranges = [
-      [0, 20],
-      [160, 180],
-      [181, 200],
-      [340, 360],
-    ];
-
-    const activeRangeIndex = ranges.findIndex((range) => {
-      return range[0] <= angle && angle <= range[1];
-    });
-
-    // Ensure that the last index rolls over to the first range.
-    return ranges[activeRangeIndex === 3 ? 0 : activeRangeIndex + 1];
-  };
-
-  let startTime: number | null = null;
-  const startingAngle = getCurrentAngle();
-  const range = selectRange(startingAngle);
-  let destinationAngle: number = randomInRange(range[0], range[1]);
-  destinationAngle =
-    destinationAngle < startingAngle
-      ? destinationAngle + 360
-      : destinationAngle;
-
-  const duration = 1250;
-  const totalDegreesToTurn = destinationAngle - startingAngle;
-  const easing = BezierEasing(0.5, 0, 0, 1);
-
-  const gradientEffect = async () => {
-    const turnGradient = (timestamp: number) => {
-      if (!startTime) {
-        startTime = timestamp;
-      }
-
-      const runTime = timestamp - startTime;
-      const relativeProgress = runTime / duration;
-      const easedProgress = easing(relativeProgress);
-      const easedDegrees = totalDegreesToTurn * Math.min(easedProgress, 1);
-      const newAngleFromStartingAngle = startingAngle + easedDegrees;
-
-      document.documentElement.style.setProperty(
-        "--gradient-angle",
-        `${toDegreeableValue(newAngleFromStartingAngle)}deg`
-      );
-
-      if (runTime < duration) {
-        requestAnimationFrame(turnGradient);
-      }
-    };
-
-    (document as any).fonts.status === "loaded" ||
-      (await (document as any).fonts.ready);
-
-    requestAnimationFrame(turnGradient);
-  };
-
-  if (!prefersReducedMotion()) {
-    gradientTextNodes.forEach((el) => {
-      el.classList.add("gradient-is-initialized");
-    });
-    gradientEffect();
-  }
-</script>
-
 <style>
   .gradient-text {
-    padding: 1rem 0;
-    transition: background 0.15s ease-in-out;
     background: linear-gradient(
-      var(--gradient-angle),
-      theme("colors.gray.500") 50%,
-      theme("colors.gray.800") 50%
+      to bottom right,
+      theme("colors.gray.700") 50%,
+      theme("colors.gray.500") 50%
     );
-    background-clip: text;
     -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rotateGradient 1s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+    background-size: 100% 150%;
   }
 
-  .gradient-is-initialized {
-    -webkit-text-fill-color: transparent;
+  @keyframes rotateGradient {
+    from {
+      background-position: bottom right;
+    }
+
+    to {
+      background-position: top left;
+    }
   }
 </style>

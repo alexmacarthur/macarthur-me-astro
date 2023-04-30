@@ -7,7 +7,7 @@ import Pagination from "../components/Pagination.astro";
 import type { GhostPost } from "../types/types";
 
 export interface Props {
-  page: Partial<Page<GhostPost>>;
+  page: Page<GhostPost>;
 }
 
 const { page } = Astro.props;
