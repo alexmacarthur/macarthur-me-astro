@@ -16,7 +16,7 @@
     "@astrojs/rss": "^2.4.1",
     "@astrojs/sitemap": "^1.3.1",
     "@astrojs/tailwind": "^3.1.2",
-    "@jam-comments/astro": "^1.1.2",
+    "@jam-comments/astro": "^1.1.3",
     "@ramseyinhouse/feedback-component": "^1.0.3",
     "@supabase/supabase-js": "^2.21.0",
     "@tryghost/content-api": "^1.11.10",
