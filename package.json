@@ -20,7 +20,7 @@
     "@ramseyinhouse/feedback-component": "^1.0.3",
     "@supabase/supabase-js": "^2.22.0",
     "@tryghost/content-api": "^1.11.10",
-    "astro": "^2.5.3",
+    "astro": "^2.5.5",
     "astro-compress": "^1.1.44",
     "astro-heroicons": "^0.3.0",
     "astro-robots-txt": "^0.5.0",

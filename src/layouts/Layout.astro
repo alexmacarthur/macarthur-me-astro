@@ -73,8 +73,17 @@ const articleOgData = postData
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      rel="preload"
+      href="https://macarthur.me/fonts/inter-subset.woff2"
+      as="font"
+      type="font/woff2"
+    />
+
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.ico" />
     <link rel="preconnect" href="https://unpkg.com" />
+    <link rel="preload" href="https://unpkg.com" />
     <meta name="generator" content={Astro.generator} />
     <script defer data-domain="macarthur.me" src="/js/numbers.js"></script>
 
@@ -178,11 +187,32 @@ const articleOgData = postData
 
     <style is:global>
       @import "prismjs/themes/prism-okaidia.css";
-      *:not(pre, pre *) {
-        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-          "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-          "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-          "Noto Color Emoji";
+
+      /** global typography adjustments */
+
+      .italic,
+      em,
+      blockquote,
+      i {
+        font-variation-settings: 'slnt' -10 !important;
+        font-style: oblique 10deg !important;
+      }
+
+      @font-face {
+        font-family: 'Inter Variable';
+        src: url('/fonts/inter-subset.woff2') format('woff2');
+        font-weight: 1 999;
+        font-style: oblique 0deg 10deg;
+        font-display: swap;
+      }
+
+      * {
+        letter-spacing: -0.025em;
+      }
+
+      h2 em {
+        font-weight: inherit;
+        color: inherit;
       }
 
       h1,
@@ -197,6 +227,8 @@ const articleOgData = postData
       :not(h1, h2, h3, h4, h5, h6, pre, pre *) {
         @apply text-gray-600 font-light;
       }
+
+      /** end global typography adjustments */
 
       nav {
         grid-area: nav;
