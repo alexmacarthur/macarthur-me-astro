@@ -16,6 +16,7 @@
     "@astrojs/rss": "^2.4.3",
     "@astrojs/sitemap": "^1.3.1",
     "@astrojs/tailwind": "^3.1.3",
+    "@fontsource/open-sans": "^5.0.1",
     "@jam-comments/astro": "^1.1.6",
     "@ramseyinhouse/feedback-component": "^1.0.3",
     "@supabase/supabase-js": "^2.22.0",
