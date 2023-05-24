@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: [
-        '"Inter Variable", monospace',
+        '"Inter Variable", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif',
       ],
     },
     fontWeight: {
