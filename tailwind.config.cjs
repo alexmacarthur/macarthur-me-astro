@@ -8,17 +8,17 @@ module.exports = {
       ],
     },
     fontWeight: {
-      thin: '100',
-      hairline: '100',
-      extralight: '200',
-      light: '300',
-      normal: '400',
-      medium: '500',
-      semibold: '550',
-      bold: '700',
-      extrabold: '800',
-      'extra-bold': '800',
-      black: '900',
+      thin: "100",
+      hairline: "100",
+      extralight: "200",
+      light: "300",
+      normal: "400",
+      medium: "500",
+      semibold: "550",
+      bold: "700",
+      extrabold: "800",
+      "extra-bold": "800",
+      black: "900",
     },
     extend: {
       fontSize: {
@@ -49,8 +49,8 @@ module.exports = {
               content: "none",
             },
             "strong a": {
-              fontWeight: "inherit"
-            }
+              fontWeight: "inherit",
+            },
           },
         },
       }),

@@ -22,7 +22,7 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params;
 
-const post = await contentService.getPost(slug as string);
+const post = await contentService.getPost(slug as unknown as string);
 const computedDescription = computeDescription(post);
 
 let postSchema: WithContext<BlogPosting> = {
@@ -112,7 +112,6 @@ if (post.updated_at) {
 
       if (codeTag.offsetWidth > parentWidth) {
         code.classList.add("is-visible");
-        // console.log(" it is!!!");
       }
 
       observer.observe(code);
@@ -158,12 +157,6 @@ if (post.updated_at) {
       animation: slide 0.75s infinite ease-in-out alternate;
       animation-iteration-count: 2;
     }
-
-    /* @media screen(sm) {
-      .code-block:after {
-        display: none;
-      }
-    } */
 
     .kg-embed-card iframe {
       @apply w-full mx-auto;
