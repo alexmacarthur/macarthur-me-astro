@@ -31,9 +31,20 @@ module.exports = {
             img: {
               margin: "0 auto",
             },
+            a: {
+              color: theme("colors.gray.800"),
+              textDecoration: "none",
+            },
+            strong: {
+              color: theme("colors.gray.800"),
+            },
             "h1, h2, h3, h4, h5, h6": {
               color: theme("colors.gray.900"),
               marginBottom: `theme("margin.3") !important`,
+              fontWeight: `650`
+            },
+            "h1 a, h2 a, h3 a, h4 a, h5 a, h6 a": {
+              fontWeight: "inherit",
             },
             code: {
               fontWeight: "inherit",
@@ -48,8 +59,9 @@ module.exports = {
             "code::after": {
               content: "none",
             },
-            "strong a": {
+            "strong *": {
               fontWeight: "inherit",
+              color: "inherit",
             },
           },
         },

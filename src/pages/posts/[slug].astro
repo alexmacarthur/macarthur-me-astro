@@ -12,6 +12,10 @@ import { getCurrentPath } from "../../utils";
 import SignupForm from "../../components/SignupForm.astro";
 import contentService, { computeDescription } from "../../lib/ContentService";
 
+interface Params {
+  slug: string;
+}
+
 export async function getStaticPaths() {
   return (await contentService.getAllPosts()).map((post) => {
     return {
@@ -20,9 +24,9 @@ export async function getStaticPaths() {
   });
 }
 
-const { slug } = Astro.params;
+const { slug: postSlug } = Astro.params as unknown as Params;
 
-const post = await contentService.getPost(slug as unknown as string);
+const post = await contentService.getPost(postSlug);
 const computedDescription = computeDescription(post);
 
 let postSchema: WithContext<BlogPosting> = {

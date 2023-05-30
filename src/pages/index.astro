@@ -1,5 +1,6 @@
 ---
 import ButtonLink from "../components/ButtonLink.astro";
+import Logo from "../components/Logo.astro";
 import GradientText from "../components/GradientText.astro";
 import SignupForm from "../components/SignupForm.astro";
 import DateFormatter from "../components/DateFormatter.astro";
@@ -23,15 +24,14 @@ const featuredBlogPosts = (await Promise.all(
 
 <Layout title="I'm Alex MacArthur">
   <div class="max-w-5xl mx-auto mb-20 md:mb-24">
-    <div class="pt-12 mb-28">
+    <div class="pt-12 mb-16 md:mb-28">
       <GradientText>
         <h1 class="text-4xl md:text-5xl lg:text-mega font-bold mb-2">
-          I'm Alex MacArthur,
+          Bossing around computers in made-up languages.
         </h1>
       </GradientText>
-      <span class="block -mt-1 leading-tight text-md md:text-xl">
-        a software engineer bossing around computers in made-up languages.
-      </span>
+
+      <span class="block mt-2 text-lg md:text-2xl">Alex MacArthur is a software engineer in Nashville-ish, TN.</span>
     </div>
 
     <ul class="list-none grid grid-cols-3 gap-4 mb-4">
