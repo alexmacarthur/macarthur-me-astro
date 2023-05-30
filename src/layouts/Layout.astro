@@ -188,8 +188,34 @@ const articleOgData = postData
     <style is:global>
       @import "prismjs/themes/prism-okaidia.css";
 
-      .slanted-text {
-        font-style: oblique 3deg;
+      /** custom utilities */
+
+      @layer {
+        .slanted-text {
+          font-style: oblique 3deg;
+        }
+
+        .fancy-link {
+          @apply relative no-underline;
+          background: linear-gradient(
+            to right,
+            theme("colors.purple.600") 50%,
+            theme("colors.purple.700") 50%
+          );
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+
+        .fancy-link-on-hover:hover {
+          @apply relative no-underline;
+          background: linear-gradient(
+            to right,
+            theme("colors.purple.600") 50%,
+            theme("colors.purple.700") 50%
+          );
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
       }
 
       /** global typography adjustments */
@@ -225,7 +251,7 @@ const articleOgData = postData
       h4,
       h5,
       h6 {
-        @apply text-gray-800 font-medium;
+        @apply text-gray-700 font-medium;
       }
 
       h1,
@@ -296,17 +322,10 @@ const articleOgData = postData
 
       .prose {
         :not(h1, h2, h3, h4, h5, h6) > a {
-          @apply relative no-underline;
-          background: linear-gradient(
-            to right,
-            theme("colors.purple.600") 50%,
-            theme("colors.purple.700") 50%
-          );
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
+          @apply fancy-link;
         }
 
-        a:after {
+        :not(h1, h2, h3, h4, h5, h6) > a:after {
           content: "";
           left: 0;
           bottom: 0;
@@ -320,7 +339,7 @@ const articleOgData = postData
           @apply bg-gradient-to-r from-purple-500 to-purple-600;
         }
 
-        a:hover:after {
+        :not(h1, h2, h3, h4, h5, h6) > a:hover:after {
           height: 0.2em;
         }
       }

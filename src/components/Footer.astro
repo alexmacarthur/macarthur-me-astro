@@ -13,31 +13,128 @@ const socialLinks = [
     href: "https://www.linkedin.com/in/alexmacarthur/",
   },
 ];
+
+const otherLinks = [
+  {
+    name: "Hyperlinks",
+    href: "/links",
+  },
+  {
+    name: "Site Stack",
+    href: "/stack",
+  },
+  {
+    name: "Newsletter",
+    href: "/newsletter",
+  },
+  {
+    name: "RSS Feed",
+    href: "https://www.macarthur.me/rss/feed.xml",
+  },
+];
+
+const projectLinks = [
+  {
+    name: "JamComments",
+    href: "https://jamcomments.com",
+  },
+  {
+    name: "TypeIt",
+    href: "https://typeitjs.com",
+  },
+  {
+    name: "Share a Color",
+    href: "/color",
+  },
+];
 ---
 
 <footer
-  class="px-4 md:px-6 py-6 mt-12 flex flex-col justify-center items-center"
+  class="px-4 md:px-6 py-8 pb-6 mt-12 flex flex-col justify-center items-center"
 >
-  <hr class="bg-gray-200 h-px w-full max-w-5xl mb-6" />
+  <hr class="bg-gray-200 h-px w-full max-w-5xl mb-8" />
 
-  <div class="mb-4 grid gap-6 grid-cols-1">
-    <ul class="flex flex-wrap gap-8 justify-center">
-      <li class="w-full sm:w-auto text-center order-last sm:order-first">
-        &copy; {new Date().getFullYear()} Alex MacArthur
-      </li>
-      <li class="hidden sm:block social-link-separator">//</li>
-      {
-        socialLinks.map((link) => {
-          return (
-            <li class="social-link">
-              <a href={link.href} target="_blank">
-                {link.name}
-              </a>
-            </li>
-          );
-        })
-      }
-    </ul>
+  <div
+    class="flex flex-col-reverse md:flex-row justify-between w-full max-w-5xl mx-auto"
+  >
+    <span class="flex-none text-base text-gray-500 text-center md:text-left"
+      >&copy; {new Date().getFullYear()} Alex MacArthur</span
+    >
+
+    <div
+      class="mb-4 flex justify-between sm:justify-center md:justify-end gap-8 sm:gap-14 w-full"
+    >
+      <div>
+        <h5 class="mb-3 text-gray-500 font-light text-base slanted-text">
+          Social
+        </h5>
+        <ul class="flex flex-col gap-3">
+          {
+            socialLinks.map((link) => {
+              return (
+                <li class="social-link">
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    class="fancy-link-on-hover"
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="mb-3 text-gray-500 font-light text-base slanted-text">
+          Projects
+        </h5>
+
+        <ul class="flex flex-col gap-3">
+          {
+            projectLinks.map((link) => {
+              return (
+                <li class="social-link">
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    class="fancy-link-on-hover"
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="mb-3 text-gray-500 font-light text-base slanted-text">
+          Other
+        </h5>
+
+        <ul class="flex flex-col gap-3">
+          {
+            otherLinks.map((link) => {
+              return (
+                <li class="social-link">
+                  <a
+                    href={link.href}
+                    class="fancy-link-on-hover"
+                    target="_blank"
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </div>
+    </div>
   </div>
 </footer>
 
