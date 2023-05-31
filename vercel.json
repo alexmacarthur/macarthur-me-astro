@@ -2,7 +2,7 @@
   "trailingSlash": false,
   "headers": [
     {
-      "source": "/fonts/(.*)",
+      "source": "/fonts/inter-subset.woff2",
       "headers": [
         {
           "key": "Cache-Control",
