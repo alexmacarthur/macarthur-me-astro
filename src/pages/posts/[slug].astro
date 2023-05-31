@@ -103,11 +103,22 @@ if (post.updated_at) {
 
   <Feedback slug={post.slug} />
 
-  <SignupForm isHorizontal={true} />
+  <div
+    class="my-6 grid grid-cols-1 sm:grid-cols-5 gap-8 pt-10 pb-8 w-screen max-w-6xl px-6 transform translate-x-[-50%] left-[50%] relative"
+  >
+    <div class="grid place-items-center p-6 col-span-2">
+      <Bio />
+    </div>
 
-  <Bio />
+    <div class="col-span-3">
+      <SignupForm isHorizontal={true} />
+    </div>
+  </div>
 
-  <JamComments path={getCurrentPath(Astro)} />
+  <div class="max-w-3xl mx-auto">
+    <h5 class="text-2xl font-semibold slanted-text">Leave a Free Comment</h5>
+    <JamComments path={getCurrentPath(Astro)} />
+  </div>
 
   <script>
     const observer = new IntersectionObserver((entries, o) => {

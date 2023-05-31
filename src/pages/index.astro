@@ -37,13 +37,18 @@ const featuredBlogPosts = (await Promise.all(
     </div>
 
     <ul class="list-none grid grid-cols-3 gap-4 mb-4">
-      <li class="col-span-2">
-        <h2 class="text-2xl text-gray-600 font-light">Featured Posts</h2>
+      <li class="col-span-3 md:col-span-2 flex items-center">
+        <h2 class="text-2xl text-gray-600 font-light flex-1">Featured Posts</h2>
+
+        <span class="md:hidden">
+          <ButtonLink href="/posts" withArrow={true}>See All Posts</ButtonLink>
+        </span>
       </li>
       <li class="hidden md:block">
         <h2 class="text-2xl text-gray-600 font-light">Get Updated</h2>
       </li>
     </ul>
+
     <ul class="list-none grid grid-cols-2 sm:grid-cols-3 gap-4 featured-blocks">
       {
         featuredBlogPosts.map((post) => {
@@ -88,5 +93,11 @@ const featuredBlogPosts = (await Promise.all(
         <SignupForm />
       </li>
     </ul>
+
+    <div class="text-right hidden md:grid gap-4 grid-cols-3 pt-4">
+      <div class="col-span-2">
+        <ButtonLink href="/posts" withArrow={true}>See All Posts</ButtonLink>
+      </div>
+    </div>
   </div>
 </Layout>
