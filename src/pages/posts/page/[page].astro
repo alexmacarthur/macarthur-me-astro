@@ -9,7 +9,7 @@ export async function getStaticPaths({ paginate }) {
   return paginate(posts, { pageSize: POSTS_PER_PAGE });
 }
 
-const { page } = Astro.props;
+const { page: pageData } = Astro.props;
 ---
 
-<PaginatedPosts page={page} />
+<PaginatedPosts page={pageData} />

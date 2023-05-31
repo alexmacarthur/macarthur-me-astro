@@ -36,6 +36,8 @@ export interface GhostPost {
   feature_image_caption?: string;
 }
 
+export type Views = [string, number];
+
 export interface GhostPostList extends Array<GhostPost> {
   meta: {
     pagination: {

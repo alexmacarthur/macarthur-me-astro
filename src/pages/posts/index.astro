@@ -6,7 +6,7 @@ import contentService from "../../lib/ContentService";
 
 const posts = await contentService.getPosts(1);
 
-const page: Partial<Page<GhostPost>> = {
+const pageData: Partial<Page<GhostPost>> = {
   data: posts,
   currentPage: 1,
   lastPage: posts.meta.pagination.pages,
@@ -17,4 +17,4 @@ const page: Partial<Page<GhostPost>> = {
 };
 ---
 
-<PaginatedPosts page={page} />
+<PaginatedPosts page={pageData as Page<GhostPost>} />

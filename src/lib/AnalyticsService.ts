@@ -1,3 +1,5 @@
+import type { GhostPost, Views } from "../types/types";
+
 class AnalyticsService {
   totalSiteViews: number | null = null;
 
@@ -16,6 +18,20 @@ class AnalyticsService {
     const { views } = await response.json();
 
     return [views, parseInt(views.replace(/\,/g, ""), 10)];
+  }
+
+  async makePageViewMap(posts: GhostPost[]): Promise<Map<string, Views>> {
+    const viewMap = new Map<string, Views>();
+
+    await Promise.all(
+      posts.map(async (post) => {
+        const viewData = await this.getPageViews(post.slug);
+
+        viewMap.set(post.slug, viewData);
+      })
+    );
+
+    return viewMap;
   }
 
   private async fetchTotalSiteViews(): Promise<number> {
