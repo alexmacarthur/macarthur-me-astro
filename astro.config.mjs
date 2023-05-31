@@ -4,6 +4,7 @@ import image from "@astrojs/image";
 import sitemap from "@astrojs/sitemap";
 import compress from "astro-compress";
 import robotsTxt from "astro-robots-txt";
+import prefetch from "@astrojs/prefetch";
 
 export default defineConfig({
   site: "https://macarthur.me",
@@ -13,8 +14,14 @@ export default defineConfig({
     sitemap(),
     robotsTxt({
       policy: [
-        { allow: "/", userAgent: "*" },
-        { disallow: "/proxy/", userAgent: "*" },
+        {
+          allow: "/",
+          userAgent: "*",
+        },
+        {
+          disallow: "/proxy/",
+          userAgent: "*",
+        },
       ],
     }),
     compress({
@@ -23,6 +30,9 @@ export default defineConfig({
       img: true,
       js: false,
       svg: true,
+    }),
+    prefetch({
+      selector: "a[href^='/'], a[href^='https://macarthur.me']",
     }),
   ],
 });
