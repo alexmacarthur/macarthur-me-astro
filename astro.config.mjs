@@ -19,7 +19,7 @@ export default defineConfig({
           userAgent: "*",
         },
         {
-          disallow: "/proxy/",
+          disallow: "/proxy-image/",
           userAgent: "*",
         },
       ],
