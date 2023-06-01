@@ -10,4 +10,4 @@ export const LINKS = {
 };
 export const TITLE = "Alex MacArthur // Web Developer in Nashville";
 export const DESCRIPTION =
-  "I'm Alex MacArthur, a web developer in Nashville-ish, TN.";
+  "I'm a software engineer in Nashville, bossing around computers in made-up languages.";
