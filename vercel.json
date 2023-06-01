@@ -1,16 +1,5 @@
 {
   "trailingSlash": false,
-  "headers": [
-    {
-      "source": "/fonts/inter-subset.woff2",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000"
-        }
-      ]
-    }
-  ],
   "redirects": [
     {
       "source": "/sitemap.xml",
