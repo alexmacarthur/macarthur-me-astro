@@ -33,6 +33,12 @@ module.exports = {
               color: theme("colors.gray.800"),
               textDecoration: "none",
             },
+            "a code": {
+              background: "none",
+              fontSize: "inherit",
+              fontFamily: "inherit",
+              padding: "0",
+            },
             strong: {
               color: theme("colors.gray.800"),
             },

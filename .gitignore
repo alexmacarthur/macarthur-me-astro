@@ -20,4 +20,5 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 .vercel
-db.json
+
+public/proxy-public
