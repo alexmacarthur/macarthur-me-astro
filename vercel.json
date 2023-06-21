@@ -58,6 +58,10 @@
     {
       "source": "/color",
       "destination": "https://color-macarthur-me.netlify.app"
+    }, 
+    {
+      "source": "/trees.png",
+      "destination": "https://macarthur-me-api.vercel.app/api/fat-image"
     }
   ]
 }
