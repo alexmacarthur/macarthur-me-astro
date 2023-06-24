@@ -90,8 +90,6 @@ class ContentService {
   }
 
   #proxyImages = (html: string): string => {
-    if (!isProduction()) return html;
-
     const dom = new JSDOM(html);
     const images = dom.window.document.querySelectorAll("img");
 
@@ -99,9 +97,20 @@ class ContentService {
       return `https://picperf.dev/${value}`;
     }
 
+    function transformSrcset(value) {
+      return value
+        .split(",")
+        .map((src) => {
+          const [url, size] = src.trim().split(" ");
+
+          return `${transform(url)} ${size}`;
+        })
+        .join(",");
+    }
+
     images.forEach((image) => {
       image.src = transform(image.src);
-      image.srcset = transform(image.srcset);
+      image.srcset = transformSrcset(image.srcset);
     });
 
     return dom.serialize();
