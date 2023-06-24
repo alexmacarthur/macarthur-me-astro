@@ -22,3 +22,4 @@ pnpm-debug.log*
 .vercel
 
 public/proxy-public
+db.json

@@ -95,13 +95,13 @@ class ContentService {
     const dom = new JSDOM(html);
     const images = dom.window.document.querySelectorAll("img");
 
-    function replace(value) {
-      return value.replace(/https:\/\/cms\.macarthur\.me/g, "/proxy-image");
+    function transform(value) {
+      return `https://picperf.dev/${value}`;
     }
 
     images.forEach((image) => {
-      image.src = replace(image.src);
-      image.srcset = replace(image.srcset);
+      image.src = transform(image.src);
+      image.srcset = transform(image.srcset);
     });
 
     return dom.serialize();
