@@ -1,0 +1,29 @@
+---
+import ButtonLink from "./ButtonLink.astro";
+---
+
+<div class="px-3 py-4 md:p-6 h-18 z-20 bg-slate-50 border-2 border-slate-200">
+  <h5 class="font-bold text-xl mb-3 italic">
+    Care about front-end performance? Check out <a
+      href="https://picperf.dev"
+      target="_blank"
+      class="fancy-link font-bold">PicPerf.dev.</a
+    >
+  </h5>
+
+  <p class="mb-3 leading-relaxed">
+    It's a new service for making your site's faster by automatically
+    optimizing, reformatting, and aggressively caching a site's images, just by
+    prefixing its URLs.
+  </p>
+
+  <ButtonLink
+    linkId={`picperf-link`}
+    href={"https://picperf.dev"}
+    target="_blank"
+    asButton={false}
+    withArrow={true}
+  >
+    Learn More
+  </ButtonLink>
+</div>

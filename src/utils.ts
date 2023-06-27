@@ -1,4 +1,5 @@
 import { SITE_URL } from "./lib/constants";
+import type { GhostPost } from "./types/types";
 
 export const isProduction = () => {
   return import.meta.env.NODE_ENV === "production";
@@ -39,3 +40,7 @@ export function sendEvent(eventName: string, eventProps: EventProps = {}) {
 export const getCurrentPath = (astro) => {
   return new URL(astro.request.url).pathname;
 };
+
+export function hasPromotion(post: GhostPost) {
+  return post.tags.some((tag) => tag.slug.startsWith("promote-"));
+}

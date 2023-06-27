@@ -6,22 +6,20 @@ export interface Props {
 const { slug } = Astro.props;
 ---
 
-<div class="mt-12">
-  <hr class="divider" />
+<hr class="divider" />
 
-  <div
-    class="flex flex-col md:flex-row justify-center items-center py-8 md:space-x-6"
-  >
-    <span class="text-center md:text-left block prose">
-      <feedback-component data-slug={slug}>
-        <span slot="cta">Was this post helpful?</span>
-        <span slot="confirmation">Thanks for the feedback!</span>
-      </feedback-component>
-    </span>
-  </div>
-
-  <hr class="divider" />
+<div
+  class="flex flex-col md:flex-row justify-center items-center py-8 md:space-x-6"
+>
+  <span class="text-center md:text-left block prose">
+    <feedback-component data-slug={slug}>
+      <span slot="cta">Was this post helpful?</span>
+      <span slot="confirmation">Thanks for the feedback!</span>
+    </feedback-component>
+  </span>
 </div>
+
+<hr class="divider" />
 
 <style>
   :root {

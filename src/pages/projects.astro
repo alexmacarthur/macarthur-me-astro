@@ -16,6 +16,14 @@ interface SpecialProject {
 const repos = await ghService.getProjectReposData();
 const specialProjects: SpecialProject[] = [
   {
+    id: "picperf",
+    name: "PicPerf",
+    subheading: "A picture should be worth a thousand words. Not kilobytes.",
+    description:
+      "PicPerf automatically optimizes, reformats, and aggressively caches your website's images just by prefixing the URLs you're already using. It's the easiest way to make a site's images load faster and lighter.",
+    link: "https://picperf.dev",
+  },
+  {
     id: "jamcomments",
     name: "JamComments",
     subheading: "A stupid-simple comment service for the Jamstack.",
