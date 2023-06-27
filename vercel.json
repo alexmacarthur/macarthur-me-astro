@@ -63,5 +63,16 @@
       "source": "/trees.png",
       "destination": "https://macarthur-me-api.vercel.app/api/fat-image"
     }
+  ], 
+  "headers": [
+    {
+      "source": "/fonts/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31560000, immutable"
+        }
+      ]
+    }
   ]
 }
