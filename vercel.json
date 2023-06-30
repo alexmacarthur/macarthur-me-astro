@@ -62,6 +62,18 @@
     {
       "source": "/trees.png",
       "destination": "https://macarthur-me-api.vercel.app/api/fat-image"
+    },
+    {
+      "source": "/svg.svg",
+      "destination": "https://macarthur-me-api.vercel.app/api/image?format=svg"
+    },
+    {
+      "source": "/jpeg.jpeg",
+      "destination": "https://macarthur-me-api.vercel.app/api/image?format=jpeg"
+    },
+    {
+      "source": "/png.png",
+      "destination": "https://macarthur-me-api.vercel.app/api/image?format=png"
     }
   ], 
   "headers": [
