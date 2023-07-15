@@ -1,7 +1,7 @@
 class WordPressService {
   async getPluginDownloadCount() {
     const response = await fetch(
-      "https://api.wordpress.org/plugins/info/1.2/?action=query_plugins&request[author]=alexmacarthur"
+      "https://api.wordpress.org/plugins/info/1.2/?action=query_plugins&request[author]=alexmacarthur",
     );
     const { plugins } = await response.json();
 

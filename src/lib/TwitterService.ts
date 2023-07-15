@@ -6,7 +6,7 @@ class TwitterService {
         headers: {
           Authorization: `Bearer ${import.meta.env.TWITTER_BEARER_TOKEN}`,
         },
-      }
+      },
     );
 
     const { ids } = await response.json();

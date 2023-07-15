@@ -1,7 +1,7 @@
 class NpmService {
   async getPackageSlugs(): Promise<string[]> {
     const response = await fetch(
-      "https://api.npms.io/v2/search?q=author:alexmacarthur"
+      "https://api.npms.io/v2/search?q=author:alexmacarthur",
     );
     const { results } = await response.json();
 
@@ -13,7 +13,7 @@ class NpmService {
 
     for (const slug of await this.getPackageSlugs()) {
       const response = await fetch(
-        `https://api.npmjs.org/downloads/range/last-year/${slug}`
+        `https://api.npmjs.org/downloads/range/last-year/${slug}`,
       );
       const { downloads } = await response.json();
       const downloadCount = downloads.reduce((total, day) => {

@@ -13,7 +13,7 @@ class AnalyticsService {
 
   async getPageViews(slug: string): Promise<[string, number]> {
     const response = await fetch(
-      `https://macarthur-me-api.vercel.app/api/stats?slug=${slug}`
+      `https://macarthur-me-api.vercel.app/api/stats?slug=${slug}`,
     );
     const { views } = await response.json();
 
@@ -28,7 +28,7 @@ class AnalyticsService {
         const viewData = await this.getPageViews(post.slug);
 
         viewMap.set(post.slug, viewData);
-      })
+      }),
     );
 
     return viewMap;
@@ -36,7 +36,7 @@ class AnalyticsService {
 
   private async fetchTotalSiteViews(): Promise<number> {
     const response = await fetch(
-      `${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/stats`
+      `${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/stats`,
     );
     const { views } = await response.json();
 

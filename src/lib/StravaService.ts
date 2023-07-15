@@ -29,7 +29,7 @@ class StravaService {
             headers: {
               Authorization: "Bearer " + this.accessToken,
             },
-          }
+          },
         );
         const data = await response.json();
         const hasErrors = (data.errors || []).length;

@@ -8,6 +8,7 @@ import prefetch from "@astrojs/prefetch";
 
 export default defineConfig({
   site: "https://macarthur.me",
+  trailingSlash: "never",
   integrations: [
     tailwind(),
     image(),

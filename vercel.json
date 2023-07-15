@@ -40,6 +40,11 @@
       "source": "/links",
       "destination": "/hyperlinks",
       "permanent": true
+    },
+    {
+      "source": "/projects",
+      "destination": "/products",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -75,7 +80,7 @@
       "source": "/png.png",
       "destination": "https://macarthur-me-api.vercel.app/api/image?format=png"
     }
-  ], 
+  ],
   "headers": [
     {
       "source": "/fonts/(.*)",
