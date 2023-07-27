@@ -5,10 +5,14 @@ import sitemap from "@astrojs/sitemap";
 import compress from "astro-compress";
 import robotsTxt from "astro-robots-txt";
 import prefetch from "@astrojs/prefetch";
+import { rehypePicPerf } from "@picperf/rehype";
 
 export default defineConfig({
   site: "https://macarthur.me",
   trailingSlash: "never",
+  markdown: {
+    rehypePlugins: [rehypePicPerf]
+  },
   integrations: [
     tailwind(),
     image(),
