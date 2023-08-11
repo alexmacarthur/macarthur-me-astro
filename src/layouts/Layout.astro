@@ -342,6 +342,10 @@ const articleOgData = postData
         }
       </style>
 
+      <script is:inline>
+        console.log("my script");
+      </script>
+
     </div>
 
      <script is:inline>
@@ -367,20 +371,20 @@ const articleOgData = postData
         
         document.getElementById("content").innerHTML = doc.getElementById("content").innerHTML;
 
-        const scripts = document.querySelectorAll('script');
+        const scripts = document.querySelectorAll('head script, #content script'); 
 
-        // scripts.forEach(script => {
-          // const newScript = document.createElement('script');
+        scripts.forEach(script => {
+          const newScript = document.createElement('script');
 
-          // if (script.src) {
-          //   newScript.src = script.src;
-          // } else {
-          //   newScript.textContent = script.textContent;
-          // }
+          if (script.src) {
+            newScript.src = script.src;
+          } else {
+            newScript.textContent = script.textContent;
+          }
 
-          // document.body.appendChild(newScript);
-          // script.remove();
-        // });
+          document.getElementById("content").appendChild(newScript);
+          script.remove();
+        });
 
         attachInterceptionListeners();
       }
