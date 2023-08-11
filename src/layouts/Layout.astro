@@ -369,18 +369,18 @@ const articleOgData = postData
 
         const scripts = document.querySelectorAll('script');
 
-        scripts.forEach(script => {
-          const newScript = document.createElement('script');
+        // scripts.forEach(script => {
+          // const newScript = document.createElement('script');
 
-          if (script.src) {
-            newScript.src = script.src;
-          } else {
-            newScript.textContent = script.textContent;
-          }
+          // if (script.src) {
+          //   newScript.src = script.src;
+          // } else {
+          //   newScript.textContent = script.textContent;
+          // }
 
-          document.body.appendChild(newScript);
-          script.remove();
-        });
+          // document.body.appendChild(newScript);
+          // script.remove();
+        // });
 
         attachInterceptionListeners();
       }
