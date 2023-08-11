@@ -12,18 +12,18 @@
     "format": "prettier -w ."
   },
   "dependencies": {
-    "@astrojs/image": "^0.17.2",
+    "@astrojs/image": "^0.17.3",
     "@astrojs/prefetch": "^0.3.0",
-    "@astrojs/rss": "^2.4.3",
+    "@astrojs/rss": "^2.4.4",
     "@astrojs/sitemap": "^2.0.1",
     "@astrojs/tailwind": "^4.0.0",
     "@jam-comments/astro": "^1.2.0",
-    "@picperf/rehype": "^0.0.4",
+    "@picperf/rehype": "^0.2.0",
     "@ramseyinhouse/feedback-component": "^1.0.3",
-    "@supabase/supabase-js": "^2.27.0",
+    "@supabase/supabase-js": "^2.32.0",
     "@tryghost/content-api": "^1.11.16",
-    "astro": "^2.9.1",
-    "astro-compress": "^1.1.49",
+    "astro": "^2.10.5",
+    "astro-compress": "^2.0.5",
     "astro-heroicons": "^0.3.0",
     "astro-robots-txt": "^0.5.0",
     "astro-seo": "^0.7.5",
@@ -39,8 +39,8 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",
-    "@types/node": "^20.4.4",
-    "prettier": "^3.0.0",
+    "@types/node": "^20.4.9",
+    "prettier": "^3.0.1",
     "prettier-plugin-astro": "^0.11.0"
   }
 }

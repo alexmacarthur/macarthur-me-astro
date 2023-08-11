@@ -22,11 +22,7 @@ export default defineConfig({
         {
           allow: "/",
           userAgent: "*",
-        },
-        {
-          disallow: "/proxy-image/",
-          userAgent: "*",
-        },
+        }
       ],
     }),
     compress({
