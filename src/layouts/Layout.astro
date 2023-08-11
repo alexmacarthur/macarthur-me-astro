@@ -171,172 +171,234 @@ const articleOgData = postData
     />
   </head>
   <body>
-    <Nav />
-    <main class={`px-4 md:px-6 mx-auto w-full ${mainClass}`}>
-      <slot />
-    </main>
+    <div id="content">
 
-    <Footer />
+      <Nav />
 
-    <script>
-      import "../scripts/link-tracking";
-    </script>
+      <main class={`px-4 md:px-6 mx-auto w-full ${mainClass}`}>
+        <slot />
+      </main>
 
-    <style is:global>
-      @import "prismjs/themes/prism-okaidia.css";
+      <Footer />
 
-      /** custom utilities */
+      <script>
+        import "../scripts/link-tracking";
+      </script>
 
-      @layer {
-        .slanted-text {
-          font-style: oblique 4deg;
+      <style is:global>
+        @import "prismjs/themes/prism-okaidia.css";
+
+        /** custom utilities */
+
+        @layer {
+          .slanted-text {
+            font-style: oblique 4deg;
+          }
+
+          .fancy-link {
+            @apply relative no-underline;
+            background: linear-gradient(
+              to right,
+              theme("colors.purple.600") 50%,
+              theme("colors.purple.700") 50%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
+
+          .fancy-link-on-hover:hover {
+            @apply relative no-underline;
+            background: linear-gradient(
+              to right,
+              theme("colors.purple.600") 50%,
+              theme("colors.purple.700") 50%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
         }
 
-        .fancy-link {
-          @apply relative no-underline;
-          background: linear-gradient(
-            to right,
-            theme("colors.purple.600") 50%,
-            theme("colors.purple.700") 50%
-          );
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
+        /** global typography adjustments */
+
+        .italic,
+        em,
+        blockquote,
+        i {
+          font-variation-settings: "slnt" -10 !important;
+          font-style: oblique 10deg !important;
         }
 
-        .fancy-link-on-hover:hover {
-          @apply relative no-underline;
-          background: linear-gradient(
-            to right,
-            theme("colors.purple.600") 50%,
-            theme("colors.purple.700") 50%
-          );
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-      }
-
-      /** global typography adjustments */
-
-      .italic,
-      em,
-      blockquote,
-      i {
-        font-variation-settings: "slnt" -10 !important;
-        font-style: oblique 10deg !important;
-      }
-
-      @font-face {
-        font-family: "Inter Variable";
-        src: url("/fonts/inter-subset.woff2") format("woff2");
-      }
-
-      * {
-        letter-spacing: -0.025em;
-      }
-
-      h2 em {
-        font-weight: inherit;
-        color: inherit;
-      }
-
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        @apply text-gray-700 font-medium;
-      }
-
-      h1,
-      h2 {
-        font-style: oblique 3deg;
-      }
-
-      h2 {
-      }
-
-      :not(h1, h2, h3, h4, h5, h6, pre, pre *) {
-        @apply text-gray-600 font-light;
-      }
-
-      /** end global typography adjustments */
-
-      nav {
-        grid-area: nav;
-      }
-
-      main {
-        grid-area: main;
-      }
-
-      form input,
-      form textarea {
-        @apply border border-gray-300 rounded-sm w-full px-2 py-2 text-base;
-      }
-
-      label {
-        @apply mb-2 inline-block;
-      }
-
-      .password-wrapper {
-        position: absolute;
-        z-index: -1;
-        opacity: 0;
-      }
-
-      .button,
-      .jc-CommentBox-button {
-        @apply border-2 text-white text-lg border-purple-500 rounded-3xl px-5 py-1 bg-purple-500 hover:bg-white hover:text-purple-500 transition-colors duration-200 cursor-pointer !important;
-      }
-
-      .button.light {
-        @apply bg-transparent border-white text-white hover:text-purple-500 hover:bg-white !important;
-      }
-
-      .button.submit {
-        @apply rounded-sm;
-      }
-
-      .button.large {
-        @apply text-2xl;
-      }
-
-      .button svg {
-        stroke: white;
-      }
-
-      .card {
-        @apply border-2 border-gray-200 rounded-lg p-6 md:p-8;
-      }
-
-      *:focus-visible {
-        outline: theme("colors.purple.500") auto 1px;
-      }
-
-      .prose {
-        :not(h1, h2, h3, h4, h5, h6) > a {
-          @apply fancy-link;
+        @font-face {
+          font-family: "Inter Variable";
+          src: url("/fonts/inter-subset.woff2") format("woff2");
         }
 
-        :not(h1, h2, h3, h4, h5, h6) > a:after {
-          content: "";
-          left: 0;
-          bottom: 0;
-          width: 100%;
-          height: 0;
-          display: block;
+        * {
+          letter-spacing: -0.025em;
+        }
+
+        h2 em {
+          font-weight: inherit;
+          color: inherit;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          @apply text-gray-700 font-medium;
+        }
+
+        h1,
+        h2 {
+          font-style: oblique 3deg;
+        }
+
+        h2 {
+        }
+
+        :not(h1, h2, h3, h4, h5, h6, pre, pre *) {
+          @apply text-gray-600 font-light;
+        }
+
+        /** end global typography adjustments */
+
+        nav {
+          grid-area: nav;
+        }
+
+        main {
+          grid-area: main;
+        }
+
+        form input,
+        form textarea {
+          @apply border border-gray-300 rounded-sm w-full px-2 py-2 text-base;
+        }
+
+        label {
+          @apply mb-2 inline-block;
+        }
+
+        .password-wrapper {
           position: absolute;
-          background: theme("colors.purple.500");
-          transform: translateY(100%) skew(-5deg);
-          transition: all 0.08s ease-out;
-          @apply bg-gradient-to-r from-purple-500 to-purple-600;
+          z-index: -1;
+          opacity: 0;
         }
 
-        :not(h1, h2, h3, h4, h5, h6) > a:hover:after {
-          height: 0.2em;
+        .button,
+        .jc-CommentBox-button {
+          @apply border-2 text-white text-lg border-purple-500 rounded-3xl px-5 py-1 bg-purple-500 hover:bg-white hover:text-purple-500 transition-colors duration-200 cursor-pointer !important;
         }
+
+        .button.light {
+          @apply bg-transparent border-white text-white hover:text-purple-500 hover:bg-white !important;
+        }
+
+        .button.submit {
+          @apply rounded-sm;
+        }
+
+        .button.large {
+          @apply text-2xl;
+        }
+
+        .button svg {
+          stroke: white;
+        }
+
+        .card {
+          @apply border-2 border-gray-200 rounded-lg p-6 md:p-8;
+        }
+
+        *:focus-visible {
+          outline: theme("colors.purple.500") auto 1px;
+        }
+
+        .prose {
+          :not(h1, h2, h3, h4, h5, h6) > a {
+            @apply fancy-link;
+          }
+
+          :not(h1, h2, h3, h4, h5, h6) > a:after {
+            content: "";
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 0;
+            display: block;
+            position: absolute;
+            background: theme("colors.purple.500");
+            transform: translateY(100%) skew(-5deg);
+            transition: all 0.08s ease-out;
+            @apply bg-gradient-to-r from-purple-500 to-purple-600;
+          }
+
+          :not(h1, h2, h3, h4, h5, h6) > a:hover:after {
+            height: 0.2em;
+          }
+        }
+      </style>
+
+    </div>
+
+     <script>
+      async function interceptClick(e) {
+        e.preventDefault();
+
+        const response = await fetch(e.target.href, {
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+          },
+        });
+
+        window.history.pushState({}, "", e.target.href);
+        document.dispatchEvent(new Event("popstate"));
+        
+        const html = await response.text();
+        const doc = new DOMParser().parseFromString(html, "text/html");
+
+        const newHead = doc.head;
+        const newBody = doc.body;
+
+        document.head.innerHTML = doc.head.innerHTML;
+        
+        document.getElementById("content").innerHTML = doc.getElementById("content").innerHTML;
+
+        const scripts = document.querySelectorAll('script');
+
+        scripts.forEach(script => {
+          const newScript = document.createElement('script');
+
+          if (script.src) {
+            newScript.src = script.src;
+          } else {
+            newScript.textContent = script.textContent;
+          }
+
+          document.body.appendChild(newScript);
+          script.remove();
+        });
+
+        attachInterceptionListeners();
       }
-    </style>
+
+      function attachInterceptionListeners() {
+        document.querySelectorAll("a").forEach((link) => {
+          if (link.href.startsWith(window.location.origin)) {
+            link.addEventListener("click", interceptClick);
+          }
+        });
+      };
+
+      attachInterceptionListeners();
+
+      </script>
+
+      <div id="persistentPlayer" class="fixed left-4 bottom-4">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/noMkydq4cd4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
   </body>
 </html>

@@ -11,7 +11,7 @@ export default defineConfig({
   site: "https://macarthur.me",
   trailingSlash: "never",
   markdown: {
-    rehypePlugins: [rehypePicPerf]
+    rehypePlugins: [rehypePicPerf],
   },
   integrations: [
     tailwind(),
@@ -22,7 +22,7 @@ export default defineConfig({
         {
           allow: "/",
           userAgent: "*",
-        }
+        },
       ],
     }),
     compress({
@@ -32,8 +32,8 @@ export default defineConfig({
       js: false,
       svg: true,
     }),
-    prefetch({
-      selector: "a[href^='/'], a[href^='https://macarthur.me']",
-    }),
+    // prefetch({
+    //   selector: "a[href^='/'], a[href^='https://macarthur.me']",
+    // }),
   ],
 });
