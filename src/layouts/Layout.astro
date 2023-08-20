@@ -13,6 +13,7 @@ export interface Props {
   pageType?: `narrow` | `normal` | "open";
   subtitle?: string;
   schema?: WithContext<any>;
+  canonicalUrl?: string | null;
   postData?: {
     date: string;
     lastUpdated: string;
@@ -28,6 +29,7 @@ const {
   subtitle = "",
   schema,
   postData,
+  canonicalUrl,
 } = Astro.props;
 
 const mainClass = (() => {
@@ -96,6 +98,7 @@ const articleOgData = postData
     <SEO
       title={title ? `${title} | Alex MacArthur` : TITLE}
       description={description || DESCRIPTION}
+      canonical={canonicalUrl ?? Astro.url.href} 
       openGraph={{
         article: articleOgData,
         image: {

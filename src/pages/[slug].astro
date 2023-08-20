@@ -24,6 +24,7 @@ const page = await contentService.getPage(pageSlug);
   description={computeDescription(page)}
   openGraphImage={page.og_image || page.feature_image}
   openGraphAlt={page.feature_image_caption}
+  canonicalUrl={page.canonical_url}
   pageType="normal"
   title={page.title}
 >
