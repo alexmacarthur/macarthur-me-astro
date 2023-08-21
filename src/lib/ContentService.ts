@@ -88,22 +88,6 @@ class ContentService {
     return api.pages.browse({ limit: "all" });
   }
 
-  async getAdjacentPosts(slug: string): Promise<{
-    previousPost: GhostPost | null;
-    nextPost: GhostPost | null;
-  }> {
-    const posts = await this.getAllPosts();
-    const currentPostIndex = posts.findIndex((post) => post.slug === slug);
-
-    const previousPost = posts[currentPostIndex - 1];
-    const nextPost = posts[currentPostIndex + 1];
-
-    return {
-      previousPost,
-      nextPost,
-    };
-  }
-
   #proxyImages = (html: string): string => {
     const dom = new JSDOM(html);
     const images = dom.window.document.querySelectorAll("img");

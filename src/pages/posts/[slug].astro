@@ -29,9 +29,8 @@ export async function getStaticPaths() {
 
 const { slug: postSlug } = Astro.params as unknown as Params;
 
-const [post, { nextPost, previousPost }, viewData] = await Promise.all([
+const [post, viewData] = await Promise.all([
   contentService.getPost(postSlug),
-  contentService.getAdjacentPosts(postSlug),
   analyticsService.getPageViews(postSlug),
 ]);
 const [viewStr, viewNum] = viewData;
