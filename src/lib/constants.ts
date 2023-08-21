@@ -3,6 +3,7 @@ export const FB_ADMINS = "502371334";
 export const TWITTER_HANDLE = "@amacarthur";
 export const MY_NAME = "Alex MacArthur";
 export const SITE_URL = import.meta.env.SITE_URL;
+export const MINIMUM_VIEW_COUNT = 200;
 export const LINKS = {
   github: "https://www.github.com/alexmacarthur",
   linkedin: "https://linkedin.com/in/alexmacarthur",

@@ -23,7 +23,7 @@ export default defineConfig({
         item.priority = 0.9;
 
         return item;
-      }
+      },
     }),
     robotsTxt({
       policy: [

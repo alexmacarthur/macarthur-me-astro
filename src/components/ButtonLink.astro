@@ -1,10 +1,12 @@
 ---
 import ArrowSmallRight from "astro-heroicons/outline/ArrowSmallRight.astro";
+import ArrowSmallLeft from "astro-heroicons/outline/ArrowSmallLeft.astro";
 import ArrowTopRightOnSquare from "astro-heroicons/outline/ArrowTopRightOnSquare.astro";
 
 export interface Props {
   href: string;
   withArrow?: boolean;
+  arrowDirection?: "left" | "right";
   target?: string;
   linkId?: string;
   asButton?: boolean;
@@ -15,6 +17,7 @@ const {
   href,
   linkId = null,
   withArrow = false,
+  arrowDirection = "right",
   target = "_self",
   asButton = false,
   classes = "",
@@ -29,11 +32,13 @@ const {
   data-link-id={linkId}
   target={target}
 >
+  {target !== "_blank" && withArrow && arrowDirection === "left" && <ArrowSmallLeft class="h-4" />}
+
   <slot />
 
   {target === "_blank" && <ArrowTopRightOnSquare class="h-4" />}
 
-  {target !== "_blank" && withArrow && <ArrowSmallRight class="h-4" />}
+  {target !== "_blank" && withArrow && arrowDirection === "right" && <ArrowSmallRight class="h-4" />}
 </a>
 
 <style>
