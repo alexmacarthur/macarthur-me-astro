@@ -16,7 +16,15 @@ export default defineConfig({
   integrations: [
     tailwind(),
     image(),
-    sitemap(),
+    sitemap({
+      serialize(item) {
+        item.changefreq = "daily";
+        item.lastmod = new Date();
+        item.priority = 0.9;
+
+        return item;
+      }
+    }),
     robotsTxt({
       policy: [
         {
