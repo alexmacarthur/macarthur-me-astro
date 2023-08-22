@@ -80,16 +80,5 @@
       "source": "/png.png",
       "destination": "https://macarthur-me-api.vercel.app/api/image?format=png"
     }
-  ],
-  "headers": [
-    {
-      "source": "/fonts/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, s-maxage=31560000, max-age=31560000, immutable"
-        }
-      ]
-    }
   ]
 }
