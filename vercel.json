@@ -1,4 +1,5 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "trailingSlash": false,
   "redirects": [
     {
@@ -83,11 +84,11 @@
   ],
   "headers": [
     {
-      "source": "/fonts/(.*)",
+      "source": "/(.+\\.js|.+\\.css|.+\\.woff2)",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, s-maxage=31560000, max-age=31560000, immutable"
+          "value": "public, max-age=31560001, immutable"
         }
       ]
     }
