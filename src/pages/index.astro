@@ -71,8 +71,7 @@ const featuredBlogPosts = (await Promise.all(
                 <ButtonLink
                   href={url}
                   target={external ? "_blank" : "_self"}
-                  withArrow={external}
-                >
+                  withArrow={external}>
                   Read It
                 </ButtonLink>
 
@@ -88,8 +87,7 @@ const featuredBlogPosts = (await Promise.all(
       }
 
       <li
-        class="signup-form grid row-auto col-span-full sm:row-span-2 sm:col-start-3 sm:row-start-1"
-      >
+        class="signup-form grid row-auto col-span-full sm:row-span-2 sm:col-start-3 sm:row-start-1">
         <SignupForm />
       </li>
     </ul>
