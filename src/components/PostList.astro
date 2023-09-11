@@ -33,7 +33,7 @@ const viewMap = await analyticsService.makePageViewMap(posts);
       return (
         <li>
           <article>
-            <h2 class="text-2xl font-bold" transition:name={post.slug}>
+            <h2 class="text-2xl font-bold mb-1" transition:name={post.slug}>
               <a href={postPath} target={target}>
                 {post.title}
               </a>

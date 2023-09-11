@@ -16,7 +16,7 @@ const {
 
 <div class="">
   <h1
-    class={`${headingClasses} font-extrabold pb-2 block mb-2 md:mb-5 md:leading-[1.10]`}
+    class={`${headingClasses} font-extrabold pb-2 block mb-2 md:mb-5`}
     transition:name={transitionName}>
     <GradientText>
       <slot />
@@ -25,9 +25,9 @@ const {
 
   {
     subtitle && (
-      <h2 class="font-light text-base md:text-lg italic text-gray-500 mb-4 -mt-5">
+      <span class="font-light text-base md:text-lg italic text-gray-500 mb-4 -mt-5 block">
         {subtitle}
-      </h2>
+      </span>
     )
   }
 </div>
