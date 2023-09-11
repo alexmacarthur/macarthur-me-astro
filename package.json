@@ -12,7 +12,6 @@
     "format": "prettier -w ."
   },
   "dependencies": {
-    "@astrojs/image": "^0.17.3",
     "@astrojs/prefetch": "^0.4.0",
     "@astrojs/rss": "^3.0.0",
     "@astrojs/sitemap": "^3.0.0",
@@ -22,10 +21,10 @@
     "@ramseyinhouse/feedback-component": "^1.0.3",
     "@supabase/supabase-js": "^2.33.1",
     "@tryghost/content-api": "^1.11.16",
-    "astro": "^3.0.8",
+    "astro": "^3.0.12",
     "astro-compress": "^2.0.15",
     "astro-heroicons": "^0.3.0",
-    "astro-robots-txt": "^0.5.0",
+    "astro-robots-txt": "^1.0.0",
     "astro-seo": "^0.8.0",
     "countup.js": "^2.8.0",
     "dotenv": "^16.3.1",
@@ -38,8 +37,8 @@
     "tailwindcss": "^3.3.3"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.9",
-    "@types/node": "^20.5.9",
+    "@tailwindcss/typography": "^0.5.10",
+    "@types/node": "^20.6.0",
     "prettier": "^3.0.3",
     "prettier-plugin-astro": "^0.12.0"
   }

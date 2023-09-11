@@ -1,6 +1,5 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
-import image from "@astrojs/image";
 import sitemap from "@astrojs/sitemap";
 import compress from "astro-compress";
 import robotsTxt from "astro-robots-txt";
@@ -15,7 +14,6 @@ export default defineConfig({
   },
   integrations: [
     tailwind(),
-    image(),
     sitemap({
       serialize(item) {
         item.changefreq = "daily";

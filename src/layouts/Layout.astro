@@ -4,6 +4,7 @@ import { DESCRIPTION, MY_NAME, TITLE, TWITTER_HANDLE } from "../lib/constants";
 import type { WebSite, WithContext } from "schema-dts";
 import { SEO } from "astro-seo";
 import Footer from "../components/Footer.astro";
+import { ViewTransitions } from "astro:transitions";
 
 export interface Props {
   title: string;
@@ -70,7 +71,7 @@ const articleOgData = postData
   : {};
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -95,10 +96,12 @@ const articleOgData = postData
       set:html={JSON.stringify(schema || defaultSchema)}
     />
 
+    <ViewTransitions />
+
     <SEO
       title={title ? `${title} | Alex MacArthur` : TITLE}
       description={description || DESCRIPTION}
-      canonical={canonicalUrl ?? Astro.url.href} 
+      canonical={canonicalUrl ?? Astro.url.href}
       openGraph={{
         article: articleOgData,
         image: {

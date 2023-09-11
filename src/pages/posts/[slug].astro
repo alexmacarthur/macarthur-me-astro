@@ -71,28 +71,24 @@ if (post.updated_at) {
   postData={{
     date: post.published_at,
     lastUpdated: post.updated_at,
-  }}
->
-
-  <ButtonLink 
-    href="/posts" 
-    withArrow={true} 
+  }}>
+  <ButtonLink
+    href="/posts"
+    withArrow={true}
     arrowDirection="left"
-    classes="mb-2"
-  >
+    classes="mb-2">
     Back to All Posts
   </ButtonLink>
 
   <Title
     headingClasses={"text-3xl md:text-6xl mb-5"}
     subtitle={post.custom_excerpt}
-  >
+    transitionName={post.slug}>
     {post.title}
   </Title>
 
   <div
-    class={`flex items-start gap-4 mb-6 ${post.custom_excerpt ? "" : "-mt-4"}`}
-  >
+    class={`flex items-start gap-4 mb-6 ${post.custom_excerpt ? "" : "-mt-4"}`}>
     <div class="flex flex-wrap gap-x-3">
       <DateFormatter date={post.published_at} className="inline-block" />
 
@@ -118,9 +114,8 @@ if (post.updated_at) {
   </div>
 
   <div
-    class="my-6 grid grid-cols-1 sm:grid-cols-5 gap-8 pt-10 pb-8 w-screen max-w-6xl px-6 transform translate-x-[-50%] left-[50%] relative"
-  >
-    <div class="grid place-items-center p-6 sm:col-span-2"> 
+    class="my-6 grid grid-cols-1 sm:grid-cols-5 gap-8 pt-10 pb-8 w-screen max-w-6xl px-6 transform translate-x-[-50%] left-[50%] relative">
+    <div class="grid place-items-center p-6 sm:col-span-2">
       <Bio />
     </div>
 

@@ -28,6 +28,11 @@ module.exports = {
             maxWidth: "100%",
             img: {
               margin: "0 auto",
+              minWidth: "250px",
+              maxWidth: "100%",
+            },
+            figcaption: {
+              textAlign: "center",
             },
             a: {
               color: theme("colors.gray.800"),
