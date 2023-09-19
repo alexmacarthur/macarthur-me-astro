@@ -1,16 +1,6 @@
 {
   "name": "macarthur-me-astro",
-  "type": "module",
   "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "format": "prettier -w ."
-  },
   "dependencies": {
     "@astrojs/prefetch": "^0.4.0",
     "@astrojs/rss": "^3.0.0",
@@ -20,25 +10,34 @@
     "@picperf/rehype": "^0.2.0",
     "@ramseyinhouse/feedback-component": "^1.0.3",
     "@supabase/supabase-js": "^2.33.2",
+    "@tailwindcss/typography": "^0.5.10",
     "@tryghost/content-api": "^1.11.16",
+    "@types/node": "^20.6.2",
     "astro": "^3.1.0",
     "astro-heroicons": "^0.3.0",
     "astro-robots-txt": "^1.0.0",
     "astro-seo": "^0.8.0",
+    "bun-types": "^1.0.2",
     "countup.js": "^2.8.0",
     "dotenv": "^16.3.1",
     "jsdom": "^22.1.0",
     "lowdb": "^6.0.1",
     "octonode": "^0.10.2",
+    "prettier": "^3.0.3",
+    "prettier-plugin-astro": "^0.12.0",
     "prismjs": "^1.29.0",
     "sanitize-html": "^2.11.0",
     "schema-dts": "^1.1.2",
     "tailwindcss": "^3.3.3"
   },
-  "devDependencies": {
-    "@tailwindcss/typography": "^0.5.10",
-    "@types/node": "^20.6.2",
-    "prettier": "^3.0.3",
-    "prettier-plugin-astro": "^0.12.0"
-  }
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "format": "prettier -w ."
+  },
+  "type": "module"
 }

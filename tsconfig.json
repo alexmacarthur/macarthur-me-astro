@@ -3,6 +3,7 @@
   "compilerOptions": {
     "noImplicitAny": false,
     "isolatedModules": false,
-    "module": "esnext"
+    "module": "esnext",
+    "types": ["bun-types"]
   }
 }
