@@ -1,0 +1,98 @@
+{
+  "github": {
+    "projectRepos": [
+      {
+        "html_url": "https://github.com/alexmacarthur/binding-pry-js",
+        "description": "binding.pry for JavaScript, for the Ruby devs who can't shake the habit.",
+        "name": "binding-pry-js",
+        "stargazers_count": 2
+      },
+      {
+        "html_url": "https://github.com/alexmacarthur/bridgetown-jam-comments",
+        "description": "The official Bridgetown plugin for JamComments.",
+        "name": "bridgetown-jam-comments",
+        "stargazers_count": 1
+      },
+      {
+        "html_url": "https://github.com/alexmacarthur/christian-git",
+        "description": "A wrapper for Git to sanctify your version control workflow. ✝️",
+        "name": "christian-git",
+        "stargazers_count": 90
+      },
+      {
+        "html_url": "https://github.com/alexmacarthur/expand-text-nodes",
+        "description": "Expand text within HTML to be composed of one text node per character.",
+        "name": "expand-text-nodes",
+        "stargazers_count": 1
+      },
+      {
+        "html_url": "https://github.com/alexmacarthur/graphql-quest",
+        "description": "Ultra-minimal library for making GraphQL requests in the browser and Node (with a quick polyfill).",
+        "name": "graphql-quest",
+        "stargazers_count": 20
+      },
+      {
+        "html_url": "https://github.com/alexmacarthur/jam-comments-javascript",
+        "description": "A monorepo for the JamComments packages that power the JavaScript-based integrations.",
+        "name": "jam-comments-javascript",
+        "stargazers_count": 3
+      },
+      {
+        "html_url": "https://github.com/alexmacarthur/jekyll-jam-comments",
+        "description": "A Ruby gem for setting up JamComments in your Jekyll site.",
+        "name": "jekyll-jam-comments",
+        "stargazers_count": 1
+      },
+      {
+        "html_url": "https://github.com/alexmacarthur/local-docker-db",
+        "description": "A bunch o' Docker Compose files used to quickly spin up local databases.",
+        "name": "local-docker-db",
+        "stargazers_count": 266
+      },
+      {
+        "html_url": "https://github.com/alexmacarthur/probaclick",
+        "description": "Do something when someone is probably going to click something.",
+        "name": "probaclick",
+        "stargazers_count": 71
+      },
+      {
+        "html_url": "https://github.com/alexmacarthur/slide-element",
+        "description": "A < 750 byte Promise-based library for animating elements with dynamic heights open & closed. Basically, a modern variant of jQuery's slideUp(), slideDown(), and slideToggle().",
+        "name": "slide-element",
+        "stargazers_count": 169
+      },
+      {
+        "html_url": "https://github.com/alexmacarthur/striff",
+        "description": "Real simple string diffing.",
+        "name": "striff",
+        "stargazers_count": 199
+      },
+      {
+        "html_url": "https://github.com/alexmacarthur/typeit",
+        "description": "The most versatile JavaScript typewriter effect library on the planet.",
+        "name": "typeit",
+        "stargazers_count": 2884
+      },
+      {
+        "html_url": "https://github.com/alexmacarthur/vite-plugin-proxy-page",
+        "description": "A Vite plugin for projecting your application onto a remote page during development.",
+        "name": "vite-plugin-proxy-page",
+        "stargazers_count": 21
+      },
+      {
+        "html_url": "https://github.com/alexmacarthur/wp-better-resource-hints",
+        "description": "A WordPress plugin to help better manage resource hinting (preloading, prefetching, server pushing).",
+        "name": "wp-better-resource-hints",
+        "stargazers_count": 17
+      },
+      {
+        "html_url": "https://github.com/alexmacarthur/wp-typeit",
+        "description": "Easily add typewriter effects to your WordPress site with TypeIt, the most versatile animated typing utility on the planet.",
+        "name": "wp-typeit",
+        "stargazers_count": 7
+      }
+    ],
+    "totalStars": 4060,
+    "followerCount": 255
+  }
+}

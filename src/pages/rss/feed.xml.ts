@@ -14,7 +14,10 @@ export const get = () =>
       link: `${import.meta.env.SITE_URL}/posts/${post.slug}`,
       title: post.title,
       pubDate: new Date(post.published_at),
-      content: sanitizeHtml(post.html),
+      content: sanitizeHtml(post.html, {
+        allowedTags: false,
+        allowedAttributes: false,
+      }),
     })),
     customData: `<language>en-us</language>`,
   });
