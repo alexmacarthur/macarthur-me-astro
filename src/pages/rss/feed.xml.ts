@@ -15,8 +15,10 @@ export const get = () =>
       title: post.title,
       pubDate: new Date(post.published_at),
       content: sanitizeHtml(post.html, {
-        allowedTags: false,
-        allowedAttributes: false,
+        allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+          "img",
+          "iframe",
+        ]),
       }),
     })),
     customData: `<language>en-us</language>`,

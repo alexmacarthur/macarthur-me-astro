@@ -14,6 +14,7 @@
     "@tryghost/content-api": "^1.11.16",
     "@types/node": "^20.6.2",
     "astro": "^3.1.0",
+    "astro-compress": "^2.0.15",
     "astro-heroicons": "^0.3.0",
     "astro-robots-txt": "^1.0.0",
     "astro-seo": "^0.8.0",
