@@ -7,8 +7,9 @@ export const MINIMUM_VIEW_COUNT = 200;
 export const LINKS = {
   github: "https://www.github.com/alexmacarthur",
   linkedin: "https://linkedin.com/in/alexmacarthur",
-  twitter: "https://www.twitter.com/amacarthur",
+  twitter: "https://www.x.com/amacarthur",
 };
 export const TITLE = "Alex MacArthur // Web Developer in Nashville";
 export const DESCRIPTION =
   "I'm a software engineer in Nashville, bossing around computers in made-up languages.";
+export const TAGLINE = "Bossing around computers in made-up languages.";

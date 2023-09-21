@@ -8,7 +8,6 @@ import stravaService from "../lib/StravaService";
 import npmService from "../lib/NpmService";
 import gsService from "../lib/GoogleSearchService";
 import wpService from "../lib/WordPressService";
-import twitterService from "../lib/TwitterService";
 import Counter from "../components/Counter.astro";
 import ArrowTopRightOnSquare from "astro-heroicons/outline/ArrowTopRightOnSquare.astro";
 
@@ -31,12 +30,6 @@ const stats: State[] = [
     link: "https://github.com/alexmacarthur",
     subTitle: "Do it yourself today, for free.",
     value: ghService.getFollowerCount(),
-  },
-  {
-    title: "Total Twitter Followers",
-    link: "https://twitter.com/amacarthur",
-    subTitle: "Go ahead, follow me.",
-    value: twitterService.getFollowerCount(),
   },
   {
     title: "Total Website Views",
@@ -138,8 +131,7 @@ for (let stat of stats) {
                     href={stat.link}
                     class="inline-block ml-3"
                     target="_blank"
-                    rel="noreferrer"
-                  >
+                    rel="noreferrer">
                     <ArrowTopRightOnSquare class="h-4 w-4" />
                   </a>
                 )}

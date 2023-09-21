@@ -4,9 +4,11 @@ import { DESCRIPTION, MY_NAME, TITLE, TWITTER_HANDLE } from "../lib/constants";
 import type { WebSite, WithContext } from "schema-dts";
 import { SEO } from "astro-seo";
 import Footer from "../components/Footer.astro";
+import { getOpenGraphUrl } from "../utils";
 
 export interface Props {
   title: string;
+  ogTitle?: string | null;
   description?: string;
   openGraphImage?: string;
   openGraphAlt?: string;
@@ -22,6 +24,7 @@ export interface Props {
 
 const {
   title,
+  ogTitle = "",
   description = "",
   pageType = "",
   openGraphImage = "",
@@ -59,8 +62,11 @@ const defaultSchema: WithContext<WebSite> = {
   },
 };
 
-const image =
-  openGraphImage || import.meta.env.SITE_URL + "/default-open-graph.jpg";
+const image = getOpenGraphUrl({
+  path: Astro.url.pathname,
+  image: openGraphImage,
+  title: ogTitle || title || TITLE,
+});
 const articleOgData = postData
   ? {
       publishedTime: postData.date,

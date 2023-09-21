@@ -1,8 +1,30 @@
-import { SITE_URL } from "./lib/constants";
+import { SITE_URL, TAGLINE } from "./lib/constants";
 import type { GhostPost } from "./types/types";
 
 export const isProduction = () => {
   return import.meta.env.NODE_ENV === "production";
+};
+
+export const getOpenGraphUrl = ({
+  image,
+  path,
+  title,
+}: {
+  path: string;
+  image: string;
+  title: string;
+}) => {
+  if (path === "/") {
+    return buildOpenGraphUrl(TAGLINE);
+  }
+
+  return image || buildOpenGraphUrl(title);
+};
+
+export const buildOpenGraphUrl = (title: string) => {
+  return `https://www.macarthur.me/open-graph?title=${encodeURIComponent(
+    title,
+  )}`;
 };
 
 export const randomInRange = (min, max): number => {
