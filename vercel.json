@@ -62,6 +62,10 @@
       "destination": "https://alexmacarthur.github.io/slide-element"
     },
     {
+      "source": "/headlights",
+      "destination": "https://headlights.vercel.app"
+    },
+    {
       "source": "/color",
       "destination": "https://color-macarthur-me.netlify.app"
     },
