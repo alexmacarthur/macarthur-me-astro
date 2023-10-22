@@ -35,7 +35,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && cp _redirects dist/_redirects && cp _headers dist/_headers",
+    "build": "astro build && cp _redirects dist/_redirects && cp _headers dist/_headers && cp _routes.json dist/_routes.json",
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier -w .",
