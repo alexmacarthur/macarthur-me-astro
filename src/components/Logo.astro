@@ -1,15 +1,25 @@
-<span class="text-3xl font-black logo slanted-text">AM</span>
+---
+const { text = "AM", hoverable, fontSize = "text-3xl" } = Astro.props;
+---
+
+<span
+  class={`${fontSize} font-black logo slanted-text ${
+    hoverable ? "hoverable" : ""
+  }`}>{text}</span
+>
 
 <style>
   .logo {
     color: white;
     letter-spacing: -0.05em;
-    text-shadow: 0.075em 0.075em 0px theme("colors.gray.800"),
+    text-shadow:
+      0.075em 0.075em 0px theme("colors.gray.800"),
       -0.075em -0.075em 0px theme("colors.gray.800");
     transition: text-shadow 0.075s ease-out;
 
-    &:hover {
-      text-shadow: 0.075em 0.075em 0px theme("colors.purple.700"),
+    &.hoverable:hover {
+      text-shadow:
+        0.075em 0.075em 0px theme("colors.purple.700"),
         -0.075em -0.075em 0px theme("colors.purple.600");
     }
   }
