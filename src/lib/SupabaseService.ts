@@ -1,8 +1,8 @@
-import { createClient, SupabaseClient } from "@supabase/supabase-js";
+import { createClient } from "@supabase/supabase-js";
 
 export const client = createClient(
   import.meta.env.SUPABASE_URL,
-  import.meta.env.SUPABASE_SERVICE_KEY,
+  import.meta.env.SUPABASE_SERVICE_KEY
 );
 
 class SupabaseService {
@@ -12,7 +12,7 @@ class SupabaseService {
     this.client = client;
   }
 
-  getClient(): SupabaseClient {
+  getClient() {
     return this.client;
   }
 
