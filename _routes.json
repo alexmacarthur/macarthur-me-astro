@@ -1,0 +1,4 @@
+{
+  "version": 1,
+  "include": ["/trees.png", "/svg.svg", "/jpeg.jpeg", "/png.png", "/open-graph"]
+}
