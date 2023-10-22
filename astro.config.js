@@ -15,14 +15,14 @@ export default defineConfig({
   },
   integrations: [
     tailwind(),
-    sitemap({
-      serialize(item) {
-        item.changefreq = "daily";
-        item.lastmod = new Date();
-        item.priority = 0.9;
-        return item;
-      },
-    }),
+    // sitemap({
+    //   serialize(item) {
+    //     item.changefreq = "daily";
+    //     item.lastmod = new Date();
+    //     item.priority = 0.9;
+    //     return item;
+    //   },
+    // }),
     prefetch({
       selector: "a[href^='/'], a[href^='https://macarthur.me']",
     }),
