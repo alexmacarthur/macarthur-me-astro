@@ -38,10 +38,12 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "format": "prettier -w ."
+    "format": "prettier -w .",
+    "cf": "npx wrangler pages dev -- astro dev"
   },
   "type": "module",
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20231016.0",
     "typescript": "^5.2.2"
   }
 }

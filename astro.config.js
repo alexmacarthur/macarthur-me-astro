@@ -35,6 +35,6 @@ export default defineConfig({
     prefetch({
       selector: "a[href^='/'], a[href^='https://macarthur.me']",
     }),
-    compress(),
+    // compress(),
   ],
 });
