@@ -1,7 +1,6 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
-import robotsTxt from "astro-robots-txt";
 import prefetch from "@astrojs/prefetch";
 import { rehypePicPerf } from "@picperf/rehype";
 
@@ -23,14 +22,6 @@ export default defineConfig({
         item.priority = 0.9;
         return item;
       },
-    }),
-    robotsTxt({
-      policy: [
-        {
-          allow: "/",
-          userAgent: "*",
-        },
-      ],
     }),
     prefetch({
       selector: "a[href^='/'], a[href^='https://macarthur.me']",
