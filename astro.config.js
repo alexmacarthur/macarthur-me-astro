@@ -24,17 +24,17 @@ export default defineConfig({
         return item;
       },
     }),
-    // robotsTxt({
-    //   policy: [
-    //     {
-    //       allow: "/",
-    //       userAgent: "*",
-    //     },
-    //   ],
-    // }),
+    robotsTxt({
+      policy: [
+        {
+          allow: "/",
+          userAgent: "*",
+        },
+      ],
+    }),
     prefetch({
       selector: "a[href^='/'], a[href^='https://macarthur.me']",
     }),
-    // compress(),
+    compress(),
   ],
 });
