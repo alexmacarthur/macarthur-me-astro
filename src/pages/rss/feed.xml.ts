@@ -4,7 +4,7 @@ import sanitizeHtml from "sanitize-html";
 
 const posts = await contentService.getAllPosts();
 
-export const get = () =>
+export const GET = () =>
   rss({
     title: "Alex MacArthur's Blog",
     description:
