@@ -93,7 +93,7 @@ class ContentService {
     const images = dom.window.document.querySelectorAll("img");
 
     function transform(value) {
-      return `https://picperf.dev/${value}`;
+      return `https://picperf.io/${value}`;
     }
 
     function transformSrcset(value) {
