@@ -5,8 +5,6 @@ import robotsTxt from "astro-robots-txt";
 import prefetch from "@astrojs/prefetch";
 import { rehypePicPerf } from "@picperf/rehype";
 
-import compress from "astro-compress";
-
 // https://astro.build/config
 export default defineConfig({
   site: "https://macarthur.me",
@@ -35,6 +33,5 @@ export default defineConfig({
     prefetch({
       selector: "a[href^='/'], a[href^='https://macarthur.me']",
     }),
-    compress(),
   ],
 });
