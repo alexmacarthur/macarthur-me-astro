@@ -25,9 +25,13 @@ export default defineConfig({
     robotsTxt({
       policy: [
         {
-          allow: "/",
           userAgent: "*",
+          allow: "/"
         },
+        {
+          userAgent: "GPTBot",
+          disallow: "/", 
+        }
       ],
     }),
     prefetch({
