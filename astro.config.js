@@ -26,12 +26,12 @@ export default defineConfig({
       policy: [
         {
           userAgent: "*",
-          allow: "/"
+          allow: "/",
         },
         {
           userAgent: "GPTBot",
-          disallow: "/", 
-        }
+          disallow: "/",
+        },
       ],
     }),
     prefetch({
