@@ -1,4 +1,5 @@
 ---
+import type { GetStaticPaths } from "astro";
 import type { BlogPosting, WithContext } from "schema-dts";
 import JamComments from "@jam-comments/astro";
 import Bio from "../../components/Bio.astro";
@@ -142,8 +143,9 @@ if (post.updated_at) {
       });
     });
 
-    document.querySelectorAll(".code-block").forEach((code) => {
+    document.querySelectorAll(".code-block-wrapper").forEach((code) => {
       const codeTag = code.querySelector("code") as HTMLElement;
+
       const { paddingLeft, paddingRight } = getComputedStyle(code);
       const parentWidth =
         (code as HTMLElement).offsetWidth -
@@ -174,28 +176,36 @@ if (post.updated_at) {
     }
 
     .code-block {
-      @apply relative !important;
+      @apply relative my-4 p-5 !important;
       content-visibility: auto;
       contain-intrinsic-size: auto 275px;
     }
 
-    .code-block:after {
+    .code-block-wrapper {
+      @apply relative overflow-x-auto;
+    }
+
+    .code-block-wrapper:after {
       display: block;
       content: "scroll →";
       opacity: 0;
       transition: opacity 0.25s ease-in-out;
-      @apply absolute right-5 bottom-3 text-gray-400 text-sm -mt-5 text-right;
+      @apply absolute text-gray-400 text-sm;
+      position: absolute;
+      bottom: -0.225rem;
+      right: 0.25rem;
+      z-index: 1;
     }
 
-    .code-block.is-visible {
-      @apply pb-8 !important;
+    .code-block-wrapper.is-visible .code-block {
+      @apply mb-6 !important;
     }
 
-    .code-block.is-visible:after {
+    .code-block-wrapper.is-visible:after {
       opacity: 1;
     }
 
-    .code-block.is-in-view:after {
+    .code-block-wrapper.is-in-view:after {
       animation: slide 0.75s infinite ease-in-out alternate;
       animation-iteration-count: 2;
     }

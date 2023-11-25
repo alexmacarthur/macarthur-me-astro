@@ -165,6 +165,14 @@ class ContentService {
       );
 
       block.innerHTML = html;
+
+      // Wrapper the entire thing in a wrapper so we can more easily
+      // fix a "scroll" label at the bottom of the code block.
+      const blockWrapper = dom.window.document.createElement("div");
+      blockWrapper.classList.add("code-block-wrapper");
+      blockWrapper.appendChild(block.parentElement.cloneNode(true));
+
+      block.parentElement.replaceWith(blockWrapper);
     });
 
     return dom.serialize();

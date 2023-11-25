@@ -9,15 +9,14 @@
     "@jam-comments/astro": "^2.0.1",
     "@picperf/rehype": "^0.4.1",
     "@ramseyinhouse/feedback-component": "^1.0.3",
-    "@supabase/supabase-js": "^2.38.4",
+    "@supabase/supabase-js": "^2.38.5",
     "@tailwindcss/typography": "^0.5.10",
     "@tryghost/content-api": "^1.11.20",
-    "@types/node": "^20.9.2",
-    "astro": "^3.5.5",
+    "@types/node": "^20.10.0",
+    "astro": "^3.6.0",
     "astro-heroicons": "^0.3.0",
     "astro-robots-txt": "^1.0.0",
     "astro-seo": "^0.8.0",
-    "bun-types": "^1.0.13",
     "countup.js": "^2.8.0",
     "dotenv": "^16.3.1",
     "jsdom": "^22.1.0",
@@ -42,6 +41,6 @@
   },
   "type": "module",
   "devDependencies": {
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.2"
   }
 }
