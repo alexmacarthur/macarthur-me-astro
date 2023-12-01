@@ -15,8 +15,7 @@ const {
 <div
   class={`bg-gradient-to-br from-purple-600 to-purple-600 p-6 rounded-md w-full ${
     isHorizontal ? "grid md:grid-cols-5 gap-10 py-11" : ""
-  }`}
->
+  }`}>
   <div class="mb-5 md:col-span-3">
     <p class="text-white mb-3 font-semibold">
       {heading}
@@ -49,8 +48,7 @@ const {
 
     <p
       class="text-white px-1 py-2 text-center border-white hidden is-error"
-      id="resultMessage"
-    >
+      id="resultMessage">
     </p>
   </div>
 </div>
@@ -62,7 +60,7 @@ const {
 </style>
 
 <script>
-  import { sendEvent } from "../utils.ts";
+  import { sendEvent } from "../utils";
 
   const form = document.getElementById("signUpForm") as HTMLFormElement;
   const resultMessage = document.getElementById(
@@ -81,30 +79,18 @@ const {
       form.querySelector('input[name="email"]') as HTMLInputElement
     ).value as string;
     const path = window.location.pathname;
-    const response = await fetch(
-      `${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/sign-up`,
-      {
-        keepalive: true,
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, path }),
-      }
-    );
+
+    // @ts-ignore
+    fetch(`${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/sign-up`, {
+      keepalive: true,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, path }),
+    });
 
     resultMessage.classList.remove("hidden");
-
-    if (!response.ok) {
-      if (response.status === 409) {
-        resultMessage.innerText = "Looks like you're already subscribed!";
-      } else {
-        resultMessage.innerText = "Oh no! Something went wrong.";
-      }
-
-      button.disabled = false;
-      return;
-    }
 
     form.reset();
     resultMessage.classList.remove("is-error");

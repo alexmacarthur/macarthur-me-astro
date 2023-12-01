@@ -1,5 +1,4 @@
 ---
-import type { GetStaticPaths } from "astro";
 import type { BlogPosting, WithContext } from "schema-dts";
 import JamComments from "@jam-comments/astro";
 import Bio from "../../components/Bio.astro";
@@ -182,7 +181,12 @@ if (post.updated_at) {
     }
 
     .code-block-wrapper {
-      @apply relative overflow-x-auto;
+      @apply relative overflow-x-auto mx-auto;
+      max-width: calc(100% - theme("width.4"));
+
+      @screen sm {
+        max-width: 100%;
+      }
     }
 
     .code-block-wrapper:after {
