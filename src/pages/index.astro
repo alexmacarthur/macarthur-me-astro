@@ -1,6 +1,5 @@
 ---
 import ButtonLink from "../components/ButtonLink.astro";
-import Logo from "../components/Logo.astro";
 import GradientText from "../components/GradientText.astro";
 import SignupForm from "../components/SignupForm.astro";
 import DateFormatter from "../components/DateFormatter.astro";
@@ -58,16 +57,18 @@ const featuredBlogPosts = (await Promise.all(
             : `/posts/${post.slug}`;
 
           return (
-            <li class="border-2 p-4 rounded-md">
-              <h3>
-                <a class="font-light" href={url}>
-                  {post.title}
-                </a>
-              </h3>
+            <li class="border-2 p-4 rounded-md flex flex-col">
+              <div class="mb-4">
+                <h3>
+                  <a class="font-light" href={url}>
+                    {post.title}
+                  </a>
+                </h3>
 
-              <DateFormatter date={post.published_at} />
+                <DateFormatter date={post.published_at} />
+              </div>
 
-              <div class="mt-4 flex sm:gap-1 md:justify-between md:items-center flex-col md:flex-row">
+              <div class="flex sm:gap-1 md:justify-between md:items-center flex-col md:flex-row mt-auto">
                 <ButtonLink
                   href={url}
                   target={external ? "_blank" : "_self"}
