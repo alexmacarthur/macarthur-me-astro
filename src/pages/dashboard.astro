@@ -8,6 +8,7 @@ import stravaService from "../lib/StravaService";
 import npmService from "../lib/NpmService";
 import gsService from "../lib/GoogleSearchService";
 import wpService from "../lib/WordPressService";
+import contentService from "../lib/ContentService";
 import Counter from "../components/Counter.astro";
 import ArrowTopRightOnSquare from "astro-heroicons/outline/ArrowTopRightOnSquare.astro";
 
@@ -19,6 +20,13 @@ type State = {
 };
 
 const stats: State[] = [
+  {
+    title: "Total Blog Posts",
+    link: "https://macarthur.me/posts",
+    subTitle:
+      "Sign up for <a href='/newsletter' target='_blank'>my newsletter</a> to get new ones in your inbox.",
+    value: contentService.getTotalPostCount(),
+  },
   {
     title: "Total GitHub Stars",
     link: "https://github.com/alexmacarthur",
@@ -136,9 +144,10 @@ for (let stat of stats) {
                   </a>
                 )}
               </div>
-              <span class="text-sm italic text-gray-500 block mb-3">
-                {stat.subTitle}
-              </span>
+              <span
+                class="text-sm italic text-gray-500 block mb-3 child-link:text-purple-600"
+                set:html={stat.subTitle}
+              />
               <Counter
                 value={String(stat.value)}
                 classes="text-4xl md:text-5xl font-black"

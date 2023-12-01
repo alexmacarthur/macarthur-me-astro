@@ -80,6 +80,12 @@ class ContentService {
     return api.posts.browse({ limit: "all", include: "tags" });
   }
 
+  getTotalPostCount(): Promise<number> {
+    return api.posts
+      .browse({ limit: 1 })
+      .then((data) => data.meta.pagination.total);
+  }
+
   getPage(slug: string): Promise<GhostPost> {
     return api.pages.read({ slug });
   }

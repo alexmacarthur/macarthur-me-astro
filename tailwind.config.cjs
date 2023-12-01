@@ -76,5 +76,11 @@ module.exports = {
       }),
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [
+    require("@tailwindcss/typography"),
+    function ({ addVariant }) {
+      addVariant("child-link", "& > a");
+      addVariant("child-link-hover", "& > a:hover");
+    },
+  ],
 };
