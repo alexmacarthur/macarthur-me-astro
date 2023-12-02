@@ -28,10 +28,6 @@ export default defineConfig({
           userAgent: "*",
           allow: "/",
         },
-        {
-          userAgent: "GPTBot",
-          disallow: "/",
-        },
       ],
     }),
     prefetch({
