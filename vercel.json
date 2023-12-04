@@ -46,6 +46,11 @@
       "source": "/projects",
       "destination": "/products",
       "permanent": true
+    },
+    { 
+      "source": "/posts/all-the-ways-you-can-hide-stuff-in-the-browser",
+      "destination": "/posts/hide-stuff-in-the-browser",
+      "permanent": true
     }
   ],
   "rewrites": [
