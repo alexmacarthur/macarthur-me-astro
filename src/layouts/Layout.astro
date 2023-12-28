@@ -12,7 +12,7 @@ export interface Props {
   description?: string;
   openGraphImage?: string;
   openGraphAlt?: string;
-  pageType?: `narrow` | `normal` | "open";
+  pageType?: `narrow` | `normal` | "open" | "wide";
   subtitle?: string;
   schema?: WithContext<any>;
   canonicalUrl?: string | null;
@@ -43,6 +43,8 @@ const mainClass = (() => {
       return "max-w-[875px]";
     case "open":
       return "max-w-screen-lg";
+    case "wide":
+      return "max-w-[1100px]";
     default:
       return "";
   }
@@ -296,7 +298,7 @@ const articleOgData = postData
 
       .button,
       .jc-CommentBox-button {
-        @apply border-2 text-white text-lg border-purple-500 rounded-md px-4 py-1 bg-purple-500 hover:bg-white hover:text-purple-500 transition-colors duration-200 cursor-pointer !important;
+        @apply border-2 text-white text-lg border-purple-500 rounded-sm px-4 py-1 bg-purple-500 hover:bg-white hover:text-purple-500 transition-colors duration-200 cursor-pointer !important;
       }
 
       .jc-CommentBox-preview code[class^="language-"] {

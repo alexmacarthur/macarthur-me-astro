@@ -3,17 +3,16 @@ import type { BlogPosting, WithContext } from "schema-dts";
 import JamComments from "@jam-comments/astro";
 import Bio from "../../components/Bio.astro";
 import DateFormatter from "../../components/DateFormatter.astro";
-import Feedback from "../../components/Feedback.astro";
 import Title from "../../components/Title.astro";
 import ViewCount from "../../components/ViewCount.astro";
 import Layout from "../../layouts/Layout.astro";
 import { MINIMUM_VIEW_COUNT, MY_NAME } from "../../lib/constants";
-import { getCurrentPath, hasPromotion } from "../../utils";
+import { getCurrentPath } from "../../utils";
 import SignupForm from "../../components/SignupForm.astro";
 import contentService, { computeDescription } from "../../lib/ContentService";
 import analyticsService from "../../lib/AnalyticsService";
-import PromoSlice from "../../components/PromoSlice.astro";
 import ButtonLink from "../../components/ButtonLink.astro";
+import CarbonAds from "../../components/CarbonAds.astro";
 
 interface Params {
   slug: string;
@@ -63,7 +62,7 @@ if (post.updated_at) {
 <Layout
   title={post.title}
   ogTitle={post.meta_title}
-  pageType={"normal"}
+  pageType={"wide"}
   schema={postSchema}
   description={computedDescription}
   openGraphImage={post.og_image || post.feature_image}
@@ -108,26 +107,36 @@ if (post.updated_at) {
     </div>
   </div>
 
-  <div class="prose lg:prose-lg mx-auto" set:html={post.html} />
+  <div class="grid grid-cols-1 md:grid-cols-8 md:gap-10">
+    <div class="md:col-span-6">
+      <div class="prose lg:prose-lg mx-auto" set:html={post.html} />
 
-  <div class="mt-12">
-    {hasPromotion(post) ? <PromoSlice /> : <Feedback slug={post.slug} />}
-  </div>
+      <hr class="divider my-8" />
 
-  <div
-    class="my-6 grid grid-cols-1 sm:grid-cols-5 gap-8 pt-10 pb-8 w-screen max-w-6xl px-6 transform translate-x-[-50%] left-[50%] relative">
-    <div class="grid place-items-center p-6 sm:col-span-2">
+      <div class="flex flex-col gap-6 mb-10 md:hidden">
+        <Bio />
+
+        <SignupForm isHorizontal={false} />
+      </div>
+
+      <div class="max-w-3xl mx-auto">
+        <h5 class="text-2xl font-semibold slanted-text">
+          Leave a Free Comment
+        </h5>
+        <JamComments path={getCurrentPath(Astro)} />
+      </div>
+    </div>
+
+    <aside class="md:col-span-2 flex-col gap-8 hidden lg:flex">
       <Bio />
-    </div>
 
-    <div class="sm:col-span-3">
-      <SignupForm isHorizontal={true} />
-    </div>
-  </div>
+      <div class="sticky top-6">
+        <SignupForm isHorizontal={false} />
+      </div>
 
-  <div class="max-w-3xl mx-auto">
-    <h5 class="text-2xl font-semibold slanted-text">Leave a Free Comment</h5>
-    <JamComments path={getCurrentPath(Astro)} />
+      <!-- removed for now... need to decide if i want to do it -->
+      <!-- <CarbonAds /> -->
+    </aside>
   </div>
 
   <script>
@@ -181,7 +190,7 @@ if (post.updated_at) {
     }
 
     .code-block-wrapper {
-      @apply relative overflow-x-auto mx-auto;
+      @apply relative overflow-x-auto overflow-y-hidden mx-auto;
       max-width: calc(100% - theme("width.4"));
 
       @screen sm {
