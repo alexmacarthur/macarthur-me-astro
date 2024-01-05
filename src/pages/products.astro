@@ -1,7 +1,7 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Title from "../components/Title.astro";
 import ButtonLink from "../components/ButtonLink.astro";
+import Title from "../components/Title.astro";
+import Layout from "../layouts/Layout.astro";
 
 interface Product {
   id: string;
@@ -27,6 +27,15 @@ const products: Product[] = [
     description:
       "A stupid-simple comment service built for static site generators like Gatsby, Eleventy, and NextJS. It was built out of dissatisfaction with other solutions that require you to load a bloated, invasive third-party script in order to render comments client-side.",
     link: "https://jamcomments.com",
+  },
+  {
+    id: "plausiblebootstrapper",
+    name: "The Plausible Bootstrapper",
+    subheading:
+      "Set up self-hosted Plausible Analytics without losing your ever-loving mind.",
+    description:
+      "The Plausible Bootstrapper is a script you execute on a DigitalOcean droplet for painlessly setting up a self-hosted instance of Plausible Analytics.",
+    link: "https://plausiblebootstrapper.com",
   },
   {
     id: "typeit",
