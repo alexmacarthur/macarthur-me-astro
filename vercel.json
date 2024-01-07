@@ -93,6 +93,10 @@
     {
       "source": "/open-graph",
       "destination": "https://macarthur-me-api.vercel.app/api/og"
+    },
+    {
+      "source": "/run",
+      "destination": "https://macarthur-me-api.vercel.app/api/run"
     }
   ],
   "headers": [
