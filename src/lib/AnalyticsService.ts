@@ -12,12 +12,18 @@ class AnalyticsService {
   }
 
   async getPageViews(slug: string): Promise<[string, number]> {
-    const response = await fetch(
-      `https://macarthur-me-api.vercel.app/api/stats?slug=${slug}`,
-    );
-    const { views } = await response.json();
+    try {
+      const response = await fetch(
+        `https://macarthur-me-api.vercel.app/api/stats?slug=${slug}`
+      );
 
-    return [views, parseInt(views.replace(/\,/g, ""), 10)];
+      const { views } = await response.json();
+
+      return [views, parseInt(views.replace(/\,/g, ""), 10)];
+    } catch (error) {
+      console.error(error);
+      return ["0", 0];
+    }
   }
 
   async makePageViewMap(posts: GhostPost[]): Promise<Map<string, Views>> {
@@ -28,7 +34,7 @@ class AnalyticsService {
         const viewData = await this.getPageViews(post.slug);
 
         viewMap.set(post.slug, viewData);
-      }),
+      })
     );
 
     return viewMap;
@@ -36,7 +42,7 @@ class AnalyticsService {
 
   private async fetchTotalSiteViews(): Promise<number> {
     const response = await fetch(
-      `${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/stats`,
+      `${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/stats`
     );
     const { views } = await response.json();
 
