@@ -4,6 +4,6 @@
     "noImplicitAny": false,
     "isolatedModules": false,
     "module": "esnext",
-    "types": ["bun-types"]
-  }
+    "types": ["bun-types"],
+  },
 }

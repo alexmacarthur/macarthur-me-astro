@@ -1,16 +1,15 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Title from "../components/Title.astro";
-import analyticsService from "../lib/AnalyticsService";
-import ghService from "../lib/GitHubService";
-import supService from "../lib/SupabaseService";
-import stravaService from "../lib/StravaService";
-import npmService from "../lib/NpmService";
-import gsService from "../lib/GoogleSearchService";
-import wpService from "../lib/WordPressService";
-import contentService from "../lib/ContentService";
-import Counter from "../components/Counter.astro";
 import ArrowTopRightOnSquare from "astro-heroicons/outline/ArrowTopRightOnSquare.astro";
+import Counter from "../components/Counter.astro";
+import Title from "../components/Title.astro";
+import Layout from "../layouts/Layout.astro";
+import contentService from "../lib/ContentService";
+import ghService from "../lib/GitHubService";
+import gsService from "../lib/GoogleSearchService";
+import npmService from "../lib/NpmService";
+import stravaService from "../lib/StravaService";
+import supService from "../lib/SupabaseService";
+import wpService from "../lib/WordPressService";
 
 type State = {
   title: string;
@@ -38,11 +37,6 @@ const stats: State[] = [
     link: "https://github.com/alexmacarthur",
     subTitle: "Do it yourself today, for free.",
     value: ghService.getFollowerCount(),
-  },
-  {
-    title: "Total Website Views",
-    subTitle: "As tracked by Plausible since November, 2015.",
-    value: analyticsService.getTotalSiteViews(),
   },
   {
     title: "Positive Feedback (👍) on Blog Posts",

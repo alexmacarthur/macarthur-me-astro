@@ -1,22 +1,19 @@
 ---
-import DateFormatter from "./DateFormatter.astro";
-import ViewCount from "./ViewCount.astro";
-import ButtonLink from "./ButtonLink.astro";
-import type { GhostPost, Views } from "../types/types";
 import {
-  isExternal,
   computeDescription,
-  extractUrlFromBookmark,
   extractHostFromUrl,
+  extractUrlFromBookmark,
+  isExternal,
 } from "../lib/ContentService";
-import analyticsService from "../lib/AnalyticsService";
+import type { GhostPost } from "../types/types";
+import ButtonLink from "./ButtonLink.astro";
+import DateFormatter from "./DateFormatter.astro";
 
 interface Props {
   posts: GhostPost[];
 }
 
 const { posts } = Astro.props;
-const viewMap = await analyticsService.makePageViewMap(posts);
 ---
 
 <ul class="space-y-10">
@@ -28,7 +25,6 @@ const viewMap = await analyticsService.makePageViewMap(posts);
         ? extractUrlFromBookmark(post.html)
         : `/posts/${post.slug}`;
       const target = external ? "_blank" : "_self";
-      const [viewStr, viewNum] = viewMap.get(post.slug) as Views;
 
       return (
         <li>
@@ -45,21 +41,7 @@ const viewMap = await analyticsService.makePageViewMap(posts);
                 className="inline-block"
               />
 
-              {viewNum > 200 || external ? <small>/</small> : null}
-
-              {external ? (
-                extractHostFromUrl(postPath)
-              ) : (
-                <>
-                  {viewNum > 200 && (
-                    <ViewCount
-                      value={viewStr}
-                      slug={post.slug}
-                      disableAnimation={true}
-                    />
-                  )}
-                </>
-              )}
+              {external ? extractHostFromUrl(postPath) : null}
             </div>
 
             <p class="block text-gray-500 mb-2">{description}</p>

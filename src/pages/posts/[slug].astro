@@ -4,15 +4,12 @@ import JamComments from "@jam-comments/astro";
 import Bio from "../../components/Bio.astro";
 import DateFormatter from "../../components/DateFormatter.astro";
 import Title from "../../components/Title.astro";
-import ViewCount from "../../components/ViewCount.astro";
 import Layout from "../../layouts/Layout.astro";
-import { MINIMUM_VIEW_COUNT, MY_NAME } from "../../lib/constants";
+import { MY_NAME } from "../../lib/constants";
 import { getCurrentPath } from "../../utils";
 import SignupForm from "../../components/SignupForm.astro";
 import contentService, { computeDescription } from "../../lib/ContentService";
-import analyticsService from "../../lib/AnalyticsService";
 import ButtonLink from "../../components/ButtonLink.astro";
-import CarbonAds from "../../components/CarbonAds.astro";
 
 interface Params {
   slug: string;
@@ -28,11 +25,7 @@ export async function getStaticPaths() {
 
 const { slug: postSlug } = Astro.params as unknown as Params;
 
-const [post, viewData] = await Promise.all([
-  contentService.getPost(postSlug),
-  analyticsService.getPageViews(postSlug),
-]);
-const [viewStr, viewNum] = viewData;
+const post = await contentService.getPost(postSlug);
 const computedDescription = computeDescription(post);
 
 let postSchema: WithContext<BlogPosting> = {
@@ -91,19 +84,6 @@ if (post.updated_at) {
     class={`flex items-start gap-4 mb-6 ${post.custom_excerpt ? "" : "-mt-4"}`}>
     <div class="flex flex-wrap gap-x-3">
       <DateFormatter date={post.published_at} className="inline-block" />
-
-      {
-        viewNum && viewNum > MINIMUM_VIEW_COUNT && (
-          <>
-            <small>/</small>
-            <ViewCount
-              value={viewStr}
-              slug={post.slug}
-              disableAnimation={true}
-            />
-          </>
-        )
-      }
     </div>
   </div>
 
@@ -133,9 +113,6 @@ if (post.updated_at) {
       <div class="sticky top-6">
         <SignupForm isHorizontal={false} />
       </div>
-
-      <!-- removed for now... need to decide if i want to do it -->
-      <!-- <CarbonAds /> -->
     </aside>
   </div>
 
