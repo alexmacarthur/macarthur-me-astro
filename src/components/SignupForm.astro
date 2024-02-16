@@ -26,7 +26,7 @@ const {
   </div>
 
   <div class="flex flex-col justify-center flex-auto md:col-span-2">
-    <form id="signUpForm" class={`${isHorizontal ? "is-horizontal" : ""}`}>
+    <form data-signup-form class={`${isHorizontal ? "is-horizontal" : ""}`}>
       <div class="mb-4">
         <input
           class="border-none"
@@ -48,7 +48,7 @@ const {
 
     <p
       class="text-white px-1 py-2 text-center border-white hidden is-error"
-      id="resultMessage">
+      data-signup-message>
     </p>
   </div>
 </div>
@@ -62,40 +62,45 @@ const {
 <script>
   import { sendEvent } from "../utils";
 
-  const form = document.getElementById("signUpForm") as HTMLFormElement;
-  const resultMessage = document.getElementById(
-    "resultMessage"
-  ) as HTMLParagraphElement;
-  const button = form.querySelector('input[type="submit"]') as HTMLInputElement;
+  document
+    .querySelectorAll<HTMLFormElement>("[data-signup-form]")
+    .forEach((form) => {
+      const resultMessage = form.parentElement!.querySelector(
+        "[data-signup-message]"
+      ) as HTMLParagraphElement;
+      const button = form.querySelector(
+        'input[type="submit"]'
+      ) as HTMLInputElement;
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-    button.disabled = true;
+        button.disabled = true;
 
-    // Reset classes in case this is a second submission on the same page load.
-    resultMessage.classList.add("is-error", "hidden");
-    const email = (
-      form.querySelector('input[name="email"]') as HTMLInputElement
-    ).value as string;
-    const path = window.location.pathname;
+        // Reset classes in case this is a second submission on the same page load.
+        resultMessage.classList.add("is-error", "hidden");
+        const email = (
+          form.querySelector('input[name="email"]') as HTMLInputElement
+        ).value as string;
+        const path = window.location.pathname;
 
-    // @ts-ignore
-    fetch(`${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/sign-up`, {
-      keepalive: true,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, path }),
+        // @ts-ignore
+        fetch(`${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/sign-up`, {
+          keepalive: true,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, path }),
+        });
+
+        resultMessage.classList.remove("hidden");
+
+        form.reset();
+        resultMessage.classList.remove("is-error");
+        resultMessage.innerText = "You're in. Thanks! 🎉";
+        form.remove();
+        sendEvent("email_signup", { path });
+      });
     });
-
-    resultMessage.classList.remove("hidden");
-
-    form.reset();
-    resultMessage.classList.remove("is-error");
-    resultMessage.innerText = "You're in. Thanks! 🎉";
-    form.remove();
-    sendEvent("email_signup", { path });
-  });
 </script>

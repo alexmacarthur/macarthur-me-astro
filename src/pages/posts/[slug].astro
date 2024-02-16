@@ -87,13 +87,13 @@ if (post.updated_at) {
     </div>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-8 md:gap-10">
-    <div class="md:col-span-6">
+  <div class="grid grid-cols-1 lg:grid-cols-8 lg:gap-10">
+    <div class="lg:col-span-6">
       <div class="prose lg:prose-lg mx-auto" set:html={post.html} />
 
       <hr class="divider my-8" />
 
-      <div class="flex flex-col gap-6 mb-10 md:hidden">
+      <div class="flex flex-col gap-6 mb-10 lg:hidden">
         <Bio />
 
         <SignupForm isHorizontal={false} />
@@ -107,7 +107,7 @@ if (post.updated_at) {
       </div>
     </div>
 
-    <aside class="md:col-span-2 flex-col gap-8 hidden lg:flex">
+    <aside class="lg:col-span-2 flex-col gap-8 hidden lg:flex">
       <Bio />
 
       <div class="sticky top-6">
