@@ -14,14 +14,14 @@ function isCacheableForever(response: Response) {
 export const onRequestGet: PagesFunction = async (context) => {
   const response = await context.next();
 
-  if (isCacheableForever(response)) {
-    response.headers.set(
-      "Cache-Control",
-      "public, max-age=31560001, immutable"
-    );
+  // if (isCacheableForever(response)) {
+  //   response.headers.set(
+  //     "Cache-Control",
+  //     "public, max-age=31560001, immutable"
+  //   );
 
-    return response;
-  }
+  //   return response;
+  // }
 
   response.headers.set(
     "Cache-Control",
