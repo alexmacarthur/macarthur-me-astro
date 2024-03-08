@@ -8,6 +8,8 @@ const CACHE_FOREVER_CONTENT_TYPES = [
 function isCacheableForever(response: Response) {
   const contentType = response.headers.get("content-type") || "";
 
+  console.log("contentType", contentType);
+
   return CACHE_FOREVER_CONTENT_TYPES.some((type) => contentType.includes(type));
 }
 
@@ -19,14 +21,21 @@ export const onRequestGet: PagesFunction = async (context) => {
     return Response.redirect(requestUrl.replace("www.", ""), 301);
   }
 
-  // const contentType = response.headers.get("content-type") || "";
+  const contentType = response.headers.get("content-type") || "";
 
-  // if (contentType.includes("text/html")) {
-  //   response.headers.set(
-  //     "Cache-Control",
-  //     "public, s-maxage=3600, stale-while-revalidate=43200"
-  //   );
-  // }
+  if (contentType.includes("text/html")) {
+    response.headers.set(
+      "Cache-Control",
+      "public, s-maxage=3600, stale-while-revalidate=43200"
+    );
+  }
+
+  if (isCacheableForever(response)) {
+    response.headers.set(
+      "Cache-Control",
+      "public, max-age=31536001, immutable"
+    );
+  }
 
   return response;
 };
