@@ -11,7 +11,7 @@ function isCacheableForever(response: Response) {
   return CACHE_FOREVER_CONTENT_TYPES.some((type) => contentType.includes(type));
 }
 
-export const onRequest: PagesFunction = async (context) => {
+export const onRequestGet: PagesFunction = async (context) => {
   const response = await context.next();
 
   if (isCacheableForever(response)) {
