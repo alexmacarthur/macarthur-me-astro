@@ -14,29 +14,20 @@ function isCacheableForever(response: Response) {
 export const onRequestGet: PagesFunction = async (context) => {
   const response = await context.next();
 
+  console.log("URL", response.url);
+
   if (response.url.includes("www.")) {
     return Response.redirect(response.url.replace("www.", ""), 301);
   }
 
-  if (isCacheableForever(response)) {
-    console.log("Caching forever:", response.url);
+  // const contentType = response.headers.get("content-type") || "";
 
-    response.headers.set(
-      "Cache-Control",
-      "public, max-age=31560001, immutable"
-    );
-
-    return response;
-  }
-
-  const contentType = response.headers.get("content-type") || "";
-
-  if (contentType.includes("text/html")) {
-    response.headers.set(
-      "Cache-Control",
-      "public, s-maxage=3600, stale-while-revalidate=43200"
-    );
-  }
+  // if (contentType.includes("text/html")) {
+  //   response.headers.set(
+  //     "Cache-Control",
+  //     "public, s-maxage=3600, stale-while-revalidate=43200"
+  //   );
+  // }
 
   return response;
 };
