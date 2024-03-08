@@ -14,6 +14,10 @@ function isCacheableForever(response: Response) {
 export const onRequestGet: PagesFunction = async (context) => {
   const response = await context.next();
 
+  if (response.url.includes("www.")) {
+    return Response.redirect(response.url.replace("www.", ""), 301);
+  }
+
   // if (isCacheableForever(response)) {
   //   response.headers.set(
   //     "Cache-Control",
