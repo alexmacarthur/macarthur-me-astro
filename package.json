@@ -33,7 +33,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build && cp _headers dist/_headers",
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier -w .",

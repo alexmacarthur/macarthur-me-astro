@@ -1,4 +1,3 @@
-// Set CORS to all /api responses
 export const onRequest: PagesFunction = async (context) => {
   const response = await context.next();
 
