@@ -23,10 +23,14 @@ export const onRequestGet: PagesFunction = async (context) => {
   //   return response;
   // }
 
-  response.headers.set(
-    "Cache-Control",
-    "public, s-maxage=3600, stale-while-revalidate=43200"
-  );
+  const contentType = response.headers.get("content-type") || "";
+
+  if (contentType.includes("text/html")) {
+    response.headers.set(
+      "Cache-Control",
+      "public, s-maxage=3600, stale-while-revalidate=43200"
+    );
+  }
 
   return response;
 };
