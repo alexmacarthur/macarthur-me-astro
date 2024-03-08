@@ -1,16 +1,16 @@
-const CACHE_FOREVER_CONTENT_TYPES = [
-  "application/javascript",
-  "font/woff2",
-  "image/svg+xml",
-  "text/css",
+const CACHE_FOREVER_EXTENSIONS = [
+  ".css",
+  ".js",
+  ".woff",
+  ".woff2",
+  ".ttf",
+  ".svg",
+  ".eot",
+  ".otf",
 ];
 
-function isCacheableForever(response: Response) {
-  const contentType = response.headers.get("content-type") || "";
-
-  console.log("contentType", contentType);
-
-  return CACHE_FOREVER_CONTENT_TYPES.some((type) => contentType.includes(type));
+function isCacheableForever(requestUrl: string) {
+  return CACHE_FOREVER_EXTENSIONS.some((ext) => requestUrl.endsWith(ext));
 }
 
 export const onRequestGet: PagesFunction = async (context) => {
@@ -30,7 +30,7 @@ export const onRequestGet: PagesFunction = async (context) => {
     );
   }
 
-  if (isCacheableForever(response)) {
+  if (isCacheableForever(requestUrl)) {
     response.headers.set(
       "Cache-Control",
       "public, max-age=31536001, immutable"
