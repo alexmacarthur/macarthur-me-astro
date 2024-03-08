@@ -18,14 +18,16 @@ export const onRequestGet: PagesFunction = async (context) => {
     return Response.redirect(response.url.replace("www.", ""), 301);
   }
 
-  // if (isCacheableForever(response)) {
-  //   response.headers.set(
-  //     "Cache-Control",
-  //     "public, max-age=31560001, immutable"
-  //   );
+  if (isCacheableForever(response)) {
+    console.log("Caching forever:", response.url);
 
-  //   return response;
-  // }
+    response.headers.set(
+      "Cache-Control",
+      "public, max-age=31560001, immutable"
+    );
+
+    return response;
+  }
 
   const contentType = response.headers.get("content-type") || "";
 
