@@ -1,7 +1,7 @@
 name: Rebuild Astro Site
 on:
   schedule:
-    - cron: "0 */2 * * *"
+    - cron: "0 0 * * *"
 
 jobs:
   trigger_build:
