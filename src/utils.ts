@@ -22,8 +22,8 @@ export const getOpenGraphUrl = ({
 
 export const buildOpenGraphUrl = (title: string) => {
   return `https://www.macarthur.me/open-graph?title=${encodeURIComponent(
-    title,
-  )}`;
+    title
+  )}&v=2`;
 };
 
 export const randomInRange = (min, max): number => {
