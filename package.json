@@ -9,11 +9,11 @@
     "@jam-comments/astro": "^2.0.1",
     "@picperf/rehype": "^0.4.1",
     "@ramseyinhouse/feedback-component": "^1.0.3",
-    "@supabase/supabase-js": "^2.39.7",
+    "@supabase/supabase-js": "^2.39.8",
     "@tailwindcss/typography": "^0.5.10",
     "@tryghost/content-api": "^1.11.20",
-    "@types/node": "^20.11.25",
-    "astro": "^4.4.13",
+    "@types/node": "^20.11.27",
+    "astro": "^4.5.3",
     "astro-heroicons": "^2.1.1",
     "astro-robots-txt": "^1.0.0",
     "astro-seo": "^0.8.3",
@@ -42,6 +42,6 @@
   "type": "module",
   "devDependencies": {
     "typescript": "^5.4.2",
-    "@cloudflare/workers-types": "^4.20231025.0"
+    "@cloudflare/workers-types": "^4.20240312.0"
   }
 }
