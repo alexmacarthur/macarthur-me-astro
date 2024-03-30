@@ -7,6 +7,7 @@
     "@astrojs/sitemap": "^3.1.2",
     "@astrojs/tailwind": "^5.1.0",
     "@jam-comments/astro": "^2.0.1",
+    "@picperf/astro": "^1.1.0",
     "@picperf/rehype": "^0.4.1",
     "@ramseyinhouse/feedback-component": "^1.0.3",
     "@supabase/supabase-js": "^2.41.1",
@@ -41,7 +42,7 @@
   },
   "type": "module",
   "devDependencies": {
-    "typescript": "^5.4.3",
-    "@cloudflare/workers-types": "^4.20240320.1"
+    "@cloudflare/workers-types": "^4.20240320.1",
+    "typescript": "^5.4.3"
   }
 }
