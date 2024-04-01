@@ -71,7 +71,7 @@ class ContentService {
     data.html = this.#lazyLoadImages(data.html);
     data.html = this.#linkHeadings(data.html);
     data.html = this.#openExternalLinksInNewTab(data.html);
-    data.html = this.#proxyImages(data.html);
+    data.html = this.#proxyImages(data.html, slug);
 
     return data;
   }
@@ -94,12 +94,12 @@ class ContentService {
     return api.pages.browse({ limit: "all" });
   }
 
-  #proxyImages = (html: string): string => {
+  #proxyImages = (html: string, postSlug: string): string => {
     const dom = new JSDOM(html);
     const images = dom.window.document.querySelectorAll("img");
 
     function transform(value) {
-      return `https://picperf.io/${value}`;
+      return `https://picperf.io/${value}?sitemap_path=/posts/${postSlug}`;
     }
 
     function transformSrcset(value) {

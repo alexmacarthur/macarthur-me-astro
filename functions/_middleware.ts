@@ -26,14 +26,14 @@ export const onRequestGet: PagesFunction = async (context) => {
   if (contentType.includes("text/html")) {
     response.headers.set(
       "Cache-Control",
-      "public, s-maxage=3600, stale-while-revalidate=43200"
+      "public, s-maxage=3600, stale-while-revalidate=43200",
     );
   }
 
   if (isCacheableForever(requestUrl)) {
     response.headers.set(
       "Cache-Control",
-      "public, max-age=31536001, immutable"
+      "public, max-age=31536001, immutable",
     );
   }
 
