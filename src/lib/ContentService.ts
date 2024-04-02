@@ -65,9 +65,9 @@ class ContentService {
   }
 
   async getPost(slug: string): Promise<GhostPost> {
-    const data = (await api.posts.read({ slug, include: "tags" })) as GhostPost;
+    const data = await api.posts.read({ slug, include: "tags" });
 
-    data.html = this.#formatCodeBlocks(data.html);
+    data.html = this.#formatCodeBlocks(data.html || "");
     data.html = this.#lazyLoadImages(data.html);
     data.html = this.#linkHeadings(data.html);
     data.html = this.#openExternalLinksInNewTab(data.html);
@@ -167,7 +167,7 @@ class ContentService {
       const html = prism.highlight(
         code,
         prism.languages[language] || prism.languages.txt,
-        language || "txt",
+        language || "txt"
       );
 
       block.innerHTML = html;
