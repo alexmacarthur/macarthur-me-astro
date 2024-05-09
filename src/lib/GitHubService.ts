@@ -50,7 +50,7 @@ class GitHubService {
 
         return total;
       },
-      0
+      0,
     );
 
     this.dbCache.saveGitHubData({ totalStars });
@@ -126,7 +126,7 @@ class GitHubService {
       {
         per_page: 100,
         type: "public",
-      }
+      },
     );
 
     console.log(`Fetched ${repoData.length} repositories from GitHub...`);
@@ -143,12 +143,12 @@ class GitHubService {
         `/repos/alexmacarthur/${repo.name}/commits`,
         {
           per_page: 1,
-        }
+        },
       );
     });
 
     let commitData = (await Promise.allSettled(
-      commitPromises
+      commitPromises,
     )) as unknown as any[];
 
     console.log("Got commit data...");
@@ -158,7 +158,7 @@ class GitHubService {
       .map((commit) => commit.value[1][0])
       .reduce((allCommitData, commit) => {
         const repoName = commit?.commit.url.match(
-          /alexmacarthur\/(.+)\/git/
+          /alexmacarthur\/(.+)\/git/,
         )[1];
 
         allCommitData[repoName] = commit;
@@ -173,7 +173,7 @@ class GitHubService {
         `/repos/alexmacarthur/${repo.name}/tags`,
         {
           per_page: 1,
-        }
+        },
       );
     });
 
@@ -187,7 +187,7 @@ class GitHubService {
       .map((tag) => tag.value[1][0])
       .reduce((alltagData, tag) => {
         const repoName = tag.zipball_url.match(
-          /alexmacarthur\/(.+)\/zipball/
+          /alexmacarthur\/(.+)\/zipball/,
         )[1];
         alltagData[repoName] = tag;
 
