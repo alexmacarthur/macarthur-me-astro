@@ -17,10 +17,21 @@ export default defineConfig({
     rehypePlugins: [rehypePicPerf],
   },
   integrations: [
+<<<<<<< HEAD
     jamComments({
       domain: process.env.JAM_COMMENTS_DOMAIN,
       apiKey: process.env.JAM_COMMENTS_API_KEY,
     }),
+=======
+    {
+      name: "jam-comments-whatever",
+      hooks: {
+        "astro:build:setup": async ({ pages }) => {
+          console.log("...will use eventually...");
+        },
+      },
+    },
+>>>>>>> 3430c2e (wip)
     tailwind(),
     sitemap({
       serialize(item) {
