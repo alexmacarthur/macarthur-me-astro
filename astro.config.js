@@ -13,6 +13,14 @@ export default defineConfig({
     rehypePlugins: [rehypePicPerf],
   },
   integrations: [
+    {
+      name: "jam-comments-whatever",
+      hooks: {
+        "astro:build:setup": async ({ pages }) => {
+          console.log("...will use eventually...");
+        },
+      },
+    },
     tailwind(),
     sitemap({
       serialize(item) {

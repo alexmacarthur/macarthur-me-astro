@@ -1,0 +1,49 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+interface Flag {
+  title: string;
+  description: string;
+}
+
+const flags: Record<string, Flag> = {
+  "line-breaks": {
+    title: "Too many line breaks.",
+    description: "Make sure you’ve got a good grip on the concept of a “paragraph” before writing anything. When every sentence is followed by a line break, it feels like I’m reading a torturous block of terms & conditions. Adding all that space doesn’t bring clarity. It makes my thumb sore."
+  }, 
+  "selfie": {
+    title: "Selfie overload.",
+    description: "Don’t you dare include a selfie. If you think you can get an exception by shedding tears in that selfie, you’re too far gone and it may be time to delete your account."
+  }
+};
+
+const randomNumber = Math.floor(Math.random() * 900) + 100;
+---
+
+<Layout title="LinkedIn Flag" pageType="normal">
+  <div class="flex justify-center">
+    <div class="grid grid-cols-[30px_1fr] grid-rows-[1fr_50vw] gap-0">
+
+      <div class="relative bg-red-600 rounded-lg row-span-2">
+        <div class="absolute bg-red-600 rounded-lg row-span-2 top-0 w-full h-full right-[-60%]"></div>
+      </div>
+      
+      <div class="white bg-red-600 rounded-lg p-10 md:p-12 lg:p-20 relative skew-x-3">
+        <div class="-skew-x-3">
+        <span class="text-3xl md:text-4xl lg:text-7xl block font-bold mb-2">#{randomNumber}</span>
+        <h1 class="text-3xl font-bold mb-8">{flags["line-breaks"].title}</h1>
+        <p class="mt-4 text-lg leading-relaxed mb-0">{flags["line-breaks"].description}</p>
+        </div>
+      </div>
+
+      <div class="col-start-2"></div>
+    </div>
+  </div>
+
+</Layout>
+
+<style>
+  .white * {
+    color: white !important;
+  }
+</style>
