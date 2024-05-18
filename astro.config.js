@@ -4,6 +4,10 @@ import sitemap from "@astrojs/sitemap";
 // import robotsTxt from "astro-robots-txt";
 import prefetch from "@astrojs/prefetch";
 import { rehypePicPerf } from "@picperf/rehype";
+import { jamComments } from "@jam-comments/astro/config";
+import { configDotenv } from "dotenv";
+
+configDotenv();
 
 // https://astro.build/config
 export default defineConfig({
@@ -13,6 +17,10 @@ export default defineConfig({
     rehypePlugins: [rehypePicPerf],
   },
   integrations: [
+    jamComments({
+      domain: process.env.JAM_COMMENTS_DOMAIN,
+      apiKey: process.env.JAM_COMMENTS_API_KEY,
+    }),
     tailwind(),
     sitemap({
       serialize(item) {
