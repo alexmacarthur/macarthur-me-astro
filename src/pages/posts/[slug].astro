@@ -59,8 +59,7 @@ if (post.updated_at) {
   description={computedDescription}
   openGraphImage={post.og_image || post.feature_image}
   openGraphAlt={post.feature_image_caption}
-  canonicalUrl={post.canonical_url}
-  schema={postSchema}
+  canonicalUrl={post.canonical_url} 
   postData={{
     date: post.published_at,
     lastUpdated: post.updated_at,
@@ -103,7 +102,7 @@ if (post.updated_at) {
         <h5 class="text-2xl font-semibold slanted-text">
           Leave a Free Comment
         </h5>
-        <JamComments path={getCurrentPath(Astro)} />
+        <JamComments path={getCurrentPath(Astro)} schema={postSchema} />
       </div>
     </div>
 
