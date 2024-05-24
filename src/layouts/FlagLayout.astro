@@ -3,51 +3,43 @@ import FlagIcon from "../components/FlagIcon.astro";
 import Layout from "./Layout.astro";
 
 const {frontmatter} = Astro.props;
-
-interface Flag {
-  title: string;
-  description: string;
-}
-
-const flags: Record<string, Flag> = {
-  "line-breaks": {
-    title: "Too many line breaks.",
-    description: "Make sure you’ve got a good grip on the concept of a “paragraph” before writing anything. When every sentence is followed by a line break, it feels like I’m reading a torturous block of terms & conditions. Adding all that space doesn’t bring clarity. It makes my thumb sore."
-  }, 
-  "selfie": {
-    title: "Selfie overload.",
-    description: "Don’t you dare include a selfie. If you think you can get an exception by shedding tears in that selfie, you’re too far gone and it may be time to delete your account."
-  }
-};
 ---
 
-<Layout title={`Flagged: ${frontmatter.title}`} pageType="normal">
-  <div class="max-w-xl mx-auto pt-10">
-
-      <h2 class="flex items-center justify-center gap-2 text-center text-rose-600 mb-12 uppercase font-normal">
-        <span class="bg-rose-600 block h-1 w-12"></span>
-        You've Violated a LinkedIn Guildine
-        <span class="bg-rose-600 block h-1 w-12"></span>
+<Layout 
+  showNav={false}
+  openGraphImage={`https://macarthur-me-api.vercel.app/api/flag-og?title=${frontmatter.title.toUpperCase()}!`}
+  openGraphAlt={`Flagged: ${frontmatter.title}`}
+  title={`Flagged: ${frontmatter.title}`} 
+  pageType="normal"
+  >
+  <div class="max-w-3xl mx-auto py-20">
+      <h2 class="text-sm md:text-base flex items-center justify-center gap-2 text-center text-rose-600 mb-8 uppercase font-normal">
+        <span class="bg-rose-600 block h-1 w-0 md:w-12"></span>
+        You've Violated a LinkedIn Guidline.
+        <span class="bg-rose-600 block h-1 w-0 md:w-12"></span>
       </h2>
 
-      <div class="flex flex-col justify-center text-center items-center gap-4 mb-12">
-        <i class="h-32 w-32 !text-rose-600">
+      <div class="flex flex-col justify-center text-center items-center gap-4 mb-6 bg-rose-600 p-8 py-12">
+        <i class="h-24 md:h-32 w-24 md:w-32 !text-white">
           <FlagIcon />
         </i>
-        <h1 class="text-rose-600 text-7xl font-bold">
+        <h1 class="text-white text-4xl md:text-7xl font-black uppercase">
           { frontmatter.title }
         </h1>
       </div>
 
-      <div class="immune linked-in-copy text-2xl leading-normal slanted-text ">
+      <div class="immune linked-in-copy text-2xl leading-normal slanted-text max-w-xl mx-auto mb-10">
         <slot />
       </div>
-  </div>
 
+      <div class="text-center">
+        <a href="/linkedin/violations" class="text-rose-600 text-sm font-semibold uppercase">← View them all</a>
+      </div>
+  </div>
 </Layout>
 
-<style>
-  .linked-in-copy {
-    @apply text-rose-600;
+<style is:global>
+  .linked-in-copy * {
+    @apply text-rose-600 !important;
   }
 </style>

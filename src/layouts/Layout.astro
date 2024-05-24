@@ -9,6 +9,7 @@ import { getOpenGraphUrl } from "../utils";
 export interface Props {
   title: string;
   ogTitle?: string | null;
+  showNav?: boolean;
   description?: string;
   openGraphImage?: string;
   openGraphAlt?: string;
@@ -24,6 +25,7 @@ export interface Props {
 
 const {
   title,
+  showNav = true,
   ogTitle = "",
   description = "",
   pageType = "",
@@ -187,12 +189,13 @@ const articleOgData = postData
     />
   </head>
   <body>
-    <Nav />
+    { showNav && <Nav /> }
+    
     <main class={`px-4 md:px-6 mx-auto w-full ${mainClass}`}>
       <slot />
     </main>
 
-    <Footer />
+    { showNav && <Footer /> }
 
     <script>
       import "../scripts/link-tracking";
