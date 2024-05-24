@@ -1,6 +1,6 @@
 ---
 layout: ../../../layouts/FlagLayout.astro
-title: You used a banal literary hook.
+title: Banal literary hook.
 ---
 
 You started a post with a phrase that couldn't be any less original or more cliché. Reaching for hooks like "unpopular opinion," "CONFESSION," or "I don't know who needs to hear this" signals a severe lack of originality, and greatly undermines your credibility as a content creator who's capable of giving us anything of substance to ponder.
