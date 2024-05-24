@@ -28,10 +28,10 @@ showNav={false}
 
     {flags.slice(0, 3).map(({ frontmatter, url}) => (
         <li class="text-center">
-      <article>
+      <article class="flex h-full">
 
-        <a href={url} class="flex group border-8 border-solid border-rose-600" title="Read violation">
-          <div class="flex flex-col justify-center text-center items-center gap-4 mb-0 bg-rose-600 group-hover:bg-white p-8">
+        <a href={url} class="flex group border-8 border-solid border-rose-600 w-full" title="Read violation">
+          <div class="flex flex-col justify-center text-center items-center gap-4 mb-0 w-full bg-rose-600 group-hover:bg-white p-8">
             <div class="flex flex-col justify-center items-center gap-4">
         <i class="h-16 md:h-24 w-16 md:w-24 block !text-white group-hover:!text-rose-600">
           <FlagIcon />

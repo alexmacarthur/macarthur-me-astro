@@ -39,7 +39,13 @@ const {frontmatter} = Astro.props;
 </Layout>
 
 <style is:global>
-  .linked-in-copy * {
-    @apply text-rose-600 !important;
+  .linked-in-copy { 
+    * {
+
+      @apply text-rose-600 !important;
+    }
+        p + p {
+      @apply mt-6;
+    }
   }
 </style>
