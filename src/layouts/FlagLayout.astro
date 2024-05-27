@@ -8,8 +8,8 @@ const {frontmatter} = Astro.props;
 <Layout 
   showNav={false}
   openGraphImage={`https://macarthur-me-api.vercel.app/api/flag-og?title=${frontmatter.title.toUpperCase()}`}
-  openGraphAlt={`Flagged: ${frontmatter.title}`}
-  title={`Flagged: ${frontmatter.title}`} 
+  openGraphAlt={`Violation: ${frontmatter.title}`}
+  title={`Violation: ${frontmatter.title}`} 
   pageType="normal"
   >
   <div class="max-w-3xl mx-auto py-20">
