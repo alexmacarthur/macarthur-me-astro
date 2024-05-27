@@ -14,7 +14,7 @@ showNav={false}
   <div class="max-w-3xl mx-auto py-20">
       <div class="flex flex-col justify-center text-center items-center gap-4 mb-6">
         <h1 class="text-4xl text-rose-600 md:text-6xl font-black uppercase">
-          LinkedIn Guildline Violations
+          LinkedIn Violations
         </h1>
 
         <div class="max-w-xl mx-auto mb-12">
@@ -26,7 +26,7 @@ showNav={false}
 
     <ul class="grid md:grid-cols-2 gap-8">
 
-    {flags.slice(0, 3).map(({ frontmatter, url}) => (
+    {flags.map(({ frontmatter, url}) => (
         <li class="text-center">
       <article class="flex h-full">
 
