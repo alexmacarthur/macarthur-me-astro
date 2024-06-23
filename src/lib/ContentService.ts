@@ -52,6 +52,11 @@ export const extractUrlFromBookmark = (html: string): string => {
   const dom = new JSDOM(html);
   const link = dom.window.document.querySelector("a");
 
+  if (!link) {
+    console.error(`Could not find link! HTML: ${html}`);
+    return "";
+  }
+
   return link.href;
 };
 
