@@ -6,7 +6,6 @@ import DateFormatter from "../../components/DateFormatter.astro";
 import Title from "../../components/Title.astro";
 import Layout from "../../layouts/Layout.astro";
 import { MY_NAME } from "../../lib/constants";
-import { getCurrentPath } from "../../utils";
 import SignupForm from "../../components/SignupForm.astro";
 import contentService, { computeDescription } from "../../lib/ContentService";
 import ButtonLink from "../../components/ButtonLink.astro";
@@ -102,7 +101,9 @@ if (post.updated_at) {
         <h5 class="text-2xl font-semibold slanted-text">
           Leave a Free Comment
         </h5>
-        <JamComments schema={postSchema} />
+        <JamComments schema={postSchema} copy={{
+          commentPlaceholder: "Leave a comment...",
+        }} />
       </div>
     </div>
 
