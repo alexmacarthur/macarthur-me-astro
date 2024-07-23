@@ -101,7 +101,9 @@ if (post.updated_at) {
         <h5 class="text-2xl font-semibold slanted-text">
           Leave a Free Comment
         </h5>
-        <JamComments schema={postSchema} copy={{
+        <JamComments 
+          schema={postSchema}
+          copy={{
           commentPlaceholder: "Markdown is supported!",
         }} />
       </div>
