@@ -2,7 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 
 export const client = createClient(
   import.meta.env.SUPABASE_URL,
-  import.meta.env.SUPABASE_SERVICE_KEY,
+  import.meta.env.SUPABASE_SERVICE_KEY
 );
 
 class SupabaseService {
@@ -24,16 +24,6 @@ class SupabaseService {
     is_trusted: boolean;
   }) {
     return await this.client.from("contact_form_submissions").insert([args]);
-  }
-
-  async getPositiveFeedbackCount(): Promise<number> {
-    const { count } = await this.client
-      .from("feedback_interactions")
-      .select("id", { count: "exact", head: true })
-      .eq("environment", "production")
-      .eq("value", true);
-
-    return count;
   }
 
   async getToken(service: string = ""): Promise<string> {

@@ -8,7 +8,6 @@ import ghService from "../lib/GitHubService";
 import gsService from "../lib/GoogleSearchService";
 import npmService from "../lib/NpmService";
 import stravaService from "../lib/StravaService";
-import supService from "../lib/SupabaseService";
 import wpService from "../lib/WordPressService";
 
 type State = {
@@ -37,11 +36,6 @@ const stats: State[] = [
     link: "https://github.com/alexmacarthur",
     subTitle: "Do it yourself today, for free.",
     value: ghService.getFollowerCount(),
-  },
-  {
-    title: "Positive Feedback (👍) on Blog Posts",
-    subTitle: "Scroll to the bottom of any post and do it yourself.",
-    value: supService.getPositiveFeedbackCount(),
   },
   {
     title: "Links in <em>JavaScript Weekly</em>",
