@@ -121,6 +121,7 @@ class ContentService {
     images.forEach((image) => {
       image.src = transform(image.src);
       image.srcset = "";
+      image.sizes = "";
       // image.srcset = transformSrcset(image.srcset);
     });
 
