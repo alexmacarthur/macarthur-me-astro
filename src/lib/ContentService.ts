@@ -120,7 +120,8 @@ class ContentService {
 
     images.forEach((image) => {
       image.src = transform(image.src);
-      image.srcset = transformSrcset(image.srcset);
+      image.srcset = "";
+      // image.srcset = transformSrcset(image.srcset);
     });
 
     return dom.serialize();
@@ -172,7 +173,7 @@ class ContentService {
       const html = prism.highlight(
         code,
         prism.languages[language] || prism.languages.txt,
-        language || "txt",
+        language || "txt"
       );
 
       block.innerHTML = html;
