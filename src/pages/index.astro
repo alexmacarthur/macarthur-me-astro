@@ -48,7 +48,7 @@ const featuredBlogPosts = (await Promise.all(
       </li>
     </ul>
 
-    <ul class="list-none grid grid-cols-2 sm:grid-cols-3 gap-4 featured-blocks">
+    <ul class="list-none grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-4 featured-blocks">
       {
         featuredBlogPosts.map((post) => {
           const external = isExternal(post);
@@ -57,10 +57,10 @@ const featuredBlogPosts = (await Promise.all(
             : `/posts/${post.slug}`;
 
           return (
-            <li class="border-2 p-4 rounded-md flex flex-col">
+            <li class="border-2 p-3 md:p-4 rounded-md flex flex-col">
               <div class="mb-4">
                 <h3>
-                  <a class="font-light" href={url}>
+                  <a class="font-light break-words" href={url}>
                     {post.title}
                   </a>
                 </h3>
@@ -70,12 +70,12 @@ const featuredBlogPosts = (await Promise.all(
 
               <div class="flex sm:gap-1 md:justify-between md:items-center flex-col md:flex-row mt-auto">
                 <ButtonLink
-                  classes="text-sm"
+                  classes="text-xs md:text-sm"
                   href={url}
                   target={external ? "_blank" : "_self"}
-                  withArrow={external}>
+                  withArrow={true}>
 
-                  {external ? <>{extractHostFromUrl(url)}</> : "Read It"}
+                  {external ? <>{extractHostFromUrl(url)}</> : "read it"}
                 </ButtonLink>
               </div>
             </li>
