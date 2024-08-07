@@ -1,4 +1,4 @@
-export const POSTS_PER_PAGE = 10;
+export const POSTS_PER_PAGE = 15;
 export const FB_ADMINS = "502371334";
 export const TWITTER_HANDLE = "@amacarthur";
 export const MY_NAME = "Alex MacArthur";

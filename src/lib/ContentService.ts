@@ -174,7 +174,7 @@ class ContentService {
       const html = prism.highlight(
         code,
         prism.languages[language] || prism.languages.txt,
-        language || "txt"
+        language || "txt",
       );
 
       block.innerHTML = html;

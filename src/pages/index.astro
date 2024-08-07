@@ -14,7 +14,7 @@ import type { GhostPost } from "../types/types";
 const featuredBlogPosts = (await Promise.all(
   [
     "options-for-removing-event-listeners",
-    "maps-for-dom-nodes",
+    "promise-with-resolvers",
     "send-an-http-request-on-page-exit",
     "navigating-the-event-loop",
   ].map((slug) => contentService.getPost(slug))
@@ -70,17 +70,13 @@ const featuredBlogPosts = (await Promise.all(
 
               <div class="flex sm:gap-1 md:justify-between md:items-center flex-col md:flex-row mt-auto">
                 <ButtonLink
+                  classes="text-sm"
                   href={url}
                   target={external ? "_blank" : "_self"}
                   withArrow={external}>
-                  Read It
-                </ButtonLink>
 
-                {external && (
-                  <small class="text-gray-500 text-sm">
-                    {extractHostFromUrl(url)}
-                  </small>
-                )}
+                  {external ? <>{extractHostFromUrl(url)}</> : "Read It"}
+                </ButtonLink>
               </div>
             </li>
           );
