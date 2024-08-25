@@ -1,3 +1,9 @@
+import type {
+  Pagination,
+  PostOrPage,
+  PostsOrPages,
+} from "@tryghost/content-api";
+
 export interface GhostPost {
   id: string;
   uuid: string;
@@ -52,3 +58,27 @@ export interface GhostPostList extends Array<GhostPost> {
 }
 
 export type GhostTags = "external";
+
+export interface PaginatedList {
+  data: PostsOrPages;
+  currentPage: number;
+  lastPage: number;
+  url: {
+    prev: string | undefined;
+    next: string | undefined;
+  };
+}
+
+export interface CustomPostOrPage extends PostOrPage {
+  html: string;
+  published_at: string;
+  title: string;
+  slug: string;
+}
+
+interface CustomBrowseResults<T> extends Array<T> {
+  meta: { pagination: Pagination };
+}
+
+export interface CustomPostsOrPages
+  extends CustomBrowseResults<CustomPostOrPage> {}

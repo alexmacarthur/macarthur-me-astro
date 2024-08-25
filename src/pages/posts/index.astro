@@ -1,20 +1,19 @@
 ---
-import type { Page } from "astro";
 import PaginatedPosts from "../../layouts/PaginatedPosts.astro";
-import type { GhostPost } from "../../types/types";
 import contentService from "../../lib/ContentService";
+import type { PaginatedList } from "../../types/types";
 
-const posts = await contentService.getPosts(1);
+const posts = await contentService.getPosts(1, { excludeTags: ["scratch"] });
 
-const pageData: Partial<Page<GhostPost>> = {
+const pageData: PaginatedList = {
   data: posts,
   currentPage: 1,
   lastPage: posts.meta.pagination.pages,
   url: {
     prev: undefined,
     next: "/posts/page/2",
-  } as Page["url"],
+  }
 };
 ---
 
-<PaginatedPosts page={pageData as Page<GhostPost>} />
+<PaginatedPosts page={pageData} />

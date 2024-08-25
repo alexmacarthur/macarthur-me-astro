@@ -1,0 +1,175 @@
+---
+import type { BlogPosting, WithContext } from "schema-dts";
+import Layout from "../../layouts/Layout.astro";
+import { MY_NAME } from "../../lib/constants";
+import contentService, { computeDescription } from "../../lib/ContentService";
+import ButtonLink from "../../components/ButtonLink.astro";
+import Title from "../../components/Title.astro";
+import DateFormatter from "../../components/DateFormatter.astro";
+
+interface Params {
+  slug: string;
+}
+
+export async function getStaticPaths() {
+  return (await contentService.getAllPosts()).map((post) => {
+    return {
+      params: { slug: post.slug },
+    };
+  });
+}
+
+const { slug: postSlug } = Astro.params as unknown as Params;
+
+const post = await contentService.getPost(postSlug);
+const computedDescription = computeDescription(post);
+
+let postSchema: WithContext<BlogPosting> = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  datePublished: post.published_at,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": Astro.request.url,
+  },
+  headline: post.title,
+  isFamilyFriendly: true,
+  description: computedDescription,
+  image: post.og_image || post.feature_image,
+  author: {
+    "@type": "Person",
+    name: MY_NAME,
+    url: import.meta.env.SITE_URL,
+  },
+};
+
+if (post.updated_at) {
+  postSchema.dateModified = post.updated_at;
+}
+---
+
+<Layout
+  title={post.title}
+  ogTitle={post.meta_title}
+  pageType={"normal"}
+  description={computedDescription}
+  openGraphImage={post.og_image || post.feature_image}
+  openGraphAlt={post.feature_image_caption}
+  canonicalUrl={post.canonical_url} 
+  postData={{
+    date: post.published_at,
+    lastUpdated: post.updated_at,
+  }}>
+  <ButtonLink
+    href="/posts"
+    withArrow={true}
+    arrowDirection="left"
+    classes="mb-2">
+    Back to All
+  </ButtonLink>
+
+  <Title
+    headingClasses={"text-3xl md:text-6xl mb-5"}
+    subtitle={post.custom_excerpt}
+    transitionName={post.slug}>
+    {post.title}
+  </Title>
+
+  <div
+    class={`flex items-start gap-4 mb-6 ${post.custom_excerpt ? "" : "-mt-4"}`}>
+    <div class="flex flex-wrap gap-x-3">
+      <DateFormatter date={post.published_at} className="inline-block" />
+    </div>
+  </div>
+
+    <div class="prose lg:prose-lg mx-auto" set:html={post.html} />
+
+  <script>
+    const observer = new IntersectionObserver((entries, o) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add("is-in-view");
+          }, 500);
+          observer.unobserve(entry.target);
+        }
+      });
+    });
+
+    document.querySelectorAll(".code-block-wrapper").forEach((code) => {
+      const codeTag = code.querySelector("code") as HTMLElement;
+
+      const { paddingLeft, paddingRight } = getComputedStyle(code);
+      const parentWidth =
+        (code as HTMLElement).offsetWidth -
+        parseInt(paddingLeft) -
+        parseInt(paddingRight);
+
+      if (codeTag.offsetWidth > parentWidth) {
+        code.classList.add("is-visible");
+      }
+
+      observer.observe(code);
+    });
+  </script>
+
+  <style is:global>
+    @keyframes slide {
+      0% {
+        transform: translateX(0);
+      }
+
+      50% {
+        transform: translateX(-0.5rem);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    .code-block {
+      @apply relative my-4 p-5 !important;
+      content-visibility: auto;
+      contain-intrinsic-size: auto 275px;
+    }
+
+    .code-block-wrapper {
+      @apply relative overflow-x-auto overflow-y-hidden mx-auto;
+      max-width: calc(100% - theme("width.4"));
+
+      @screen sm {
+        max-width: 100%;
+      }
+    }
+
+    .code-block-wrapper:after {
+      display: block;
+      content: "scroll →";
+      opacity: 0;
+      transition: opacity 0.25s ease-in-out;
+      @apply absolute text-gray-400 text-sm;
+      position: absolute;
+      bottom: -0.225rem;
+      right: 0.25rem;
+      z-index: 1;
+    }
+
+    .code-block-wrapper.is-visible .code-block {
+      @apply mb-6 !important;
+    }
+
+    .code-block-wrapper.is-visible:after {
+      opacity: 1;
+    }
+
+    .code-block-wrapper.is-in-view:after {
+      animation: slide 0.75s infinite ease-in-out alternate;
+      animation-iteration-count: 2;
+    }
+
+    .kg-embed-card iframe {
+      @apply w-full mx-auto;
+    }
+  </style>
+</Layout>

@@ -8,7 +8,7 @@ export interface Props {
 
 const { totalPages, currentPage, nextUrl, prevUrl } = Astro.props;
 
-const getLinkClasses = (link) => {
+const getLinkClasses = (link: string) => {
   if (!link) {
     return "pointer-events-none opacity-50";
   }

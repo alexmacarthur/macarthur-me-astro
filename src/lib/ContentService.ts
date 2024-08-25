@@ -1,9 +1,9 @@
-import GhostContentAPI from "@tryghost/content-api";
+import GhostContentAPI, { type Params } from "@tryghost/content-api";
 import { JSDOM } from "jsdom";
-import type { GhostPost, GhostPostList } from "../types/types";
 import { POSTS_PER_PAGE } from "./constants";
 import prism from "prismjs";
 import loadLanguages from "prismjs/components/index";
+import type { CustomPostOrPage, CustomPostsOrPages } from "../types/types";
 
 loadLanguages();
 
@@ -32,7 +32,10 @@ const generateExcerpt = (html: string, wordCount: number = 50) => {
   return removeHtml(text.split(" ").slice(0, wordCount).join(" "));
 };
 
-export const computeDescription = (post: GhostPost, wordCount: number = 50) => {
+export const computeDescription = (
+  post: CustomPostOrPage,
+  wordCount: number = 50,
+) => {
   if (post.meta_description) {
     return post.meta_description;
   }
@@ -44,7 +47,11 @@ export const computeDescription = (post: GhostPost, wordCount: number = 50) => {
   return generateExcerpt(post.html, wordCount);
 };
 
-export const isExternal = (post: GhostPost): boolean => {
+export const isExternal = (post: CustomPostOrPage): boolean => {
+  if (!post.tags) {
+    throw new Error("Post does not have tags!");
+  }
+
   return post.tags.some((tag) => tag.slug === "external");
 };
 
@@ -65,12 +72,31 @@ export const extractHostFromUrl = (url: string): string => {
 };
 
 class ContentService {
-  getPosts(page: number = 1): Promise<GhostPostList> {
-    return api.posts.browse({ page, include: "tags", limit: POSTS_PER_PAGE });
+  getPosts(
+    page: number = 1,
+    {
+      tags = [],
+      excludeTags = [],
+    }: {
+      tags?: string[];
+      excludeTags?: string[];
+    } = {},
+  ): Promise<CustomPostsOrPages> {
+    const args: Params = { page, limit: POSTS_PER_PAGE, include: "tags" };
+
+    if (tags.length) {
+      args.filter = `tags:${tags.toString()}`;
+    }
+
+    if (excludeTags.length) {
+      args.filter = `tags:-${excludeTags.toString()}`;
+    }
+
+    return api.posts.browse(args) as Promise<CustomPostsOrPages>;
   }
 
-  async getPost(slug: string): Promise<GhostPost> {
-    const data = await api.posts.read({ slug, include: "tags" });
+  async getPost(slug: string): Promise<CustomPostOrPage> {
+    const data = await api.posts.read({ slug }, { include: "tags" });
 
     data.html = this.#formatCodeBlocks(data.html || "");
     data.html = this.#lazyLoadImages(data.html);
@@ -78,11 +104,27 @@ class ContentService {
     data.html = this.#openExternalLinksInNewTab(data.html);
     data.html = this.#proxyImages(data.html, slug);
 
-    return data;
+    return data as CustomPostOrPage;
   }
 
-  getAllPosts(): Promise<GhostPostList> {
-    return api.posts.browse({ limit: "all", include: "tags" });
+  getAllPosts({
+    tags = undefined,
+    excludeTags = undefined,
+  }: {
+    tags?: string[];
+    excludeTags?: string[];
+  } = {}): Promise<CustomPostsOrPages> {
+    const args: Params = { limit: "all", include: "tags" };
+
+    if (tags) {
+      args.filter = `tags:${tags.toString()}`;
+    }
+
+    if (excludeTags) {
+      args.filter = `tags:-${excludeTags.toString()}`;
+    }
+
+    return api.posts.browse(args) as Promise<CustomPostsOrPages>;
   }
 
   getTotalPostCount(): Promise<number> {
@@ -91,12 +133,12 @@ class ContentService {
       .then((data) => data.meta.pagination.total);
   }
 
-  getPage(slug: string): Promise<GhostPost> {
-    return api.pages.read({ slug });
+  getPage(slug: string): Promise<CustomPostOrPage> {
+    return api.pages.read({ slug }) as Promise<CustomPostOrPage>;
   }
 
-  getAllPages(): Promise<GhostPostList> {
-    return api.pages.browse({ limit: "all" });
+  getAllPages(): Promise<CustomPostsOrPages> {
+    return api.pages.browse({ limit: "all" }) as Promise<CustomPostsOrPages>;
   }
 
   #proxyImages = (html: string, postSlug: string): string => {

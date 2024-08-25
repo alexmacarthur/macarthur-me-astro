@@ -2,21 +2,21 @@
 import type { Page } from "astro";
 import Title from "../components/Title.astro";
 import Layout from "./Layout.astro";
-import PostList from "../components/PostList.astro";
 import Pagination from "../components/Pagination.astro";
-import type { PaginatedList } from "../types/types";
+import type { CustomPostOrPage, GhostPost } from "../types/types";
+import ScratchList from "../components/ScratchList.astro";
 
 export interface Props {
-  page: PaginatedList;
+  page: any
 }
 
 const { page } = Astro.props;
 ---
 
 <Layout title="Posts" pageType="normal">
-  <Title>Posts</Title>
+  <Title>Scratchpad</Title>
 
-  <PostList posts={page.data} />
+  <ScratchList posts={page.data} />
 
   <Pagination
     totalPages={page.lastPage as number}

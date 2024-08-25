@@ -1,0 +1,20 @@
+---
+import type { Page } from "astro";
+import type { GhostPost } from "../../types/types";
+import contentService from "../../lib/ContentService";
+import PaginatedScratch from "../../layouts/PaginatedScratch.astro";
+
+const posts = await contentService.getPosts(1, { tags: ["scratch"]});
+
+const pageData: Partial<Page<GhostPost>> = {
+  data: posts,
+  currentPage: 1,
+  lastPage: posts.meta.pagination.pages,
+  url: {
+    prev: undefined,
+    next: "/scratch/page/2",
+  } as Page["url"],
+};
+---
+
+<PaginatedScratch page={pageData as Page<GhostPost>} />
