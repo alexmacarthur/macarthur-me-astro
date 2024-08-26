@@ -21,7 +21,7 @@ const { page } = Astro.props;
   <Pagination
     totalPages={page.lastPage as number}
     currentPage={page.currentPage as number}
-    nextUrl={(page.url as Page["url"]).next}
-    prevUrl={(page.url as Page["url"]).prev}
+    nextUrl={(page.url).next}
+    prevUrl={(page.url).prev}
   />
 </Layout>

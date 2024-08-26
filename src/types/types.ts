@@ -60,7 +60,7 @@ export interface GhostPostList extends Array<GhostPost> {
 export type GhostTags = "external";
 
 export interface PaginatedList {
-  data: PostsOrPages;
+  data: CustomPostsOrPages;
   currentPage: number;
   lastPage: number;
   url: {

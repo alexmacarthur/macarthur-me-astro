@@ -35,7 +35,7 @@ let postSchema: WithContext<BlogPosting> = {
   headline: post.title,
   isFamilyFriendly: true,
   description: computedDescription,
-  image: post.og_image || post.feature_image,
+  image: post.og_image || post.feature_image || undefined,
   author: {
     "@type": "Person",
     name: MY_NAME,
@@ -53,12 +53,12 @@ if (post.updated_at) {
   ogTitle={post.meta_title}
   pageType={"normal"}
   description={computedDescription}
-  openGraphImage={post.og_image || post.feature_image}
-  openGraphAlt={post.feature_image_caption}
+  openGraphImage={post.og_image || post.feature_image || undefined}
+  openGraphAlt={post.feature_image_caption || undefined}
   canonicalUrl={post.canonical_url} 
   postData={{
     date: post.published_at,
-    lastUpdated: post.updated_at,
+    lastUpdated: post.updated_at || "",
   }}>
   <ButtonLink
     href="/posts"
