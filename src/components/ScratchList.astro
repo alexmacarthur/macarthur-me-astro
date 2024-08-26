@@ -1,6 +1,5 @@
 ---
 import {
-  computeDescription,
   extractHostFromUrl,
   extractUrlFromBookmark,
   isExternal,
@@ -19,7 +18,6 @@ const { posts } = Astro.props;
 <ul class="grid grid-cols-1 gap-6">
   {
     posts.map((post) => {
-      const description = computeDescription(post);
       const external = isExternal(post);
       const postPath = external
         ? extractUrlFromBookmark(post.html)
@@ -28,23 +26,23 @@ const { posts } = Astro.props;
 
       return (
         <li class="border border-gray-300 rounded-md p-6">
-          <article>
-            <h2 class="text-2xl font-bold mb-1" transition:name={post.slug}>
-              <a href={postPath} target={target}>
-                {post.title}
-              </a>
-            </h2>
+          <article class="flex justify-between">
+            <div class="flex-none">
+              <h2 class="text-2xl font-bold mb-1" transition:name={post.slug}>
+                <a href={postPath} target={target}>
+                  {post.title}
+                </a>
+              </h2>
 
-            <div class="flex flex-wrap items-center mb-3 gap-x-3 text-base text-gray-500">
-              <DateFormatter
-                date={post.published_at}
-                className="inline-block"
-              />
+              <div class="flex flex-wrap items-center gap-x-3 text-base text-gray-500">
+                <DateFormatter
+                  date={post.published_at}
+                  className="inline-block"
+                />
 
-              {external ? extractHostFromUrl(postPath) : null}
+                {external ? extractHostFromUrl(postPath) : null}
+              </div>
             </div>
-
-            <p class="block text-gray-500 mb-2">{description}</p>
 
             <ButtonLink href={postPath} target={target} withArrow={true}>
               Read It

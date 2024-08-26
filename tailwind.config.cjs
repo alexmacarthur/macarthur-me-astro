@@ -71,6 +71,9 @@ module.exports = {
               fontWeight: "inherit",
               color: "inherit",
             },
+            blockquote: {
+              fontWeight: "inherit",
+            },
           },
         },
       }),
