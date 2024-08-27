@@ -13,7 +13,7 @@ export interface Props {
   description?: string;
   openGraphImage?: string;
   openGraphAlt?: string;
-  pageType?: `narrow` | `normal` | "open" | "wide";
+  pageType?: `narrow` | "open" | "wide";
   subtitle?: string;
   schema?: WithContext<any>;
   canonicalUrl?: string | null;
@@ -41,8 +41,6 @@ const mainClass = (() => {
   switch (pageType) {
     case "narrow":
       return "max-w-screen-md";
-    case "normal":
-      return "max-w-[875px]";
     case "open":
       return "max-w-screen-lg";
     case "wide":

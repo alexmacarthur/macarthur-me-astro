@@ -23,10 +23,10 @@ const page = await contentService.getPage(pageSlug);
 <Layout
   description={computeDescription(page)}
   ogTitle={page.meta_title}
-  openGraphImage={page.og_image || page.feature_image}
-  openGraphAlt={page.feature_image_caption}
+  openGraphImage={page.og_image || page.feature_image || undefined}
+  openGraphAlt={page.feature_image_caption || undefined}
   canonicalUrl={page.canonical_url}
-  pageType="normal"
+  pageType="narrow"
   title={page.title}>
   <Title>{page.title}</Title>
   <div class="prose lg:prose-lg mx-auto" set:html={page.html} />

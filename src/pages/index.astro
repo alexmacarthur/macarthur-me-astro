@@ -9,7 +9,7 @@ import contentService, {
   extractUrlFromBookmark,
   extractHostFromUrl,
 } from "../lib/ContentService";
-import type { GhostPost } from "../types/types";
+import type { CustomPostsOrPages } from "../types/types";
 
 const featuredBlogPosts = (await Promise.all(
   [
@@ -18,7 +18,7 @@ const featuredBlogPosts = (await Promise.all(
     "send-an-http-request-on-page-exit",
     "navigating-the-event-loop",
   ].map((slug) => contentService.getPost(slug))
-)) as GhostPost[];
+)) as CustomPostsOrPages;
 ---
 
 <Layout title="I'm Alex MacArthur">

@@ -38,7 +38,7 @@ let postSchema: WithContext<BlogPosting> = {
   headline: post.title,
   isFamilyFriendly: true,
   description: computedDescription,
-  image: post.og_image || post.feature_image,
+  image: post.og_image || post.feature_image || undefined,
   author: {
     "@type": "Person",
     name: MY_NAME,

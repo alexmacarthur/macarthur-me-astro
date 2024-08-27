@@ -13,7 +13,7 @@ export interface Props {
 const { page } = Astro.props;
 ---
 
-<Layout title="Posts" pageType="normal">
+<Layout title="Posts" pageType="narrow">
   <Title>Posts</Title>
 
   <PostList posts={page.data} />
