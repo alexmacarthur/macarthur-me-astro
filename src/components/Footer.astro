@@ -118,11 +118,13 @@ const linkSections = [
               </span>
               <ul class="flex flex-col gap-3">
                 {section.links.map((link) => {
+                  const target = link.href.includes("macarthur.me") || link.href.startsWith("/") ? "_self" : "_blank";
+
                   return (
                     <li class="social-link">
                       <a
                         href={link.href}
-                        target="_blank"
+                        target={target}
                         class="fancy-link-on-hover">
                         {link.name}
                       </a>
