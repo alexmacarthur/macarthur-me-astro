@@ -1,6 +1,7 @@
 ---
 import ButtonLink from "../components/ButtonLink.astro";
 import GradientText from "../components/GradientText.astro";
+import ListCard from "../components/ListCard.astro";
 import SignupForm from "../components/SignupForm.astro";
 import DateFormatter from "../components/DateFormatter.astro";
 import Layout from "../layouts/Layout.astro";
@@ -16,9 +17,10 @@ const featuredBlogPosts = (await Promise.all(
     "options-for-removing-event-listeners",
     "promise-with-resolvers",
     "send-an-http-request-on-page-exit",
-    "navigating-the-event-loop",
   ].map((slug) => contentService.getPost(slug))
 )) as CustomPostsOrPages;
+
+const scratchPosts = await contentService.getPosts(1, { tags: ["scratch"]});
 ---
 
 <Layout title="I'm Alex MacArthur">
@@ -35,64 +37,71 @@ const featuredBlogPosts = (await Promise.all(
       >
     </div>
 
-    <ul class="list-none grid grid-cols-3 gap-4 mb-4">
-      <li class="col-span-3 md:col-span-2 flex items-center">
+    <ul class="list-none hidden sm:grid sm:grid-cols-3 gap-4 mb-4">
+      <li class="flex items-center">
         <h2 class="text-2xl text-gray-600 font-light flex-1">Featured Posts</h2>
-
-        <span class="md:hidden">
-          <ButtonLink href="/posts" withArrow={true}>See All Posts</ButtonLink>
-        </span>
       </li>
-      <li class="hidden md:block">
+      <li>
+        <h2 class="text-2xl text-gray-600 font-light">Featured Scraps</h2>
+      </li>
+      <li>
         <h2 class="text-2xl text-gray-600 font-light">Get Updated</h2>
       </li>
     </ul>
 
-    <ul class="list-none grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-4 featured-blocks">
-      {
-        featuredBlogPosts.map((post) => {
-          const external = isExternal(post);
-          const url = external
-            ? extractUrlFromBookmark(post.html)
-            : `/posts/${post.slug}`;
+    <div class="grid sm:grid-cols-3 gap-4">
 
-          return (
-            <li class="border-2 p-3 md:p-4 rounded-md flex flex-col">
-              <div class="mb-4">
-                <h3>
-                  <a class="font-light break-words" href={url}>
-                    {post.title}
-                  </a>
-                </h3>
+      <ul class="grid sm:hidden grid-cols-2 gap-4">
 
-                <DateFormatter date={post.published_at} />
-              </div>
-
-              <div class="flex sm:gap-1 md:justify-between md:items-center flex-col md:flex-row mt-auto">
-                <ButtonLink
-                  classes="text-xs md:text-sm"
-                  href={url}
-                  target={external ? "_blank" : "_self"}
-                  withArrow={true}>
-
-                  {external ? <>{extractHostFromUrl(url)}</> : "read it"}
-                </ButtonLink>
-              </div>
-            </li>
-          );
-        })
-      }
-
-      <li
-        class="signup-form grid row-auto col-span-full sm:row-span-2 sm:col-start-3 sm:row-start-1">
-        <SignupForm />
+        <li class="flex items-center">
+        <h2 class="text-lg text-gray-600 font-light flex-1">Featured Posts</h2>
       </li>
-    </ul>
+      <li>
+        <h2 class="text-lg text-gray-600 font-light">Featured Scraps</h2>
+      </li>
+      </ul>
 
-    <div class="text-right hidden md:grid gap-4 grid-cols-3 pt-4">
-      <div class="col-span-2">
-        <ButtonLink href="/posts" withArrow={true}>See All Posts</ButtonLink>
-      </div>
+    <ul class="list-none sm:col-span-2 grid grid-cols-2 gap-4 featured-blocks">
+          {
+            featuredBlogPosts.map((post, index) => {
+              return (
+                <li class={`relative col-start-1 row-start-${index + 1}`}>
+                  <ListCard post={post} basePath="/posts"/>
+
+                  {index + 1 === featuredBlogPosts.length && (
+                    <div class="absolute -bottom-10">
+                      <ButtonLink href="/posts" withArrow={true} classes="text-sm">
+                        See All Posts
+                      </ButtonLink>
+                    </div>
+                  )}
+                </li>
+              );
+            })
+          }
+
+          {
+            scratchPosts.map((post, index) => {
+              return (
+                <li class={`relative col-start-2 row-start-${index + 1}`}>
+                  <ListCard post={post} basePath="/scratch"/>
+                  
+                  {index + 1 === scratchPosts.length && (
+                    <div class="absolute -bottom-10">
+                      <ButtonLink href="/scratch" withArrow={true} classes="text-sm">
+                        See All Scraps
+                      </ButtonLink>
+                    </div>
+                  )}
+                </li>
+              );
+            })
+          }
+
+
+      </ul>
+
+      <div class="pt-12 sm:pt-0"><SignupForm /></div>
     </div>
   </div>
 </Layout>

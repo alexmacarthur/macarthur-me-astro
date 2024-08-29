@@ -1,0 +1,23 @@
+---
+import { extractHostFromUrl, extractUrlFromBookmark, isExternal } from "../lib/ContentService";
+import ButtonLink from "./ButtonLink.astro";
+import DateFormatter from "./DateFormatter.astro";
+
+const { post, basePath } = Astro.props;
+
+            const external = isExternal(post);
+            const url = external
+              ? extractUrlFromBookmark(post.html)
+              : `${basePath}/${post.slug}`;
+
+---
+
+<a href={url} target={external ? "_blank" : "_self"} class="group transition-all hover:border-purple-500 border-2 p-3 md:p-4 rounded-md flex flex-col justify-between w-full h-full">
+
+        <h3 class="font-light break-words leading-snug mb-2 transition-all group-hover:text-purple-600">
+            {post.title}
+        </h3>
+
+        <!-- {external ? extractHostFromUrl(url) : "read it"} -->
+        <DateFormatter date={post.published_at} className="group-hover:text-purple-500"/>
+</a>
