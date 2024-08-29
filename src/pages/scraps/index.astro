@@ -2,9 +2,9 @@
 import type { Page } from "astro";
 import type { PaginatedList } from "../../types/types";
 import contentService from "../../lib/ContentService";
-import PaginatedScratch from "../../layouts/PaginatedScratch.astro";
+import PaginatedScraps from "../../layouts/PaginatedScraps.astro";
 
-const posts = await contentService.getPosts(1, { tags: ["scratch"]});
+const posts = await contentService.getPosts(1, { tags: ["scrap"]});
 
 const pageData: PaginatedList = {
   data: posts,
@@ -12,9 +12,9 @@ const pageData: PaginatedList = {
   lastPage: posts.meta.pagination.pages,
   url: {
     prev: undefined,
-    next: "/scratch/page/2",
+    next: "/scraps/page/2",
   } as Page["url"],
 };
 ---
 
-<PaginatedScratch page={pageData} />
+<PaginatedScraps page={pageData} />

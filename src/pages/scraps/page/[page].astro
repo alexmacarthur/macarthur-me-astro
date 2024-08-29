@@ -1,10 +1,10 @@
 ---
-import PaginatedScratch from "../../../layouts/PaginatedScratch.astro";
+import PaginatedScraps from "../../../layouts/PaginatedScraps.astro";
 import { POSTS_PER_PAGE } from "../../../lib/constants";
 import contentService from "../../../lib/ContentService";
 
 export async function getStaticPaths({ paginate }) {
-  const posts = await contentService.getAllPosts({ tags: ["scratch"] });
+  const posts = await contentService.getAllPosts({ tags: ["scrap"] });
 
   return paginate(posts, { pageSize: POSTS_PER_PAGE });
 }
@@ -12,4 +12,4 @@ export async function getStaticPaths({ paginate }) {
 const { page: pageData } = Astro.props;
 ---
 
-<PaginatedScratch page={pageData} />
+<PaginatedScraps page={pageData} />

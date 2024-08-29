@@ -3,7 +3,7 @@ import PaginatedPosts from "../../layouts/PaginatedPosts.astro";
 import contentService from "../../lib/ContentService";
 import type { PaginatedList } from "../../types/types";
 
-const posts = await contentService.getPosts(1, { excludeTags: ["scratch"] });
+const posts = await contentService.getPosts(1, { excludeTags: ["scrap"] });
 
 const pageData: PaginatedList = {
   data: posts,

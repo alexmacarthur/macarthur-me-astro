@@ -3,7 +3,7 @@ import Title from "../components/Title.astro";
 import Layout from "./Layout.astro";
 import Pagination from "../components/Pagination.astro";
 import type { PaginatedList } from "../types/types";
-import ScratchList from "../components/ScratchList.astro";
+import ScrapList from "../components/ScrapList.astro";
 
 export interface Props {
   page: PaginatedList;
@@ -12,10 +12,10 @@ export interface Props {
 const { page } = Astro.props;
 ---
 
-<Layout title="Scratchpad" pageType="narrow">
-  <Title>Scratchpad</Title>
+<Layout title="Scraps" pageType="narrow">
+  <Title>Scraps</Title>
 
-  <ScratchList posts={page.data} />
+  <ScrapList posts={page.data} />
 
   <Pagination
     totalPages={page.lastPage as number}

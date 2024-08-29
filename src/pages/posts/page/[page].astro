@@ -4,7 +4,7 @@ import { POSTS_PER_PAGE } from "../../../lib/constants";
 import contentService from "../../../lib/ContentService";
 
 export async function getStaticPaths({ paginate }) {
-  const posts = await contentService.getAllPosts({ excludeTags: ["scratch"] });
+  const posts = await contentService.getAllPosts({ excludeTags: ["scrap"] });
 
   return paginate(posts, { pageSize: POSTS_PER_PAGE });
 }

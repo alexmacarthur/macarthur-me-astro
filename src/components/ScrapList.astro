@@ -21,7 +21,7 @@ const { posts } = Astro.props;
       const external = isExternal(post);
       const postPath = external
         ? extractUrlFromBookmark(post.html)
-        : `/scratch/${post.slug}`;
+        : `/scraps/${post.slug}`;
       const target = external ? "_blank" : "_self";
 
       return (
