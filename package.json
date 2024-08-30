@@ -6,7 +6,7 @@
     "@astrojs/rss": "^4.0.7",
     "@astrojs/sitemap": "^3.1.6",
     "@astrojs/tailwind": "^5.1.0",
-    "@jam-comments/astro": "^3.0.0",
+    "@jam-comments/astro": "^2.7.0",
     "@picperf/astro": "^1.1.2",
     "@picperf/rehype": "^0.5.1",
     "@supabase/supabase-js": "^2.45.2",

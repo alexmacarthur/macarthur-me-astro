@@ -12,7 +12,9 @@ interface Params {
 }
 
 export async function getStaticPaths() {
-  return (await contentService.getAllPosts()).map((post) => {
+  return (await contentService.getAllPosts({
+    tags: ["scrap"]
+  })).map((post) => {
     return {
       params: { slug: post.slug },
     };
