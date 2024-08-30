@@ -1,4 +1,11 @@
 {
   "version": 1,
-  "include": ["/trees.png", "/svg.svg", "/jpeg.jpeg", "/png.png", "/open-graph"]
+  "include": [
+    "/trees.png",
+    "/svg.svg",
+    "/jpeg.jpeg",
+    "/png.png",
+    "/open-graph",
+    "/open-graph-simple"
+  ]
 }

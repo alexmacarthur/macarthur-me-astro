@@ -48,6 +48,9 @@ let postSchema: WithContext<BlogPosting> = {
 if (post.updated_at) {
   postSchema.dateModified = post.updated_at;
 }
+
+const generatedOgImage = `https://www.macarthur.me/open-graph-simple?title=${encodeURIComponent(post.title)}`;
+
 ---
 
 <Layout
@@ -55,7 +58,7 @@ if (post.updated_at) {
   ogTitle={post.meta_title}
   pageType={"narrow"}
   description={computedDescription}
-  openGraphImage={post.og_image || post.feature_image || undefined}
+  openGraphImage={post.og_image || post.feature_image || generatedOgImage}
   openGraphAlt={post.feature_image_caption || undefined}
   canonicalUrl={post.canonical_url} 
   postData={{
