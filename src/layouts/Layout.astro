@@ -6,6 +6,9 @@ import { SEO } from "astro-seo";
 import Footer from "../components/Footer.astro";
 import { getOpenGraphUrl } from "../utils";
 
+import figtreeNormal from '../fonts/figtree-latin-wght-normal.woff2?url';
+import figtreeItalic from '../fonts/figtree-latin-wght-italic.woff2?url';
+
 export interface Props {
   title: string;
   ogTitle?: string | null;
@@ -92,7 +95,14 @@ const articleOgData = postData
 
     <link
       rel="preload"
-      href="/fonts/inter-subset.woff2"
+      href={figtreeNormal}
+      as="font"
+      type="font/woff2"
+    />
+    
+    <link
+      rel="preload"
+      href={figtreeItalic}
       as="font"
       type="font/woff2"
     />
@@ -201,6 +211,28 @@ const articleOgData = postData
     <style is:global>
       @import "prismjs/themes/prism-okaidia.css";
 
+      @font-face {
+        font-family: 'Figtree Variable';
+        font-style: normal;
+        font-display: swap;
+        font-weight: 300 900;
+        src: url(@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2) format('woff2-variations');
+        unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+      }
+
+      @font-face {
+        font-family: 'Figtree Variable';
+        font-style: italic;
+        font-display: swap;
+        font-weight: 300 900;
+        src: url(@fontsource-variable/figtree/files/figtree-latin-wght-italic.woff2) format('woff2-variations');
+        unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+      }
+
+      body {
+          font-family: 'Figtree Variable', sans-serif;
+      }
+
       /** custom utilities */
 
       @layer {
@@ -236,23 +268,16 @@ const articleOgData = postData
       .italic,
       em,
       i {
-        font-variation-settings: "slnt" -10 !important;
-        font-style: oblique 10deg !important;
+        font-style: italic;
       }
 
       blockquote {
-        font-variation-settings: "slnt" -5 !important;
-        font-style: oblique 0deg !important;
+        font-style: italic !important;
         @apply leading-relaxed text-gray-800 !important;
 
         * {
           @apply text-gray-800 !important;
         }
-      }
-
-      @font-face {
-        font-family: "Inter Variable";
-        src: url("/fonts/inter-subset.woff2") format("woff2");
       }
 
       * {
@@ -271,14 +296,6 @@ const articleOgData = postData
       h5,
       h6 {
         @apply text-gray-700 font-medium;
-      }
-
-      h1,
-      h2 {
-        font-style: oblique 3deg;
-      }
-
-      h2 {
       }
 
       :not(h1, h2, h3, h4, h5, h6, pre, pre *) {
