@@ -5,9 +5,9 @@ import type { WebSite, WithContext } from "schema-dts";
 import { SEO } from "astro-seo";
 import Footer from "../components/Footer.astro";
 import { getOpenGraphUrl } from "../utils";
-
-import figtreeNormal from '../fonts/figtree-latin-wght-normal.woff2?url';
-import figtreeItalic from '../fonts/figtree-latin-wght-italic.woff2?url';
+// import { ViewTransitions } from 'astro:transitions';
+import figtreeNormal from '@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2?url';
+import figtreeItalic from '@fontsource-variable/figtree/files/figtree-latin-wght-italic.woff2?url';
 
 export interface Props {
   title: string;
@@ -99,7 +99,7 @@ const articleOgData = postData
       as="font"
       type="font/woff2"
     />
-    
+
     <link
       rel="preload"
       href={figtreeItalic}
@@ -194,6 +194,7 @@ const articleOgData = postData
         ],
       }}
     />
+    <!-- <ViewTransitions /> -->
   </head>
   <body>
     { showNav && <Nav /> }
