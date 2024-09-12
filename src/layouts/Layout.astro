@@ -5,7 +5,7 @@ import type { WebSite, WithContext } from "schema-dts";
 import { SEO } from "astro-seo";
 import Footer from "../components/Footer.astro";
 import { getOpenGraphUrl } from "../utils";
-// import { ViewTransitions } from 'astro:transitions';
+import { ViewTransitions } from 'astro:transitions';
 import figtreeNormal from '@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2?url';
 import figtreeItalic from '@fontsource-variable/figtree/files/figtree-latin-wght-italic.woff2?url';
 
@@ -194,7 +194,7 @@ const articleOgData = postData
         ],
       }}
     />
-    <!-- <ViewTransitions /> -->
+    <ViewTransitions />
   </head>
   <body>
     { showNav && <Nav /> }
