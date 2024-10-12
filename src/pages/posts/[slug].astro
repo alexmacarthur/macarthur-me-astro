@@ -166,8 +166,9 @@ if (post.updated_at) {
 
     .code-block {
       @apply relative my-4 p-5 !important;
-      content-visibility: auto;
-      contain-intrinsic-size: auto 275px;
+      
+      /* Performance benefit? */
+      contain: content;
     }
 
     .code-block-wrapper {
