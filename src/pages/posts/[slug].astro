@@ -145,7 +145,11 @@ if (post.updated_at) {
         code.classList.add("is-visible");
       }
 
-      observer.observe(code);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          observer.observe(code);
+        });
+      });
     });
   </script>
 
