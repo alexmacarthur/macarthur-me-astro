@@ -114,11 +114,7 @@ const generatedOgImage = `https://www.macarthur.me/open-graph-simple?title=${enc
         code.classList.add("is-visible");
       }
 
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          observer.observe(code);
-        });
-      });
+      observer.observe(code);
     });
   </script>
 
