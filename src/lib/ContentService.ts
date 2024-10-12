@@ -25,9 +25,13 @@ const removeHtml = (html: string) => {
   );
 };
 
-const generateExcerpt = (html: string, wordCount: number = 50) => {
+const removeHtmlTags = (html: string) => {
   const dom = new JSDOM(html);
-  const text = dom.window.document.body.textContent;
+  return dom.window.document.body.textContent;
+};
+
+const generateExcerpt = (html: string, wordCount: number = 50) => {
+  const text = removeHtmlTags(html);
 
   return removeHtml(text.split(" ").slice(0, wordCount).join(" "));
 };
@@ -125,6 +129,16 @@ class ContentService {
     }
 
     return api.posts.browse(args) as Promise<CustomPostsOrPages>;
+  }
+
+  getTotalWordCount(): Promise<number> {
+    return api.posts.browse({ limit: "all" }).then((posts) => {
+      return posts.reduce((acc, post) => {
+        const text = removeHtmlTags(post.html || "");
+
+        return acc + text.split(" ").length;
+      }, 0);
+    });
   }
 
   getTotalPostCount(): Promise<number> {
