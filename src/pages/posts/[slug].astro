@@ -104,11 +104,11 @@ if (post.updated_at) {
           Leave a Free Comment
         </h5>
         <JamComments 
+          schema={postSchema}
           copy={{
           commentPlaceholder: "Markdown is supported!",
         }} />
       </div>
-      
     </div>
 
     <aside class="lg:col-span-2 flex-col gap-8 hidden lg:flex">
