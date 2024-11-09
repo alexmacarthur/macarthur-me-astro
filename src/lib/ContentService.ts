@@ -132,13 +132,25 @@ class ContentService {
   }
 
   getTotalWordCount(): Promise<number> {
-    return api.posts.browse({ limit: "all" }).then((posts) => {
+    const postWordCount = api.posts.browse({ limit: "all" }).then((posts) => {
       return posts.reduce((acc, post) => {
         const text = removeHtmlTags(post.html || "");
 
         return acc + text.split(" ").length;
       }, 0);
     });
+
+    const pageWordCount = api.pages.browse({ limit: "all" }).then((pages) => {
+      return pages.reduce((acc, page) => {
+        const text = removeHtmlTags(page.html || "");
+
+        return acc + text.split(" ").length;
+      }, 0);
+    });
+
+    return Promise.all([postWordCount, pageWordCount]).then(
+      ([postCount, pageCount]) => postCount + pageCount,
+    );
   }
 
   getTotalPostCount(): Promise<number> {
