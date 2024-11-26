@@ -13,7 +13,7 @@
     "@supabase/supabase-js": "^2.46.1",
     "@tailwindcss/typography": "^0.5.15",
     "@tryghost/content-api": "^1.11.21",
-    "@types/node": "^22.9.3",
+    "@types/node": "^22.9.4",
     "astro": "^4.16.14",
     "astro-heroicons": "^2.1.5",
     "astro-seo": "^0.8.4",
