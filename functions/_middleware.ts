@@ -14,16 +14,6 @@ function isCacheableForever(requestUrl: string) {
 }
 
 export const onRequestGet: PagesFunction = async (context) => {
-  if (context.request.url.includes("/jamcomments/")) {
-    return fetch(
-      context.request.url.replace(
-        "https://macarthur.me",
-        "https://go.jamcomments.com",
-      ),
-      context.request,
-    );
-  }
-
   const response = await context.next();
   const requestUrl = context.request.url;
 
