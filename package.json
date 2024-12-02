@@ -38,7 +38,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier -w .",
-    "cf": "npx wrangler pages dev -- astro dev"
+    "cf": "npx wrangler pages dev --proxy 4321 -- astro dev"
   },
   "type": "module",
   "devDependencies": {
