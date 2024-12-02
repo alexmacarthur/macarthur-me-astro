@@ -4,3 +4,5 @@
 /fonts/*
   Cache-Control: public, max-age=31560001, immutable
 
+/*
+  Content-Security-Policy: script-src 'self'

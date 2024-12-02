@@ -1,0 +1,7 @@
+{
+  "observability": {
+    "logs": {
+      "invocation_logs": false
+    }
+  }
+}
