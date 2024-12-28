@@ -5,7 +5,7 @@ export interface Props {
   disableAnimation?: boolean;
 }
 
-const { classes = "", value = "0", disableAnimation = false } = Astro.props;
+const { classes = "", value = "0", disableAnimation  } = Astro.props;
 const formattedValue = value.replace(/\,/g, "");
 ---
 
@@ -23,9 +23,10 @@ const formattedValue = value.replace(/\,/g, "");
   const counters = document.querySelectorAll("[data-counter-value]");
 
   counters.forEach((counter) => {
+    
     const counterEl = counter as HTMLElement;
 
-    if (counterEl.dataset.counterDisabled !== undefined) return;
+    if (counterEl.dataset.counterDisabled === "true") return;
 
     const countUp = new CountUp(
       counterEl,
