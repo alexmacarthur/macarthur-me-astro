@@ -94,7 +94,7 @@ const stats: State[] = [
 await Promise.allSettled(stats.map((stat) => stat.value));
 
 for (let stat of stats) {
-  let result;
+  let result: string | number | null = null;
 
   try {
     result = await stat.value;
