@@ -1,0 +1,95 @@
+---
+import Search from "astro-pagefind/components/Search";
+import XMark from 'astro-heroicons/solid/XMark.astro';
+
+---
+
+<div id="search" style="display: none">
+    <div class="fixed backdrop-blur w-screen h-screen z-[51] top-0 left-0 grid items-center p-2 sm:p-12">
+        <div class="absolute w-full h-full top-0 left-0 bg-gray-300 opacity-50 -z-[1]" id="searchBackdrop"></div>
+        <button class="z-10 w-12 h-12 absolute right-3 top-3" id="closeButton">
+            <XMark />
+        </button>
+            <div class="relative max-w-xl mx-auto max-h-[80vh] w-full shadow-sm bg-white px-4 sm:px-8 pb-10 pt-8 rounded-md overflow-scroll">
+                <h3 class="text-xl mb-3">Search My Site</h3>
+
+                <Search uiOptions={{ showImages: false, resetStyles: false }}/>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .is-open {
+        display: block !important;
+        z-index: 1000;
+    }
+</style>
+
+<script>
+import { sendEvent } from "../utils";
+import { debounce } from "../utils";
+
+    let searchIsOpen = false;
+    const search = document.getElementById('search') as HTMLDivElement;
+    const searchInput = search.querySelector('input[type="text"]') as HTMLInputElement;
+    const searchBackdrop = document.getElementById('searchBackdrop') as HTMLDivElement;
+    const closeButton = document.getElementById('closeButton') as HTMLButtonElement;
+
+    const debouncedHandleSearch = debounce(function(event) {
+        sendEvent('search', {
+            query: searchInput.value
+        });
+    }, 500);
+
+    searchInput.addEventListener('keyup', debouncedHandleSearch);
+
+    function showSearch() {
+        document.body.style.overflow = 'hidden';
+        search.classList.add('is-open');
+        searchIsOpen = true;
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                searchInput.focus();
+            });
+        });
+    }
+
+    function hideSearch() {
+        document.body.style.overflow = '';
+        search.classList.remove('is-open');
+        searchIsOpen = false;
+    }
+
+    searchBackdrop.addEventListener('click', function() {
+        hideSearch();
+    });
+
+    closeButton.addEventListener('click', function() {
+        hideSearch();
+    });
+
+    document.addEventListener('keydown', function(event) {
+        if(event.key.toLowerCase() === 'escape' && searchIsOpen) {
+            event.preventDefault();
+            
+            hideSearch();
+        }
+
+        if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+            event.preventDefault(); 
+
+            showSearch();
+
+            sendEvent('search_open', {
+                method: 'keyboard'
+            });
+        }
+    });
+
+    document.body.addEventListener("search:open", function() {
+        showSearch();
+    });
+</script>

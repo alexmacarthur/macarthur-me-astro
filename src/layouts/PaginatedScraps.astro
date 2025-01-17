@@ -12,7 +12,7 @@ export interface Props {
 const { page } = Astro.props;
 ---
 
-<Layout title="Scraps" pageType="narrow">
+<Layout title="Scraps" pageType="narrow" shouldIndexForSearch={false}>
   <Title>Scraps</Title>
 
   <ScrapList posts={page.data} />

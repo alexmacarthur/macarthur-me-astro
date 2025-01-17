@@ -1,0 +1,39 @@
+---
+import MaginfyingGlass from "astro-heroicons/outline/MagnifyingGlass.astro";
+---
+
+<div class="flex justify-center sm:justify-between items-center border-2 border-gray-200 w-12 h-12 sm:h-auto sm:w-48 px-3 py-1 cursor-pointer rounded-md" id="searchTrigger">
+    <div class="flex items-center sm:gap-1">
+        <i class="block size-6 transform sm:scale-90">
+            <MaginfyingGlass />
+        </i>
+
+        <span class="text-gray-300 text-sm hidden sm:block">Search...</span>
+    </div>
+
+    <span class="text-gray-300 text-sm hidden sm:block">
+        ⌘
+        K
+    </span>
+    
+</div>
+
+<style>
+    svg {
+        @apply text-gray-300;
+    }
+</style>
+
+<script>
+    import { sendEvent } from "../utils";
+
+    const searchTrigger = document.getElementById('searchTrigger') as HTMLElement;
+
+    searchTrigger.addEventListener('click', () => {
+        document.body.dispatchEvent(new CustomEvent('search:open'));
+
+        sendEvent('search_open', {
+            method: 'input-trigger'
+        });
+    });
+</script>

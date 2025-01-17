@@ -1,10 +1,11 @@
 ---
-import type { Page } from "astro";
 import Title from "../components/Title.astro";
 import Layout from "./Layout.astro";
 import PostList from "../components/PostList.astro";
 import Pagination from "../components/Pagination.astro";
 import type { PaginatedList } from "../types/types";
+import SearchInputTrigger from "../components/SearchInputTrigger.astro";
+import TitleBar from "../components/TitleBar.astro";
 
 export interface Props {
   page: PaginatedList;
@@ -13,8 +14,11 @@ export interface Props {
 const { page } = Astro.props;
 ---
 
-<Layout title="Posts" pageType="narrow">
-  <Title>Posts</Title>
+<Layout title="Posts" pageType="narrow" shouldIndexForSearch={false}>
+
+  <TitleBar title="Posts">
+    <SearchInputTrigger />
+  </TitleBar>
 
   <PostList posts={page.data} />
 

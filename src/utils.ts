@@ -4,6 +4,20 @@ export const isProduction = () => {
   return import.meta.env.NODE_ENV === "production";
 };
 
+export function debounce(func, wait) {
+  let timeout;
+
+  return function executedFunction(...args) {
+    const later = () => {
+      timeout = null;
+      func(...args);
+    };
+
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
 export const getOpenGraphUrl = ({
   image,
   path,

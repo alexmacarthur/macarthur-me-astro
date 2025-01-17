@@ -8,6 +8,7 @@ import { getOpenGraphUrl } from "../utils";
 import { ViewTransitions } from 'astro:transitions';
 import figtreeNormal from '@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2?url';
 import figtreeItalic from '@fontsource-variable/figtree/files/figtree-latin-wght-italic.woff2?url';
+import SearchBox from "../components/SearchBox.astro";
 
 export interface Props {
   title: string;
@@ -20,6 +21,7 @@ export interface Props {
   subtitle?: string;
   schema?: WithContext<any>;
   canonicalUrl?: string | null;
+  shouldIndexForSearch?: boolean;
   postData?: {
     date: string;
     lastUpdated: string;
@@ -38,6 +40,7 @@ const {
   schema,
   postData,
   canonicalUrl,
+  shouldIndexForSearch = true,
 } = Astro.props;
 
 const mainClass = (() => {
@@ -65,6 +68,11 @@ const defaultSchema: WithContext<WebSite> = {
     name: MY_NAME,
     url: import.meta.env.SITE_URL,
   },
+};
+
+const mainAttributes = {
+  'data-pagefind-body': true,
+  ...(shouldIndexForSearch ? {} : { 'data-pagefind-ignore': true }),
 };
 
 const image = getOpenGraphUrl({
@@ -198,11 +206,13 @@ const articleOgData = postData
   <body>
     { showNav && <Nav /> }
     
-    <main class={`px-4 md:px-6 mx-auto w-full ${mainClass}`}>
+    <main class={`px-4 md:px-6 mx-auto w-full ${mainClass}`} {...mainAttributes}>
       <slot />
     </main>
 
     { showNav && <Footer /> }
+
+    <SearchBox />
 
     <script>
       import "../scripts/link-tracking";
@@ -298,7 +308,7 @@ const articleOgData = postData
         @apply text-gray-700 font-medium;
       }
 
-      :not(h1, h2, h3, h4, h5, h6, pre, pre *) {
+      :not(h1, h2, h3, h4, h5, h6, pre, pre *, svg *) {
         @apply text-gray-700 font-light;
       }
 
@@ -329,7 +339,7 @@ const articleOgData = postData
 
       .button,
       .jc-CommentBox-button {
-        @apply border-2 text-white text-lg border-purple-500 rounded-sm px-4 py-1 bg-purple-500 hover:bg-white hover:text-purple-500 transition-colors duration-200 cursor-pointer !important;
+        @apply border-2 text-white text-lg border-purple-500 rounded-sm px-4 py-1 bg-purple-500 hover:bg-white hover:text-purple-500 transition-colors duration-200 cursor-pointer font-normal !important;
       }
 
       .jc-CommentBox-preview code[class^="language-"] {
@@ -384,6 +394,19 @@ const articleOgData = postData
           height: 0.2em;
         }
       }
+
+      .pagefind-ui__button {
+        @apply border-2 border-purple-500 rounded-sm px-4 py-1 text-lg hover:text-white hover:bg-purple-500 bg-white text-purple-500 transition-colors duration-200 cursor-pointer font-normal h-auto !important;
+      }
+
+      .pagefind-ui__result-title a {
+        @apply font-semibold !important;
+      }
+
+      .pagefind-ui__result-excerpt {
+        @apply font-light text-sm !important;
+      }
+
     </style>
   </body>
 </html>

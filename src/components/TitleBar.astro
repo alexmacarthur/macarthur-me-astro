@@ -1,0 +1,11 @@
+---
+import Title from "./Title.astro";
+
+const { title} = Astro.props;
+---
+
+<div class="flex items-center justify-between mb-8">
+    <Title bottomSpacingClasses="">{title}</Title>
+
+    <slot />
+</div>
