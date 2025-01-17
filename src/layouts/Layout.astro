@@ -8,6 +8,7 @@ import { getOpenGraphUrl } from "../utils";
 import { ViewTransitions } from 'astro:transitions';
 import figtreeNormal from '@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2?url';
 import figtreeItalic from '@fontsource-variable/figtree/files/figtree-latin-wght-italic.woff2?url';
+import SearchBox from "../components/SearchBox.astro";
 
 export interface Props {
   title: string;
@@ -203,6 +204,8 @@ const articleOgData = postData
     </main>
 
     { showNav && <Footer /> }
+
+    <SearchBox />
 
     <script>
       import "../scripts/link-tracking";

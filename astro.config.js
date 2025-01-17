@@ -6,6 +6,7 @@ import prefetch from "@astrojs/prefetch";
 import { rehypePicPerf } from "@picperf/rehype";
 import { jamComments } from "@jam-comments/astro/config";
 import { configDotenv } from "dotenv";
+import pagefind from "astro-pagefind";
 
 configDotenv();
 
@@ -33,5 +34,6 @@ export default defineConfig({
     prefetch({
       selector: "a[href^='/'], a[href^='https://macarthur.me']",
     }),
+    pagefind(),
   ],
 });

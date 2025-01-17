@@ -1,0 +1,21 @@
+---
+import Search from "astro-pagefind/components/Search";
+
+---
+
+<div class="fixed w-screen h-screen z-10 bg-blue-100 top-0 left-0 grid items-center p-12">
+    <div class="max-w-xl mx-auto w-full shadow-sm bg-white px-8 py-10 max-h-[70vw] overflow-scroll rounded-md">
+        <Search />
+    </div>
+</div>
+
+<script>
+
+    document.addEventListener('keydown', function(event) {
+    if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
+    event.preventDefault(); 
+
+    console.log('CMD + K was pressed!');
+  }
+});
+</script>
