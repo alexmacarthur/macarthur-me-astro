@@ -1,7 +1,6 @@
 ---
 import Search from "astro-pagefind/components/Search";
 import XMark from 'astro-heroicons/solid/XMark.astro';
-
 ---
 
 <div id="search" style="display: none">
@@ -28,22 +27,31 @@ import XMark from 'astro-heroicons/solid/XMark.astro';
 </style>
 
 <script>
-import { sendEvent } from "../utils";
-import { debounce } from "../utils";
-
+    import { sendEvent } from "../utils";
+    import { debounce } from "../utils";
+    
     let searchIsOpen = false;
-    const search = document.getElementById('search') as HTMLDivElement;
-    const searchInput = search.querySelector('input[type="text"]') as HTMLInputElement;
-    const searchBackdrop = document.getElementById('searchBackdrop') as HTMLDivElement;
-    const closeButton = document.getElementById('closeButton') as HTMLButtonElement;
+    let search;
+    let searchInput;
+    let searchBackdrop;
+    let closeButton;
 
-    const debouncedHandleSearch = debounce(function(event) {
-        sendEvent('search', {
+    function queryForElements() {
+        search = document.getElementById('search') as HTMLDivElement;
+        searchInput = search.querySelector('input[type="text"]') as HTMLInputElement;
+        searchBackdrop = document.getElementById('searchBackdrop') as HTMLDivElement;
+        closeButton = document.getElementById('closeButton') as HTMLButtonElement;
+    }
+
+    const debouncedHandleSearch = debounce(function() {
+        if(!searchInput.value.length) {
+            return;
+        }
+
+        sendEvent('search', {   
             query: searchInput.value
         });
     }, 500);
-
-    searchInput.addEventListener('keyup', debouncedHandleSearch);
 
     function showSearch() {
         document.body.style.overflow = 'hidden';
@@ -63,15 +71,7 @@ import { debounce } from "../utils";
         searchIsOpen = false;
     }
 
-    searchBackdrop.addEventListener('click', function() {
-        hideSearch();
-    });
-
-    closeButton.addEventListener('click', function() {
-        hideSearch();
-    });
-
-    document.addEventListener('keydown', function(event) {
+    function handleKeydown(event) {
         if(event.key.toLowerCase() === 'escape' && searchIsOpen) {
             event.preventDefault();
             
@@ -87,9 +87,17 @@ import { debounce } from "../utils";
                 method: 'keyboard'
             });
         }
-    });
+    }
 
-    document.body.addEventListener("search:open", function() {
-        showSearch();
-    });
+    function initSearch() {
+        queryForElements();
+
+        closeButton.addEventListener('click', hideSearch);
+        searchBackdrop.addEventListener('click', hideSearch);
+        searchInput.addEventListener('keyup', debouncedHandleSearch);
+        document.addEventListener('keydown', handleKeydown);
+        document.body.addEventListener("search:open", showSearch);
+    }
+
+    document.addEventListener('astro:page-load', initSearch);
 </script>

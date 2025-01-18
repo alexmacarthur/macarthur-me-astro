@@ -5,7 +5,7 @@ import type { WebSite, WithContext } from "schema-dts";
 import { SEO } from "astro-seo";
 import Footer from "../components/Footer.astro";
 import { getOpenGraphUrl } from "../utils";
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 import figtreeNormal from '@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2?url';
 import figtreeItalic from '@fontsource-variable/figtree/files/figtree-latin-wght-italic.woff2?url';
 import SearchBox from "../components/SearchBox.astro";
@@ -201,7 +201,7 @@ const articleOgData = postData
         ],
       }}
     />
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body>
     { showNav && <Nav /> }
