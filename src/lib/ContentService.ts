@@ -30,7 +30,7 @@ const removeHtmlTags = (html: string) => {
   return dom.window.document.body.textContent;
 };
 
-const generateExcerpt = (html: string, wordCount: number = 50) => {
+const generateExcerpt = (html: string, wordCount: number = 20) => {
   const text = removeHtmlTags(html);
 
   return removeHtml(text.split(" ").slice(0, wordCount).join(" "));
@@ -38,7 +38,7 @@ const generateExcerpt = (html: string, wordCount: number = 50) => {
 
 export const computeDescription = (
   post: CustomPostOrPage,
-  wordCount: number = 50,
+  wordCount: number = 25,
 ) => {
   if (post.meta_description) {
     return post.meta_description;
