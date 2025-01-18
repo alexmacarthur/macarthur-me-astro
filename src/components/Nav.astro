@@ -73,6 +73,14 @@ const navItems = [
           </li>
         ))
       }
+      <li class="">
+        <a
+          href={"#"}
+          id="navSearchTrigger"
+          class="text-white text-5xl font-bold slanted-text">
+          Search
+        </a>
+      </li>
     </ul>
   </div>
 
@@ -114,3 +122,18 @@ const navItems = [
     transform: translate3d(0, -1rem, 0) rotate(45deg);
   }
 </style>
+
+<script>
+  import { handleTrigger } from "../scripts/search-trigger";
+
+  const navSearchTrigger = document.getElementById('navSearchTrigger') as HTMLElement;
+  const menuToggle = document.getElementById('menuToggle') as HTMLInputElement;
+
+  navSearchTrigger.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    menuToggle.checked = false;
+
+    handleTrigger();
+  });
+</script>
