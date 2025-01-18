@@ -23,17 +23,3 @@ import MaginfyingGlass from "astro-heroicons/outline/MagnifyingGlass.astro";
         @apply text-gray-300;
     }
 </style>
-
-<script>
-    import { sendEvent } from "../utils";
-
-    const searchTrigger = document.getElementById('searchTrigger') as HTMLElement;
-
-    searchTrigger.addEventListener('click', () => {
-        document.body.dispatchEvent(new CustomEvent('search:open'));
-
-        sendEvent('search_open', {
-            method: 'input-trigger'
-        });
-    });
-</script>
