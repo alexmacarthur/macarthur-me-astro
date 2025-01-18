@@ -1,26 +1,22 @@
 import { sendEvent } from "../utils";
 
-let isBeingHandled = false;
-
 export function handleTrigger() {
-  if (isBeingHandled) {
-    return;
-  }
-
-  isBeingHandled = true;
-
   document.body.dispatchEvent(new CustomEvent("search:open"));
 
   sendEvent("search_open", {
     method: "input-trigger",
   });
-
-  isBeingHandled = false;
 }
 
-document.addEventListener("astro:page-load", function () {
-  const searchTrigger = document.getElementById("searchTrigger") as HTMLElement;
+document.addEventListener("astro:before-preparation", function () {
+  console.log("removing");
+  document.querySelectorAll(".search-trigger").forEach((trigger) => {
+    trigger.removeEventListener("click", handleTrigger);
+  });
+});
 
+document.addEventListener("astro:page-load", function () {
+  console.log("adding");
   document.querySelectorAll(".search-trigger").forEach((trigger) => {
     trigger.addEventListener("click", handleTrigger);
   });

@@ -29,14 +29,20 @@ import XMark from 'astro-heroicons/solid/XMark.astro';
 <script>
     import { sendEvent } from "../utils";
     import { debounce } from "../utils";
-    
+
+    let abortController;
+    let signal;
     let searchIsOpen = false;
     let search;
     let searchInput;
     let searchBackdrop;
     let closeButton;
 
-    function queryForElements() {
+    function setVariables() {
+        abortController = new AbortController();
+        signal = abortController.signal;
+
+        searchIsOpen = false;
         search = document.getElementById('search') as HTMLDivElement;
         searchInput = search.querySelector('input[type="text"]') as HTMLInputElement;
         searchBackdrop = document.getElementById('searchBackdrop') as HTMLDivElement;
@@ -89,15 +95,17 @@ import XMark from 'astro-heroicons/solid/XMark.astro';
         }
     }
 
-    function initSearch() {
-        queryForElements();
+    document.addEventListener('astro:before-preparation', () => {
+        abortController.abort();
+    });
 
-        closeButton.addEventListener('click', hideSearch);
-        searchBackdrop.addEventListener('click', hideSearch);
-        searchInput.addEventListener('keyup', debouncedHandleSearch);
-        document.addEventListener('keydown', handleKeydown);
-        document.body.addEventListener("search:open", showSearch);
-    }
+    document.addEventListener('astro:page-load', () => {
+        setVariables();
 
-    document.addEventListener('astro:page-load', initSearch);
+        closeButton.addEventListener('click', hideSearch, { signal });
+        searchBackdrop.addEventListener('click', hideSearch, { signal });
+        searchInput.addEventListener('keyup', debouncedHandleSearch, { signal });
+        document.addEventListener('keydown', handleKeydown, { signal });
+        document.body.addEventListener("search:open", showSearch, { signal });
+    });
 </script>
