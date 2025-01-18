@@ -70,8 +70,7 @@ const defaultSchema: WithContext<WebSite> = {
   },
 };
 
-const mainAttributes = {
-  'data-pagefind-body': true,
+const indexingAttributes = {
   ...(shouldIndexForSearch ? {} : { 'data-pagefind-ignore': true }),
 };
 
@@ -206,9 +205,11 @@ const articleOgData = postData
   <body>
     { showNav && <Nav /> }
     
-    <main class={`px-4 md:px-6 mx-auto w-full ${mainClass}`} {...mainAttributes}>
-      <slot />
-    </main>
+    <div data-pagefind-body>
+      <main class={`px-4 md:px-6 mx-auto w-full ${mainClass}`} {...indexingAttributes} >
+        <slot />
+      </main>
+    </div>
 
     { showNav && <Footer /> }
 
