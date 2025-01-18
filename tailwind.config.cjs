@@ -79,9 +79,15 @@ module.exports = {
       }),
     },
   },
+
   plugins: [
     require("@tailwindcss/typography"),
-    function ({ addVariant }) {
+    function ({ addVariant, addUtilities, theme }) {
+      addUtilities({
+        ".red-copy *": {
+          color: theme("colors.rose.600"),
+        },
+      });
       addVariant("child-link", "& > a");
       addVariant("child-link-hover", "& > a:hover");
     },
