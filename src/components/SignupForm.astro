@@ -62,45 +62,55 @@ const {
 <script>
   import { sendEvent } from "../utils";
 
-  document
-    .querySelectorAll<HTMLFormElement>("[data-signup-form]")
-    .forEach((form) => {
-      const resultMessage = form.parentElement!.querySelector(
-        "[data-signup-message]"
-      ) as HTMLParagraphElement;
-      const button = form.querySelector(
-        'input[type="submit"]'
-      ) as HTMLInputElement;
+  async function handleSubmission(e) {
+    e.preventDefault();
+    const form = e.target;
+    const resultMessage = form.parentElement!.querySelector(
+    "[data-signup-message]"
+  ) as HTMLParagraphElement;
+    const button = form.querySelector(
+    'input[type="submit"]'
+  ) as HTMLInputElement;
 
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+    button.disabled = true;
 
-        button.disabled = true;
+    // Reset classes in case this is a second submission on the same page load.
+    resultMessage.classList.add("is-error", "hidden");
+    const email = (
+      form.querySelector('input[name="email"]') as HTMLInputElement
+    ).value as string;
+    const path = window.location.pathname;
 
-        // Reset classes in case this is a second submission on the same page load.
-        resultMessage.classList.add("is-error", "hidden");
-        const email = (
-          form.querySelector('input[name="email"]') as HTMLInputElement
-        ).value as string;
-        const path = window.location.pathname;
-
-        // @ts-ignore
-        fetch(`${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/sign-up`, {
-          keepalive: true,
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, path }),
-        });
-
-        resultMessage.classList.remove("hidden");
-
-        form.reset();
-        resultMessage.classList.remove("is-error");
-        resultMessage.innerText = "You're in. Thanks! 🎉";
-        form.remove();
-        sendEvent("email_signup", { path });
-      });
+    // @ts-ignore
+    fetch(`${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/sign-up`, {
+      keepalive: true,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, path }),
     });
+
+    resultMessage.classList.remove("hidden");
+
+    form.reset();
+    resultMessage.classList.remove("is-error");
+    resultMessage.innerText = "You're in. Thanks! 🎉";
+    form.remove();
+    sendEvent("email_signup", { path });
+  }
+
+  const forms = document.querySelectorAll<HTMLFormElement>("[data-signup-form]");
+
+  document.addEventListener('astro:before-preparation', () => {
+    forms.forEach((form) => {
+      form.removeEventListener("submit", handleSubmission);
+    });
+  });
+
+  document.addEventListener('astro:page-load', () => {
+    forms.forEach((form) => {
+      form.addEventListener("submit", handleSubmission);
+    });
+  });
 </script>
