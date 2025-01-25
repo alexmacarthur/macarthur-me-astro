@@ -27,19 +27,18 @@ const { posts } = Astro.props;
       const target = external ? "_blank" : "_self";
 
       return (
-        <li class="shadow-box flex flex-col">
+        <li class="shadow-box hoverable-shadow-box flex flex-col">
           <article>
-            <h2 class="text-2xl font-bold mb-1 fancy-link-on-hover" transition:name={post.slug}>
-              <a href={postPath} target={target}>
+            <a href={postPath} target={target} class="">
+            <h2 class="text-2xl font-semibold mb-1 fancy-link-on-hover" transition:name={post.slug}>
                 {post.title}
-              </a>
             </h2>
 
             <div class="flex flex-wrap items-center mb-3 gap-x-3 text-base text-gray-500">
               <DateFormatter
                 date={post.published_at}
                 className="inline-block"
-              />
+                />
 
               {external ? extractHostFromUrl(postPath) : null}
             </div>
@@ -49,6 +48,7 @@ const { posts } = Astro.props;
             <ButtonLink href={postPath} target={target} withArrow={true}>
               Read It
             </ButtonLink>
+                </a>
           </article>
         </li>
       );
