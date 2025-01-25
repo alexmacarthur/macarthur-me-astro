@@ -57,7 +57,7 @@ const featuredBlogPosts = (await Promise.all(
             : `/posts/${post.slug}`;
 
           return (
-            <li class="border-2 p-3 md:p-4 rounded-md flex flex-col">
+            <li class="shadow-box flex flex-col">
               <div class="mb-4">
                 <h3>
                   <a class="font-light break-words" href={url}>

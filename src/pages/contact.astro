@@ -72,6 +72,7 @@ import Title from "../components/Title.astro";
     opacity: 0.6;
     pointer-events: none;
   }
+
 </style>
 
 <script>
@@ -99,9 +100,14 @@ import Title from "../components/Title.astro";
     });
   };
 
-  const setValidationMessage = (message: string) => {
-    messageEl.innerText = message;
+  const setValidationMessage = (message: string, isError: boolean = false) => {
+    messageEl.innerHTML = message;
     messageEl.style.display = "block";
+
+    if (isError) {
+      messageEl.classList.add("bg-red-200", "text-red-700");
+      return;
+    }
   };
 
   const onSubmitSuccess = () => {
@@ -135,23 +141,30 @@ import Title from "../components/Title.astro";
     }
 
     setCanSubmit(false);
-    const formData = new FormData(e.target as HTMLFormElement);
-    const response = await fetch(
-      `${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/contact`,
-      {
-        keepalive: true,
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "x-completion-time": String(differenceInSeconds),
-          "x-is-trusted": e.isTrusted ? "1" : "0",
-        },
-        body: new URLSearchParams(formData as any).toString(),
-      }
-    );
 
-    await response.json();
+    try {
+      const formData = new FormData(e.target as HTMLFormElement);
+      const response = await fetch(
+        `${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/contact`,
+        {
+          keepalive: true,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "x-completion-time": String(differenceInSeconds),
+            "x-is-trusted": e.isTrusted ? "1" : "0",
+          },
+          body: new URLSearchParams(formData as any).toString(),
+        }
+      );
 
-    onSubmitSuccess();
+      await response.json();
+
+      onSubmitSuccess();
+    } catch(e) {
+      setCanSubmit(false);
+
+      setValidationMessage(`Something went wrong! Just email me instead: <a style="color: inherit; font-weight: 500;" href="mailto:contact@macarthur.me">contact@macarthur.me</a>`, true);
+    }
   });
 </script>

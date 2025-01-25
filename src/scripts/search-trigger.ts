@@ -9,14 +9,12 @@ export function handleTrigger() {
 }
 
 document.addEventListener("astro:before-preparation", function () {
-  console.log("removing");
   document.querySelectorAll(".search-trigger").forEach((trigger) => {
     trigger.removeEventListener("click", handleTrigger);
   });
 });
 
 document.addEventListener("astro:page-load", function () {
-  console.log("adding");
   document.querySelectorAll(".search-trigger").forEach((trigger) => {
     trigger.addEventListener("click", handleTrigger);
   });
