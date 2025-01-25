@@ -1,7 +1,6 @@
 import { defineConfig } from "astro/config";
-import tailwind from "@astrojs/tailwind";
+import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
-// import robotsTxt from "astro-robots-txt";
 import prefetch from "@astrojs/prefetch";
 import { rehypePicPerf } from "@picperf/rehype";
 import { jamComments } from "@jam-comments/astro/config";
@@ -10,19 +9,20 @@ import pagefind from "astro-pagefind";
 
 configDotenv();
 
-// https://astro.build/config
 export default defineConfig({
   site: "https://macarthur.me",
   trailingSlash: "never",
   markdown: {
     rehypePlugins: [rehypePicPerf],
   },
+  vite: {
+    plugins: [tailwindcss()],
+  },
   integrations: [
     jamComments({
       domain: process.env.JAM_COMMENTS_DOMAIN,
       apiKey: process.env.JAM_COMMENTS_API_KEY,
     }),
-    tailwind(),
     sitemap({
       serialize(item) {
         item.changefreq = "daily";

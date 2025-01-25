@@ -5,13 +5,13 @@
     "@astrojs/prefetch": "^0.4.1",
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.2.1",
-    "@astrojs/tailwind": "^5.1.5",
     "@fontsource-variable/figtree": "^5.1.2",
     "@jam-comments/astro": "^2.8.3",
     "@picperf/astro": "^1.1.2",
     "@picperf/rehype": "^0.5.1",
     "@supabase/supabase-js": "^2.48.0",
     "@tailwindcss/typography": "^0.5.16",
+    "@tailwindcss/vite": "^4.0.0",
     "@tryghost/content-api": "^1.11.21",
     "@types/node": "^22.10.7",
     "astro": "^5.1.8",
@@ -28,7 +28,7 @@
     "prismjs": "^1.29.0",
     "sanitize-html": "^2.14.0",
     "schema-dts": "^1.1.2",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^4.0.0"
   },
   "private": true,
   "scripts": {
@@ -44,6 +44,7 @@
   "type": "module",
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250121.0",
+    "@tailwindcss/postcss": "^4.0.0",
     "@types/sanitize-html": "^2.13.0",
     "@types/tryghost__content-api": "^1.3.17",
     "typescript": "^5.7.3"

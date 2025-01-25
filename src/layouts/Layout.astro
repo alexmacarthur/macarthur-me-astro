@@ -1,4 +1,5 @@
 ---
+import "../base.css";
 import Nav from "../components/Nav.astro";
 import { DESCRIPTION, MY_NAME, TITLE, TWITTER_HANDLE } from "../lib/constants";
 import type { WebSite, WithContext } from "schema-dts";
@@ -372,10 +373,6 @@ const articleOgData = postData
       .button.light {
         --mm-box-shadow-color: white;
         @apply bg-transparent border-white text-white !important;
-
-        &:hover {
-          /* border */
-        }
       }
 
       .button.submit {
