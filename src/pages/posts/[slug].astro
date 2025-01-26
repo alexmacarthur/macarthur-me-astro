@@ -57,7 +57,7 @@ if (post.updated_at) {
 <Layout
   title={post.title}
   ogTitle={post.meta_title}
-  pageType={"wide"}
+  pageType={"narrow"}
   description={computedDescription}
   openGraphImage={post.og_image || post.feature_image || undefined}
   openGraphAlt={post.feature_image_caption || undefined}
@@ -67,13 +67,14 @@ if (post.updated_at) {
     date: post.published_at,
     lastUpdated: post.updated_at || "",
   }}>
-  <ButtonLink
-    href="/posts"
-    withArrow={true}
-    arrowDirection="left"
-    classes="mb-2">
-    Back to All Posts
-  </ButtonLink>
+
+      <ButtonLink
+        href="/posts"
+        withArrow={true}
+        arrowDirection="left"
+        classes="mb-2">
+        Back to All Posts
+     </ButtonLink>
 
   <Title
     headingClasses={"text-3xl md:text-6xl mb-5"}
@@ -82,41 +83,32 @@ if (post.updated_at) {
     {post.title}
   </Title>
 
-  <div
-    class={`flex items-start gap-4 mb-6 ${post.custom_excerpt ? "" : "-mt-4"}`}>
-    <div class="flex flex-wrap gap-x-3">
+  <div class={`flex items-start gap-4 mb-6 ${post.custom_excerpt ? "" : "-mt-4"}`}>
+    <div class="flex w-full flex-wrap gap-x-3 items-center">
+      <Bio />
       <DateFormatter date={post.published_at} className="inline-block" />
+
+    
     </div>
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-8 lg:gap-10">
-    <div class="lg:col-span-6">
-      <div class="prose lg:prose-lg mx-auto" set:html={post.html} />
+    <div class="prose lg:prose-lg mx-auto" set:html={post.html} />
+    
 
-      <hr class="divider my-8" />
+  <hr class="divider my-8" />
 
-      <div class="flex flex-col gap-6 mb-10 lg:hidden">
-        <Bio />
-      </div>
-
-      <div class="max-w-3xl mx-auto">
-        <h5 class="text-2xl font-semibold slanted-text">
-          Leave a Free Comment
-        </h5>
-        <JamComments 
-          schema={postSchema}
-          copy={{
-          commentPlaceholder: "Markdown is supported!",
-        }} />
-      </div>
-    </div>
-
-    <aside class="lg:col-span-2 flex-col gap-8 hidden lg:flex">
-      <Bio />
-    </aside>
+  <div class="max-w-3xl mx-auto">
+    <h5 class="text-2xl font-semibold slanted-text">
+      Leave a Free Comment
+    </h5>
+    <JamComments 
+      schema={postSchema}
+      copy={{
+      commentPlaceholder: "Markdown is supported!",
+    }} />
+  </div>
 
     <NewsletterPopUp />
-  </div>
 
   <script>
     const observer = new IntersectionObserver((entries) => {

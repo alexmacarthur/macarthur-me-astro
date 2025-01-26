@@ -15,9 +15,9 @@ const {
 } = Astro.props;
 ---
 
-<div class="translate-y-full transition duration-300 ease-in-out fixed bottom-0 right-[5vw] newsletter-popup-wrapper">
+<div class="translate-y-full transition duration-300 ease-in-out fixed bottom-0 translate-x-1/2 md:translate-x-0 right-1/2 md:right-[5vw] newsletter-popup-wrapper">
 <div
-  class={`max-w-sm bg-gradient-to-br from-purple-600 to-purple-600 p-6 shadow-box purple-shadow-box w-full `}>
+  class={`w-80 bg-gradient-to-br from-purple-600 to-purple-600 p-6 shadow-box purple-shadow-box max-w-full`}>
     <button class="toggleNewsletter -z-10 absolute shadow-box no-padding purple-shadow-box top-0 right-0 bg-purple-600 w-12 h-14 flex items-center justify-center" aria-label="Toggle Newsletter Form">
         <div class="icon newsletter-icon ">
             <NewsletterIcon />
