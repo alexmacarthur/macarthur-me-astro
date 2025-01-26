@@ -310,7 +310,7 @@ const articleOgData = postData
         @apply text-gray-700 font-medium;
       }
 
-      :not(h1, h2, h3, h4, h5, h6, pre, pre *, svg *) {
+      :not(h1, h2, h3, h4, h5, h6, pre, pre *, svg, svg *) {
         @apply text-gray-700 font-light;
       }
 
@@ -347,13 +347,16 @@ const articleOgData = postData
       .jc-CommentBox-button {
         --mm-box-shadow-color: theme('colors.purple.500');
 
-        transition: all 0.1s ease;
+        transition: box-shadow 0.1s ease, hover 0.1s ease;
         transform: translateX(-2px);
         box-shadow: 4px 4px 0px var(--mm-box-shadow-color);
-        @apply border-2 border-purple-500 text-purple-500 rounded-sm px-4 py-1 rounded-md;
+        @apply border-2 border-purple-500 text-purple-500 px-4 py-1 rounded-md;
 
         &:hover {
           cursor: pointer;
+        }
+
+        &:not(.button-no-hover):hover {
           transform: translate(2px, 2px);
           box-shadow: 2px 2px 0px var(--mm-box-shadow-color);
         }
@@ -432,16 +435,19 @@ const articleOgData = postData
 
       .shadow-box {
         @apply border-2 p-5 md:p-6 rounded-md;
-        transition: all 0.1s ease;
+        transition: box-shadow 0.1s ease, hover 0.1s ease;
         box-shadow: 5px 5px 0px theme('colors.gray.200');
 
         &.hoverable-shadow-box {
-          
-                  &:hover {
-                    cursor: pointer;
-                    transform: translate(2px, 2px);
-                    box-shadow: 2px 2px 0px var(--mm-box-shadow-color);
-                  }
+          &:hover {
+            cursor: pointer;
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px var(--mm-box-shadow-color);
+          }
+        }
+
+        &.no-padding {
+          padding: unset;
         }
 
         &.purple-shadow-box {

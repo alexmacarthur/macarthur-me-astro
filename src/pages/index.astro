@@ -1,7 +1,7 @@
 ---
 import ButtonLink from "../components/ButtonLink.astro";
 import GradientText from "../components/GradientText.astro";
-import SignupForm from "../components/SignupForm.astro";
+import NewsletterBox from "../components/NewsletterBox.astro";
 import DateFormatter from "../components/DateFormatter.astro";
 import Layout from "../layouts/Layout.astro";
 import contentService, {
@@ -85,7 +85,7 @@ const featuredBlogPosts = (await Promise.all(
 
       <li
         class="signup-form grid row-auto col-span-full sm:row-span-2 sm:col-start-3 sm:row-start-1">
-        <SignupForm />
+        <NewsletterBox />
       </li>
     </ul>
 
