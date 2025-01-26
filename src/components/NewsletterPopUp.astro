@@ -1,0 +1,90 @@
+---
+import CloseIcon from './CloseIcon.astro';
+import NewsletterForm from './NewsletterForm.astro';
+import NewsletterIcon from './NewsletterIcon.astro';
+
+export interface Props {
+  heading?: string;
+  description?: string;
+  isHorizontal?: boolean;
+}
+
+const {
+  heading = "Get irregular emails about new posts or projects.",
+  description = "No spam. Unsubscribe whenever.",
+} = Astro.props;
+---
+
+<div class="translate-y-full transition duration-300 ease-in-out fixed bottom-0 right-[5vw] newsletter-popup-wrapper">
+<div
+  class={`max-w-sm bg-gradient-to-br from-purple-600 to-purple-600 p-6 shadow-box purple-shadow-box w-full `}>
+    <button class="toggleNewsletter -z-10 absolute shadow-box no-padding purple-shadow-box top-0 right-0 bg-purple-600" aria-label="Toggle Newsletter Form">
+        <div class="newsletter-icon text-white">
+            <NewsletterIcon />
+        </div>
+
+        <div class="close-icon text-white">
+            <CloseIcon />
+        </div>
+    </button>
+    <div class={`mb-5 md:col-span-3`}>
+        <p class="text-white mb-3 font-semibold">
+            {heading}
+        </p>
+        <span class="text-purple-200 leading-snug block">
+            {description}
+        </span>
+    </div>
+
+    <NewsletterForm />
+</div>
+</div>
+
+<style>
+    .toggleNewsletter {
+        --original-transform: translateY(calc(-100% + 10px));
+
+        transition: transform 0.25s ease-in-out;
+        transform: var(--original-transform);
+        padding: theme('spacing.2') theme('spacing.2') theme('spacing.4');
+
+        &:hover {
+            transform: translateY(calc(-100% + 5px));
+        }
+
+        &.disable-hover {   
+            transition: none;
+            transform: var(--original-transform);
+            /* pointer-events: none !important; */
+        }
+    }
+</style>
+
+<script>
+    const toggles = document.querySelectorAll('.toggleNewsletter') as NodeListOf<HTMLElement>;
+
+    let isOpen = false;
+
+    function handleToggle(e) {
+        const toggle = e.currentTarget as HTMLElement;
+        const parent = toggle.closest('.newsletter-popup-wrapper') as HTMLElement;
+
+        toggle.classList.toggle('disable-hover', !isOpen);
+        parent.classList.toggle('translate-y-full', isOpen);
+
+        isOpen = !isOpen;
+
+    }
+    
+    document.addEventListener('astro:before-preparation', () => {
+        toggles.forEach(toggle => {
+            toggle.removeEventListener('click', handleToggle);
+        });
+    });
+    
+    document.addEventListener('astro:page-load', () => {
+        toggles.forEach(toggle => {
+            toggle.addEventListener('click', handleToggle);
+        });
+    });
+</script>
