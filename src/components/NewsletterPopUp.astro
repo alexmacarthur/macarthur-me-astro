@@ -10,7 +10,7 @@ export interface Props {
 }
 
 const {
-  heading = "Get irregular emails about new posts or projects.",
+  heading = "Get emailed about new posts.",
   description = "No spam. Unsubscribe whenever.",
 } = Astro.props;
 ---
@@ -18,19 +18,16 @@ const {
 <div class="translate-y-full transition duration-300 ease-in-out fixed bottom-0 translate-x-1/2 md:translate-x-0 right-1/2 md:right-[5vw] newsletter-popup-wrapper">
 <div
   class={`w-80 bg-gradient-to-br from-purple-600 to-purple-600 p-6 shadow-box purple-shadow-box max-w-full`}>
-    <button class="toggleNewsletter -z-10 absolute shadow-box no-padding purple-shadow-box top-0 right-0 bg-purple-600 w-12 h-14 flex items-center justify-center" aria-label="Toggle Newsletter Form">
+    <button class="toggleNewsletter -z-10 absolute shadow-box no-padding purple-shadow-box top-0 right-0 bg-purple-600 flex items-center gap-3 whitespace-nowrap !p-3 !pb-6">
         <div class="icon newsletter-icon ">
             <NewsletterIcon />
         </div>
+        <h5 class="text-white mb-0 font-semibold inline-block">
+            {heading}
+        </h5>
 
-        <div class="icon close-icon">
-            <CloseIcon />
-        </div>
     </button>
     <div class={`mb-5 md:col-span-3`}>
-        <p class="text-white mb-3 font-semibold">
-            {heading}
-        </p>
         <span class="text-purple-200 leading-snug block">
             {description}
         </span>
@@ -44,11 +41,11 @@ const {
     .toggleNewsletter {
         --original-transform: translateY(calc(-100% + 10px));
 
-        transition: transform 0.25s ease-in-out;
+        transition: transform 0.15s ease-in-out;
         transform: var(--original-transform);
 
         &:hover {
-            transform: translateY(calc(-100% + 5px));
+            transform: translateY(calc(-100% + 7px));
         }
 
         &.disable-hover {   
@@ -57,7 +54,7 @@ const {
         }
 
         .icon {
-            @apply -translate-y-1 text-white absolute;
+            @apply text-white;
             transition: opacity 0.2s ease-in-out;
         }
 
