@@ -6,10 +6,10 @@ import DateFormatter from "../../components/DateFormatter.astro";
 import Title from "../../components/Title.astro";
 import Layout from "../../layouts/Layout.astro";
 import { MY_NAME } from "../../lib/constants";
-import NewsletterBox from "../../components/NewsletterBox.astro";
 import contentService, { computeDescription } from "../../lib/ContentService";
 import ButtonLink from "../../components/ButtonLink.astro";
 import NewsletterPopUp from "../../components/NewsletterPopUp.astro";
+import NewsletterBox from "../../components/NewsletterBox.astro";
 
 interface Params {
   slug: string;
@@ -92,13 +92,20 @@ if (post.updated_at) {
 
     <div class="prose lg:prose-lg mx-auto" set:html={post.html} />
     
+    <div class="block sm:hidden my-8">
+      <NewsletterBox isHorizontal={true}
+        heading="Get blog posts like this in your inbox."
+        description="May be irregular. Unsubscribe whenever."
+      />
+    </div>
 
-  <hr class="divider my-8" />
+  <hr class="divider my-8 hidden md:block" />
 
   <div class="max-w-3xl mx-auto">
     <h5 class="text-2xl font-semibold slanted-text">
       Leave a Free Comment
     </h5>
+
     <JamComments 
       schema={postSchema}
       copy={{
@@ -106,7 +113,7 @@ if (post.updated_at) {
     }} />
   </div>
 
-    <NewsletterPopUp />
+  <NewsletterPopUp />
 
   <script>
     const observer = new IntersectionObserver((entries) => {

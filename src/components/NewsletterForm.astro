@@ -36,6 +36,7 @@ const buttonHoverClass = disableButtonHover ? "button-no-hover" : "";
   .is-error {
     @apply bg-pink-600 border-2 border-white mt-3;
   }
+  
 </style>
 
 <script>
@@ -79,16 +80,18 @@ const buttonHoverClass = disableButtonHover ? "button-no-hover" : "";
     sendEvent("email_signup", { path });
   }
 
-  const forms = document.querySelectorAll<HTMLFormElement>("[data-signup-form]");
+  function getForms() {
+    return document.querySelectorAll<HTMLFormElement>("[data-signup-form]");
+  }
 
   document.addEventListener('astro:before-preparation', () => {
-    forms.forEach((form) => {
+    getForms().forEach((form) => {
       form.removeEventListener("submit", handleSubmission);
     });
   });
 
   document.addEventListener('astro:page-load', () => {
-    forms.forEach((form) => {
+    getForms().forEach((form) => {
       form.addEventListener("submit", handleSubmission);
     });
   });

@@ -14,9 +14,11 @@ const {
   description = "No spam. Might be irregular. Unsubscribe whenever. Won't be hurt.",
 } = Astro.props;
 ---
-    <div class="translate-y-full transition duration-300 ease-in-out fixed bottom-0 translate-x-1/2 md:translate-x-0 right-1/2 md:right-[5vw] newsletter-popup-wrapper">
-        <button class="toggleNewsletter -z-10 absolute shadow-box no-padding purple-shadow-box top-0 right-0 bg-purple-600 flex items-center whitespace-nowrap !pt-1 !pb-3 !px-5 md:!pt-2 md:!pb-4 w-full">
-            <div class="relative w-5 h-6 md:w-6 md:h-8 flex items-center justify-center icon-wrapper overflow-hidden mr-3">
+<div class="screen-wrap"></div>
+
+<div class="translate-y-full transition duration-300 ease-in-out fixed bottom-0 translate-x-0 right-[5vw] newsletter-popup-wrapper hidden sm:block z-20">
+        <button class="toggleNewsletter absolute shadow-box no-padding purple-shadow-box top-0 right-0 bg-purple-600 flex items-center whitespace-nowrap !px-5 !pt-2 !pb-4 w-full">
+            <div class="relative w-6 h-8 flex items-center justify-center icon-wrapper overflow-hidden mr-3">
                 <div class="icon newsletter-icon">
                     <NewsletterIcon />
                 </div>
@@ -33,8 +35,8 @@ const {
             </div>
         </button>
         <div
-        class={`w-80 bg-gradient-to-br from-purple-600 to-purple-600 p-6 !pt-0 shadow-box purple-shadow-box max-w-full`}>
-            <div class={`mb-5 md:col-span-3`}>
+        class={`w-80 bg-gradient-to-br from-purple-600 to-purple-600 p-6 !pt-0 shadow-box purple-shadow-box max-w-full relative z-20`}>
+            <div class={`mb-5 col-span-3`}>
                 <span class="text-purple-200 leading-snug block">
                     {description}
                 </span>
@@ -45,9 +47,18 @@ const {
     </div>
 
 <style>
+    .screen-wrap {
+        @apply fixed w-screen h-screen top-0 left-0 z-10 hidden;
+
+        &.is-open {
+            @apply block;
+        }
+    }   
+
     .toggleNewsletter {
         --original-transform: translateY(calc(-100% + 10px));
         transition: all 0.15s ease-in-out;
+        z-index: 11;
 
         @keyframes bump {
             0% {
@@ -113,11 +124,11 @@ const {
 </style>
 
 <script>
+    let isOpen = false;
+
     function getToggles() {
         return document.querySelectorAll('.toggleNewsletter') as NodeListOf<HTMLElement>;
     }
-
-    let isOpen = false;
 
     function closePopup(event) {
         if(event.key.toLowerCase() === 'escape' && isOpen) {
@@ -125,7 +136,9 @@ const {
             
             const parent = document.querySelector('.newsletter-popup-wrapper') as HTMLElement;
             const toggle = document.querySelector('.toggleNewsletter') as HTMLElement;
-    
+            const screenWrap = document.querySelector('.screen-wrap') as HTMLElement;
+            
+            screenWrap.classList.remove('is-open');
             toggle.classList.remove('disable-hover');
             parent.classList.add('translate-y-full');
             toggle.classList.remove('is-open');
@@ -133,10 +146,20 @@ const {
         }
     }
 
+    function handleScreenWrapClick() {
+        closePopup({ key: 'Escape', preventDefault: () => {} });    
+    }
+
+    function getScreenWrap() {
+        return document.querySelector('.screen-wrap') as HTMLElement;
+    }
+
     function handleToggle(e) {
         const toggle = e.currentTarget as HTMLElement;
         const parent = toggle.closest('.newsletter-popup-wrapper') as HTMLElement;
+        const screenWrap = document.querySelector('.screen-wrap') as HTMLElement;
 
+        screenWrap.classList.toggle('is-open', !isOpen);
         toggle.classList.toggle('disable-hover', !isOpen);
         parent.classList.toggle('translate-y-full', isOpen);
         toggle.classList.toggle('is-open', !isOpen);
@@ -146,6 +169,8 @@ const {
     
     document.addEventListener('astro:before-preparation', () => {
         document.removeEventListener('keydown', closePopup);
+
+        getScreenWrap().removeEventListener('click', handleScreenWrapClick);
         
         getToggles().forEach(toggle => {
             toggle.removeEventListener('click', handleToggle);
@@ -155,11 +180,9 @@ const {
     document.addEventListener('astro:page-load', () => {
         document.addEventListener('keydown', closePopup);
 
-        console.log('adding')
+        getScreenWrap().addEventListener('click', handleScreenWrapClick);
 
         getToggles().forEach(toggle => {
-
-            console.log('contains', toggle.classList.contains('initial-bump'));
             toggle.classList.remove('initial-bump');
 
             requestAnimationFrame(() => {
@@ -168,7 +191,6 @@ const {
                 });
             })
         
-
             toggle.addEventListener('click', handleToggle);
         });
     });
