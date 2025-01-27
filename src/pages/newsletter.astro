@@ -5,27 +5,26 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout
-  title="Newsletter"
-  ogTitle="Sign up for my semi-regular newsletter."
-  description={"Join ones and ones of others to get irregular emails about new blog posts and projects."}
-  pageType="open">
-  <div class="grid grid-cols-1 md:grid-cols-11 gap-8">
-    <div class="md:col-span-6">
+  title="Newsletter" 
+  pageType="open"
+  ogTitle="Sign up for my sorta-regular newsletter."
+  description={"Join ones and ones of others to get irregular emails about new blog posts and projects."}>
+  <div class="grid grid-cols-1 md:grid-cols-8 gap-12">
+
+    <div class="md:col-span-5">
       <Title>Sign up for my semi-regular newsletter.</Title>
 
       <div class="prose lg:prose-lg">
         <p>
-          I occassionally send out emails about new blog posts and projects I'm
-          building. If you'd like to join ones and ones of other people who've
-          already signed up, do it here.
+          I occassionally send out emails when I publish a new blog post. If you'd like to join <em>ones and ones</em> of other people who've
+          already signed up, take the leap.
         </p>
       </div>
     </div>
 
-    <div class="md:col-span-5">
+    <div class="md:col-span-3 flex flex-col justify-center">
       <NewsletterBox
         heading={"You might not regret it. Money-back guarantee."}
-        description={"Powered by Ghost. Unsubscribe at any time, obviously."}
       />
     </div>
   </div>
