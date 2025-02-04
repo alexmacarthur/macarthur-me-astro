@@ -16,7 +16,7 @@ const featuredBlogPosts = (await Promise.all(
     "options-for-removing-event-listeners",
     "promise-with-resolvers",
     "send-an-http-request-on-page-exit",
-    "navigating-the-event-loop",
+    "long-tasks",
   ].map((slug) => contentService.getPost(slug))
 )) as CustomPostsOrPages;
 ---
