@@ -21,6 +21,9 @@ export default defineConfig({
     jamComments({
       domain: process.env.JAM_COMMENTS_DOMAIN,
       apiKey: process.env.JAM_COMMENTS_API_KEY,
+      copy: {
+        commentPlaceholder: "Markdown is supported!",
+      },
     }),
     tailwind(),
     sitemap({
