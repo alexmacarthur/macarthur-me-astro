@@ -93,17 +93,19 @@ const navItems = [
 </nav>
 
 <style is:global>
+  @reference "../styles/global.css";
+  
   #mobileNav {
     transition:
       transform 0.15s ease-in-out,
       opacity 0.1s ease-in-out 0.05s;
   }
   #menuToggle:checked ~ #mobileNav {
-    @apply opacity-100 translate-x-0;
+    @apply opacity-100 translate-none;
   }
 
   #menuToggle:checked ~ #menuToggleLabel li {
-    @apply bg-white;
+    background: var(--color-white);
   }
 
   #menuToggle:checked ~ #menuToggleLabel {

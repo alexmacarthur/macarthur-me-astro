@@ -14,55 +14,62 @@ import Title from "../components/Title.astro";
   </div>
 
   <div class="mx-auto max-w-xl">
-    <span
-      id="message"
-      style="display: none;"
-      class={"block text-base md:text-xl bg-green-200 text-green-700 px-3 py-2 rounded-md mb-10 text-center"}
-    >
-      Something went wrong!
-    </span>
-
     <form id="contactForm" name="contact" method="post" action="/api/email">
-      <p class="mb-4 password-wrapper">
-        <label class="block">
-          Password:
-          <br />
-          <input
-            type="text"
-            name="password"
-            tab-index="-1"
-            auto-complete="off"
-          />
-        </label>
-      </p>
 
-      <p class="mb-4">
-        <label class="block">
-          Your name:
-          <br />
-          <input required type="text" name="name" />
-        </label>
-      </p>
+      <div class="input-wrapper">
+        <p class="mb-4 password-wrapper">
+          <label class="block">
+            Password:
+            <br />
+            <input
+              type="text"
+              name="password"
+              tab-index="-1"
+              auto-complete="off"
+            />
+          </label>
+        </p>
 
-      <p class="mb-4">
-        <label class="block">
-          Your email:
-          <br />
-          <input required type="email" name="email" />
-        </label>
-      </p>
+        <p class="mb-4">
+          <label class="block">
+            Your name:
+            <br />
+            <input required type="text" name="name" />
+          </label>
+        </p>
 
-      <p class="mb-4">
-        <label class="block">
-          Message:
-          <br />
-          <textarea required name="message" rows={4}></textarea>
-        </label>
-      </p>
+        <p class="mb-4">
+          <label class="block">
+            Your email:
+            <br />
+            <input required type="email" name="email" />
+          </label>
+        </p>
 
-      <p class="mt-6">
-        <button type="submit" class="button"> Send</button>
-      </p>
+        <p class="mb-4">
+          <label class="block">
+            Message:
+            <br />
+            <textarea required name="message" rows={4}></textarea>
+          </label>
+        </p>
+      </div>
+
+      <div class="flex flex-col md:flex-row justify-between md:items-center mt-2 gap-5 py-2">
+        <p class="my-2">
+          <button type="submit" class="button">Send</button>
+        </p>
+
+        <div>
+          <span
+            id="message"
+            style="display: none;"
+            class={"block md:text-base bg-gray-100 py-2 text-gray-800 px-3 rounded-md text-center"}
+          >
+            Something went wrong!
+          </span>
+        </div>
+      </div>
     </form>
   </div>
 </Layout>
@@ -73,10 +80,20 @@ import Title from "../components/Title.astro";
     pointer-events: none;
   }
 
+  .is-error {
+    background: var(--color-red-200);
+    color: var(--color-red-700);
+  }
+
+  .is-success {
+    background: var(--color-green-200);
+    color: var(--color-green-700);
+  }
 </style>
 
 <script>
   const form = document.getElementById("contactForm") as HTMLFormElement;
+  const inputWrapper = form.querySelector(".input-wrapper") as HTMLDivElement;
   const submitButton = form.querySelector(
     "button[type=submit]"
   ) as HTMLButtonElement;
@@ -100,29 +117,43 @@ import Title from "../components/Title.astro";
     });
   };
 
-  const setValidationMessage = (message: string, isError: boolean = false) => {
+  const setValidationMessage = (message: string, status: `error` | `info` | `success` = "info") => {
     messageEl.innerHTML = message;
     messageEl.style.display = "block";
+    messageEl.classList.remove("is-error", "is-success");
 
-    if (isError) {
-      messageEl.classList.add("bg-red-200", "text-red-700");
+    if (status === "error") {
+      messageEl.classList.add("is-error");
+      return;
+    }
+
+    if(status === "success") {
+      messageEl.classList.add("is-success");
       return;
     }
   };
 
   const onSubmitSuccess = () => {
     form.reset();
-    setValidationMessage("Message successfully sent!");
+    setValidationMessage("Message successfully sent!", "success");
     setCanSubmit(true);
+  };
+
+  const setIsSubmitting = () => {
+    setValidationMessage("Transporting your message through Internet tubes...", "info");
+    setCanSubmit(false);
   };
 
   const setCanSubmit = (canSubmit: boolean) => {
     if (canSubmit) {
-      form.classList.remove("is-disabled");
+      inputWrapper.classList.remove("is-disabled");
+      submitButton.classList.remove("is-disabled");
+      submitButton.removeAttribute("disabled");
       return submitButton.removeAttribute("disabled");
     }
 
-    form.classList.add("is-disabled");
+    inputWrapper.classList.add("is-disabled");
+    submitButton.classList.add("is-disabled");
     submitButton.setAttribute("disabled", "true");
   };
 
@@ -140,11 +171,12 @@ import Title from "../components/Title.astro";
       return;
     }
 
-    setCanSubmit(false);
+    setIsSubmitting();
 
     try {
       const formData = new FormData(e.target as HTMLFormElement);
-      const response = await fetch(
+
+      await fetch(
         `${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/contact`,
         {
           keepalive: true,
@@ -158,13 +190,11 @@ import Title from "../components/Title.astro";
         }
       );
 
-      await response.json();
-
       onSubmitSuccess();
     } catch(e) {
-      setCanSubmit(false);
+      setCanSubmit(true);
 
-      setValidationMessage(`Something went wrong! Just email me instead: <a style="color: inherit; font-weight: 500;" href="mailto:contact@macarthur.me">contact@macarthur.me</a>`, true);
+      setValidationMessage(`Something failed. Email me instead: <a style="color: inherit; font-weight: 500;" href="mailto:contact@macarthur.me">contact@macarthur.me</a>`, "error");
     }
   });
 </script>

@@ -13,14 +13,14 @@ const { text = "AM", hoverable, fontSize = "text-3xl" } = Astro.props;
     color: white;
     letter-spacing: -0.05em;
     text-shadow:
-      0.075em 0.075em 0px theme("colors.gray.800"),
-      -0.075em -0.075em 0px theme("colors.gray.800");
+      0.075em 0.075em 0px var(--color-gray-800),
+      -0.075em -0.075em 0px var(--color-gray-800);
     transition: text-shadow 0.075s ease-out;
 
     &.hoverable:hover {
       text-shadow:
-        0.075em 0.075em 0px theme("colors.purple.700"),
-        -0.075em -0.075em 0px theme("colors.purple.600");
+        0.075em 0.075em 0px var(--color-purple-700),
+        -0.075em -0.075em 0px var(--color-purple-600);
     }
   }
 </style>
