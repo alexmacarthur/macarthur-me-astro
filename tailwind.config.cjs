@@ -1,10 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
-    fontFamily: {
-      sans: ['"Figtree Variable", sans-serif'],
-    },
+    fontFamily: { sans: ['"Figtree Variable", sans-serif'] },
     fontWeight: {
       thin: "100",
       hairline: "100",
@@ -19,61 +16,37 @@ module.exports = {
       black: "900",
     },
     extend: {
-      fontSize: {
-        mega: "6rem",
-      },
       typography: (theme) => ({
         DEFAULT: {
           css: {
             maxWidth: "100%",
-            img: {
-              margin: "0 auto",
-              maxWidth: "100%",
-            },
-            figcaption: {
-              textAlign: "center",
-            },
-            a: {
-              color: theme("colors.gray.800"),
-              textDecoration: "none",
-            },
+            img: { margin: "0 auto", maxWidth: "100%" },
+            figcaption: { textAlign: "center" },
+            a: { color: "var('--color-gray-800')", textDecoration: "none" },
             "a code": {
               background: "none",
               fontSize: "inherit",
               fontFamily: "inherit",
               padding: "0",
             },
-            strong: {
-              color: theme("colors.gray.800"),
-            },
+            strong: { color: "var('--color-gray-800')" },
             "h1, h2, h3, h4, h5, h6": {
-              color: theme("colors.gray.900"),
+              color: "var('--color-gray-900')",
               marginBottom: `theme("margin.3") !important`,
               fontWeight: `650`,
             },
-            "h1 a, h2 a, h3 a, h4 a, h5 a, h6 a": {
-              fontWeight: "inherit",
-            },
+            "h1 a, h2 a, h3 a, h4 a, h5 a, h6 a": { fontWeight: "inherit" },
             code: {
               fontWeight: "inherit",
-              color: theme("colors.gray.700"),
+              color: "var('--color-gray-700')",
               borderRadius: theme("border.sm"),
               padding: theme("padding.1"),
-              background: theme("colors.gray.200"),
+              background: "var('--color-gray-200')",
             },
-            "code::before": {
-              content: "none",
-            },
-            "code::after": {
-              content: "none",
-            },
-            "strong *": {
-              fontWeight: "inherit",
-              color: "inherit",
-            },
-            blockquote: {
-              fontWeight: "inherit",
-            },
+            "code::before": { content: "none" },
+            "code::after": { content: "none" },
+            "strong *": { fontWeight: "inherit", color: "inherit" },
+            blockquote: { fontWeight: "inherit" },
           },
         },
       }),
@@ -83,11 +56,7 @@ module.exports = {
   plugins: [
     require("@tailwindcss/typography"),
     function ({ addVariant, addUtilities, theme }) {
-      addUtilities({
-        ".red-copy *": {
-          color: theme("colors.rose.600"),
-        },
-      });
+      addUtilities({ ".red-copy *": { color: "var('--color-rose-600')" } });
       addVariant("child-link", "& > a");
       addVariant("child-link-hover", "& > a:hover");
     },

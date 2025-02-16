@@ -34,9 +34,15 @@ const buttonHoverClass = disableButtonHover ? "button-no-hover" : "";
 
 <style>
   .is-error {
-    @apply bg-pink-600 border-2 border-white mt-3;
+    background: var(--bg-pink-600);
+    border-color: var(--color-white);
+    margin-top: calc(var(--spacing) * 3);
+
+    a {
+      color: var(--color-white);
+      font-weight: 500;
+    }
   }
-  
 </style>
 
 <script>
@@ -61,23 +67,30 @@ const buttonHoverClass = disableButtonHover ? "button-no-hover" : "";
     ).value as string;
     const path = window.location.pathname;
 
-    // @ts-ignore
-    fetch(`${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/sign-up`, {
-      keepalive: true,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, path }),
-    });
+    try {      
+      // @ts-ignore
+      fetch(`${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/sign-up`, {
+        keepalive: true,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, path }),
+      });
+  
+      resultMessage.classList.remove("hidden");
+  
+      form.reset();
+      resultMessage.classList.remove("is-error");
+      resultMessage.innerText = "You're in. Thanks! 🎉";
+      form.remove();
+      sendEvent("email_signup", { path });
 
-    resultMessage.classList.remove("hidden");
-
-    form.reset();
-    resultMessage.classList.remove("is-error");
-    resultMessage.innerText = "You're in. Thanks! 🎉";
-    form.remove();
-    sendEvent("email_signup", { path });
+    } catch(e) {
+      resultMessage.classList.remove("hidden");
+      resultMessage.innerHTML = `Something went wrong. <a href="/contact">Message me about it here!</a>`;
+      button.disabled = false;
+    }
   }
 
   function getForms() {

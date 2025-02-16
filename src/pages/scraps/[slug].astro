@@ -119,6 +119,8 @@ const generatedOgImage = `https://www.macarthur.me/open-graph-simple?title=${enc
   </script>
 
   <style is:global>
+    @reference "../../styles/global.css";
+    
     @keyframes slide {
       0% {
         transform: translateX(0);
@@ -134,14 +136,14 @@ const generatedOgImage = `https://www.macarthur.me/open-graph-simple?title=${enc
     }
 
     .code-block {
-      @apply relative my-4 p-5 !important;
+      @apply relative my-4 p-5;
       content-visibility: auto;
       contain-intrinsic-size: auto 275px;
     }
 
     .code-block-wrapper {
       @apply relative overflow-x-auto overflow-y-hidden mx-auto;
-      max-width: calc(100% - theme("width.4"));
+      max-width: calc(100% - var(--width-4));
 
       @screen sm {
         max-width: 100%;
@@ -161,7 +163,7 @@ const generatedOgImage = `https://www.macarthur.me/open-graph-simple?title=${enc
     }
 
     .code-block-wrapper.is-visible .code-block {
-      @apply mb-6 !important;
+      @apply mb-6;
     }
 
     .code-block-wrapper.is-visible:after {
