@@ -83,7 +83,7 @@ class ContentService {
       excludeTags = [],
     }: {
       tags?: string[];
-      excludeTags?: string[];
+      excludeTags?: (`scrap` | `skip-rss` | `external` | `remote:${string}`)[];
     } = {},
   ): Promise<CustomPostsOrPages> {
     const args: Params = { page, limit: POSTS_PER_PAGE, include: "tags" };
