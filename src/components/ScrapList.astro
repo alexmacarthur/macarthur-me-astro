@@ -5,7 +5,6 @@ import {
   isExternal,
 } from "../lib/ContentService";
 import type { CustomPostsOrPages } from "../types/types";
-import ButtonLink from "./ButtonLink.astro";
 import DateFormatter from "./DateFormatter.astro";
 
 interface Props {
@@ -25,11 +24,11 @@ const { posts } = Astro.props;
       const target = external ? "_blank" : "_self";
 
       return (
-        <li class="group border border-gray-300 hover:border-purple-500 rounded-md">
+        <li class="shadow-box no-padding hoverable-shadow-box">
             <a href={postPath} target={target} class="block p-6">
               <article class="flex justify-between">
                   <div class="flex-none">
-                    <h2 class="group-hover:text-purple-500 text-2xl font-light mb-1" transition:name={post.slug}>
+                    <h2 class="text-2xl font-semibold mb-1 fancy-link-on-hover" transition:name={post.slug}>
                         {post.title}
                     </h2>
 
