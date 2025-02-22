@@ -11,9 +11,9 @@
     "@picperf/rehype": "^0.5.1",
     "@supabase/supabase-js": "^2.48.1",
     "@tailwindcss/typography": "^0.5.16",
-    "@tailwindcss/vite": "^4.0.7",
+    "@tailwindcss/vite": "^4.0.8",
     "@tryghost/content-api": "^1.11.21",
-    "@types/node": "^22.13.4",
+    "@types/node": "^22.13.5",
     "astro": "^5.3.0",
     "astro-heroicons": "^2.1.5",
     "astro-pagefind": "^1.8.0",
@@ -23,12 +23,12 @@
     "jsdom": "^26.0.0",
     "lowdb": "^7.0.1",
     "octonode": "^0.10.2",
-    "prettier": "^3.5.1",
+    "prettier": "^3.5.2",
     "prettier-plugin-astro": "^0.14.1",
     "prismjs": "^1.29.0",
     "sanitize-html": "^2.14.0",
     "schema-dts": "^1.1.2",
-    "tailwindcss": "^4.0.7"
+    "tailwindcss": "^4.0.8"
   },
   "private": true,
   "scripts": {
