@@ -36,6 +36,14 @@ module.exports = {
               fontWeight: `650`,
             },
             "h1 a, h2 a, h3 a, h4 a, h5 a, h6 a": { fontWeight: "inherit" },
+            "h1 code, h2 code, h3 code, h4 code, h5 code, h6 code": {
+              fontWeight: "inherit",
+              fontSize: "inherit",
+              color: "var(--color-gray-700)",
+              borderRadius: theme("radius.sm"),
+              padding: theme("padding.1") + " " + theme("padding.2"),
+              background: "var(--color-gray-200)",
+            },
             code: {
               fontWeight: "inherit",
               color: "var(--color-gray-700)",
