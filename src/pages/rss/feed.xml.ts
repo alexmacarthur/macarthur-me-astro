@@ -3,7 +3,7 @@ import contentService from "../../lib/ContentService";
 import sanitizeHtml from "sanitize-html";
 
 const posts = await contentService.getAllPosts({
-  excludeTags: ["scrap", "skip-rss"],
+  excludeTags: ["scrap"],
 });
 
 export const GET = () =>
