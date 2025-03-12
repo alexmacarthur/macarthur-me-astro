@@ -11,12 +11,12 @@
     "@picperf/rehype": "^0.5.1",
     "@supabase/supabase-js": "^2.49.1",
     "@tailwindcss/typography": "^0.5.16",
-    "@tailwindcss/vite": "^4.0.10",
+    "@tailwindcss/vite": "^4.0.13",
     "@tryghost/content-api": "^1.11.21",
-    "@types/node": "^22.13.9",
-    "astro": "^5.4.2",
+    "@types/node": "^22.13.10",
+    "astro": "^5.4.3",
     "astro-heroicons": "^2.1.5",
-    "astro-pagefind": "^1.8.1",
+    "astro-pagefind": "^1.8.2",
     "astro-seo": "^0.8.4",
     "countup.js": "^2.8.0",
     "dotenv": "^16.4.7",
@@ -25,10 +25,10 @@
     "octonode": "^0.10.2",
     "prettier": "^3.5.3",
     "prettier-plugin-astro": "^0.14.1",
-    "prismjs": "^1.29.0",
+    "prismjs": "^1.30.0",
     "sanitize-html": "^2.14.0",
     "schema-dts": "^1.1.5",
-    "tailwindcss": "^4.0.10"
+    "tailwindcss": "^4.0.13"
   },
   "private": true,
   "scripts": {
@@ -43,12 +43,12 @@
   },
   "type": "module",
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250303.0",
+    "@cloudflare/workers-types": "^4.20250311.0",
     "@types/sanitize-html": "^2.13.0",
     "@types/tryghost__content-api": "^1.3.17",
     "typescript": "^5.8.2"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.34.9"
+    "@rollup/rollup-linux-x64-gnu": "^4.35.0"
   }
 }
