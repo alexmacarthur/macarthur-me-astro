@@ -218,11 +218,26 @@ class ContentService {
     return dom.serialize();
   };
 
+  #removeRefQueryParam(link: string): string {
+    try {
+      const url = new URL(link);
+      url.searchParams.delete("ref");
+      return url.toString();
+    } catch (e) {
+      return link;
+    }
+  }
+
   #openExternalLinksInNewTab = (html: string): string => {
     const dom = new JSDOM(html);
     const links = dom.window.document.querySelectorAll("a");
 
     links.forEach((link) => {
+      // Remove the ?ref parameter Ghost adds.
+      link.setAttribute(
+        "href",
+        this.#removeRefQueryParam(link.getAttribute("href")),
+      );
       link.setAttribute("target", "_blank");
       link.setAttribute("rel", "noopener");
     });
