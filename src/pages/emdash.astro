@@ -1,0 +1,92 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Contact Me" pageType="unhinged" showNav={false}>
+    <div class="h-screen w-full content-center opacity-0 transition-opacity duration-500" id="wrapper">
+        <div class="max-w-3xl mx-auto flex justify-center">
+
+            <button id="copyButton" class="px-12 text-[10vw] font-black cursor-pointer pt-6 md:pt-10">
+                <div class="text-center">
+                    <h1 id="heading" class="text-4xl md:text-5xl font-bold">Click to copy the <em class="text-inherit font-bold">em dash</em>.</h1>
+                </div>
+
+                <div class="mx-auto max-w-xl flex justify-center text-inherit">
+                    &mdash;
+                </div>
+            </button>
+
+            <div class="px-12 text-[10vw] font-black pt-6 md:pt-10 hidden" id="noCopy">
+                <div class="text-center">
+                    <h1 id="heading" class="text-4xl md:text-5xl font-bold">Copy the <em class="text-inherit font-bold">em dash</em>.</h1>
+                </div>
+
+                <div class="mx-auto max-w-xl flex justify-center text-inherit">
+                    &mdash;
+                </div>
+            </div>
+
+        </div>
+    </div>
+</Layout>
+
+<script>
+    const heading = document.getElementById('heading') as HTMLHeadingElement;
+    const copyButton = document.getElementById('copyButton') as HTMLButtonElement;
+    const noCopy = document.getElementById('noCopy') as HTMLDivElement;
+    const wrapper = document.getElementById('wrapper') as HTMLDivElement;
+    let timeout;
+
+    function clipboardIsSupported() {
+        // return false;
+        return navigator.clipboard && navigator.clipboard.writeText;
+    }
+
+    async function handleCopy() {
+        await navigator.clipboard.writeText("—");
+
+        heading.innerText = "Copied!";
+
+        clearTimeout(timeout);
+
+        timeout = setTimeout(() => {
+            heading.innerHTML = "Click to copy the em dash.";
+        }, 2000);
+    }
+
+    copyButton.addEventListener("click", handleCopy);
+    heading.addEventListener("click", handleCopy);
+
+    if(!clipboardIsSupported()) {
+        wrapper.classList.add("cannot-copy");
+
+        copyButton.classList.add("hidden");
+        noCopy.classList.remove("hidden");
+
+        copyButton.removeEventListener("click", handleCopy);
+        heading.removeEventListener("click", handleCopy);
+        heading.innerText = "Copy the em dash.";
+    }
+
+    wrapper.classList.remove("opacity-0");
+</script>
+
+<style is:global>
+    html, body, body > div, body main {
+        min-height: 100vh;
+        padding: 0;
+    }
+
+    #wrapper:not(.cannot-copy):has(#copyButton:hover) {
+        background-color: var(--color-purple-500);
+
+        button {
+            color: var(--color-white);
+        }
+
+        h1 {
+            color: var(--color-white);
+        }
+    }
+</style>
+
