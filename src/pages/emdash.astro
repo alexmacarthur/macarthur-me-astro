@@ -1,31 +1,41 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+const payLink = "https://buy.stripe.com/test_dR66s4gur75l72E9AF";
 ---
 
 <Layout title="Contact Me" pageType="unhinged" showNav={false}>
     <div class="h-screen w-full content-center opacity-0 transition-opacity duration-500" id="wrapper">
-        <div class="max-w-3xl mx-auto flex justify-center">
+        <div class="max-w-3xl mx-auto flex flex-col items-center">
+            <div class="text-center max-w-lg">
+                <h1 id="heading" class="leading-tight text-4xl md:text-5xl font-bold mb-4">Copy the perfect <em class="text-inherit font-bold">em dash</em> for $1.</h1>
 
-            <button id="copyButton" class="px-12 text-[10vw] font-black cursor-pointer pt-6 md:pt-10">
-                <div class="text-center">
-                    <h1 id="heading" class="text-4xl md:text-5xl font-bold">Click to copy the <em class="text-inherit font-bold">em dash</em>.</h1>
-                </div>
-
-                <div class="mx-auto max-w-xl flex justify-center text-inherit">
-                    &mdash;
-                </div>
-            </button>
-
-            <div class="px-12 text-[10vw] font-black pt-6 md:pt-10 hidden" id="noCopy">
-                <div class="text-center">
-                    <h1 id="heading" class="text-4xl md:text-5xl font-bold">Copy the <em class="text-inherit font-bold">em dash</em>.</h1>
-                </div>
-
-                <div class="mx-auto max-w-xl flex justify-center text-inherit">
-                    &mdash;
-                </div>
+                <p>It's a easier than trying to figure out the key combination.</p>
             </div>
 
+            <span id="emDash" class="mx-auto my-8 max-w-xl flex justify-center text-inherit text-8xl font-black select-none italic opacity-30">
+                &mdash;
+            </span>
+
+            <a href={payLink} id="payButton" class="border-1 px-4 py-2 rounded-md cursor-pointer border-gray-800 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+                </svg>
+
+                Pay to Unlock
+            </a>
+
+            <button id="copyButton" class="border-1 px-4 py-2 rounded-md cursor-pointer border-gray-800 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+                </svg>
+
+                    Copy the Em Dash
+            </button>
+
+            <span id="unsupportedText" class="hidden max-w-sm text-center text-red-800 mt-8">
+                <strong class="text-inherit font-semibold">Your browser doesn't support copying to the clipboard!</strong> You'll have to do it like the pilgrims did.
+            </span>
         </div>
     </div>
 </Layout>
@@ -33,24 +43,30 @@ import Layout from "../layouts/Layout.astro";
 <script>
     const heading = document.getElementById('heading') as HTMLHeadingElement;
     const copyButton = document.getElementById('copyButton') as HTMLButtonElement;
-    const noCopy = document.getElementById('noCopy') as HTMLDivElement;
+    const unsupportedText = document.getElementById('unsupportedText') as HTMLSpanElement;
+    const emDash = document.getElementById('emDash') as HTMLSpanElement;
     const wrapper = document.getElementById('wrapper') as HTMLDivElement;
     let timeout;
 
+    function canCopy() {
+        return new URLSearchParams(window.location.search).get('canCopy') === 'true';
+    }
+
     function clipboardIsSupported() {
-        // return false;
         return navigator.clipboard && navigator.clipboard.writeText;
     }
 
-    async function handleCopy() {
+    async function handleCopy(e) {
         await navigator.clipboard.writeText("—");
 
-        heading.innerText = "Copied!";
+        const button = e.target;
+
+        button.innerText = "You did it! It's copied!";
 
         clearTimeout(timeout);
 
         timeout = setTimeout(() => {
-            heading.innerHTML = "Click to copy the em dash.";
+            button.innerHTML = "Copy the Em Dash";
         }, 2000);
     }
 
@@ -58,35 +74,51 @@ import Layout from "../layouts/Layout.astro";
     heading.addEventListener("click", handleCopy);
 
     if(!clipboardIsSupported()) {
-        wrapper.classList.add("cannot-copy");
+        unsupportedText.classList.remove("hidden");
+        copyButton.classList.add("disabled");
+    }
 
-        copyButton.classList.add("hidden");
-        noCopy.classList.remove("hidden");
-
-        copyButton.removeEventListener("click", handleCopy);
-        heading.removeEventListener("click", handleCopy);
-        heading.innerText = "Copy the em dash.";
+    if(canCopy()) {
+        heading.innerHTML = "Congratulations! You've unlocked the <em class='font-bold'>em dash</em>!";
+        emDash.classList.remove("select-none")
+        wrapper.classList.add("can-copy");
+        emDash.classList.remove("opacity-30");
     }
 
     wrapper.classList.remove("opacity-0");
 </script>
 
-<style is:global>
+<style>
     html, body, body > div, body main {
         min-height: 100vh;
         padding: 0;
     }
 
-    #wrapper:not(.cannot-copy):has(#copyButton:hover) {
-        background-color: var(--color-purple-500);
+    button.disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+        border-color: var(--color-gray-400);
+        color: var(--color-gray-400);   
+    }
 
-        button {
-            color: var(--color-white);
+    button:hover, 
+    a:hover {
+        background-color: var(--color-gray-800);
+        color: var(--color-gray-100);
+    }
+
+    #copyButton {
+        display: none;
+    }
+
+    #wrapper.can-copy {
+        #copyButton {
+            display: flex;
         }
 
-        h1 {
-            color: var(--color-white);
-        }
+        #payButton {
+            display: none;
+        }   
     }
 </style>
 
