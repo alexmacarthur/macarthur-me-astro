@@ -1,19 +1,25 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-const payLink = "https://buy.stripe.com/test_dR66s4gur75l72E9AF";
+const payLink = import.meta.env.EM_DASH_PAY_LINK;
 ---
 
-<Layout title="Contact Me" pageType="unhinged" showNav={false}>
-    <div class="h-screen w-full content-center opacity-0 transition-opacity duration-500" id="wrapper">
+<Layout 
+    title="Copy the Perfect Em Dash" 
+    pageType="unhinged" 
+    showNav={false}
+    openGraphImage="https://macarthur.me/em-dash.png"
+    description="Copy the perfect em dash for $1. It's easier than trying to figure out the key combination."
+>
+    <div class="h-screen w-full content-center opacity-0 transition-opacity duration-700 delay-75" id="wrapper">
         <div class="max-w-3xl mx-auto flex flex-col items-center">
-            <div class="text-center max-w-lg">
-                <h1 id="heading" class="leading-tight text-4xl md:text-5xl font-bold mb-4">Copy the perfect <em class="text-inherit font-bold">em dash</em> for $1.</h1>
+            <div class="text-center max-w-3xl">
+                <h1 id="heading" class="leading-tight text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Copy the perfect <em class="text-inherit font-bold">em dash</em> for $1.</h1>
 
-                <p>It's a easier than trying to figure out the key combination.</p>
+                <p id="subCopy" class="text-lg">It's a easier than trying to figure out the key combination.</p>
             </div>
 
-            <span id="emDash" class="mx-auto my-8 max-w-xl flex justify-center text-inherit text-8xl font-black select-none italic opacity-30">
+            <span id="emDash" class="mx-auto mt-6 mb-8 max-w-xl flex justify-center text-inherit text-8xl font-black select-none italic opacity-30">
                 &mdash;
             </span>
 
@@ -38,25 +44,81 @@ const payLink = "https://buy.stripe.com/test_dR66s4gur75l72E9AF";
             </span>
         </div>
     </div>
+    
+    <div id="faq" class="hidden fixed z-10 top-0 left-0 w-full h-full place-content-center bg-white p-4">
+        
+        <button id="closeButton" class="absolute top-4 right-4 cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-12">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+        </button>
+        <div class="max-w-lg mx-auto mt-8 border-1 rounded-md border-gray-800 p-8">
+            <h2 class="text-center text-xl mb-6">Frequently Asked Questions</h2>
+
+            <ul class="flex flex-col gap-5">
+                <li>
+                    <h3>Are you serious?</h3>
+                    <p>Good, accessible grammer is always serious.</p>
+                </li>
+
+                <li>
+                    <h3>Is there a refund policy?</h3>
+                    <p>No.</p>
+                </li>
+
+                <li>
+                    <h3>How many times can I copy the em dash?</h3>
+                    <p>As many times as you want, but only on one device. To copy it from a different device, you owe me another dollar.</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="fixed bottom-0 left-0 w-full">
+        <div class="max-w-3xl mx-auto flex flex-col items-center">
+            <p class="text-center text-sm mt-8 mb-4">A product from <a href="https://macarthur.me" target="_blank" class="font-semibold" rel="noopener noreferrer">Alex MacArthur.</a></p>
+        </div>
+    </footer>
 </Layout>
 
 <script>
+import { sendEvent } from "../utils";
+import confetti from "canvas-confetti";
+
+const localStorageKey = "macarthur-me-em-dash";
     const heading = document.getElementById('heading') as HTMLHeadingElement;
+    const closeButton = document.getElementById('closeButton') as HTMLButtonElement;
     const copyButton = document.getElementById('copyButton') as HTMLButtonElement;
     const unsupportedText = document.getElementById('unsupportedText') as HTMLSpanElement;
+    const faq = document.getElementById('faq') as HTMLDivElement;
+    const subCopy = document.getElementById('subCopy') as HTMLSpanElement;
     const emDash = document.getElementById('emDash') as HTMLSpanElement;
     const wrapper = document.getElementById('wrapper') as HTMLDivElement;
+    
     let timeout;
 
+    function isValidSuccessId() {
+        return /^cs_*./.test(getSuccessId());
+    }
+
     function canCopy() {
-        return new URLSearchParams(window.location.search).get('canCopy') === 'true';
+        return isValidSuccessId() 
+        || new URLSearchParams(window.location.search).get('canCopy') === 'true';
     }
 
     function clipboardIsSupported() {
         return navigator.clipboard && navigator.clipboard.writeText;
     }
 
+    function getSuccessId(): string {
+        return new URLSearchParams(window.location.search).get("success_id") || window.localStorage.getItem(localStorageKey) || "";
+    }
+
     async function handleCopy(e) {
+        sendEvent("Copy Em Dash", {
+            checkoutSessionId: getSuccessId(),
+        });
+
         await navigator.clipboard.writeText("—");
 
         const button = e.target;
@@ -71,7 +133,10 @@ const payLink = "https://buy.stripe.com/test_dR66s4gur75l72E9AF";
     }
 
     copyButton.addEventListener("click", handleCopy);
-    heading.addEventListener("click", handleCopy);
+
+    closeButton.addEventListener("click", () => {
+        faq.classList.add("hidden");
+    });
 
     if(!clipboardIsSupported()) {
         unsupportedText.classList.remove("hidden");
@@ -79,13 +144,27 @@ const payLink = "https://buy.stripe.com/test_dR66s4gur75l72E9AF";
     }
 
     if(canCopy()) {
-        heading.innerHTML = "Congratulations! You've unlocked the <em class='font-bold'>em dash</em>!";
+        if(!window.localStorage.getItem(localStorageKey)) {
+            confetti({
+            particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+
+        heading.innerHTML = "Congratulations! <br />You've unlocked the <em class='font-bold inline-block'>em dash</em>!";
+        subCopy.innerHTML = "Click to copy below. Wield with care.";
         emDash.classList.remove("select-none")
         wrapper.classList.add("can-copy");
         emDash.classList.remove("opacity-30");
+        window.localStorage.setItem(localStorageKey, getSuccessId());
     }
 
-    wrapper.classList.remove("opacity-0");
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            wrapper.classList.remove("opacity-0");
+        })
+    })
 </script>
 
 <style>
@@ -101,8 +180,8 @@ const payLink = "https://buy.stripe.com/test_dR66s4gur75l72E9AF";
         color: var(--color-gray-400);   
     }
 
-    button:hover, 
-    a:hover {
+    button:not(#closeButton):hover, 
+    a:not(footer a):hover {
         background-color: var(--color-gray-800);
         color: var(--color-gray-100);
     }
