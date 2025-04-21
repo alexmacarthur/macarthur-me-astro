@@ -195,7 +195,7 @@ const payLink = import.meta.env.EM_DASH_PAY_LINK;
   }
 
   async function handleCopy(e) {
-    sendEvent("Copy Em Dash", {
+    sendEvent("copy_em_dash", {
       checkoutSessionId: getSuccessId(),
     });
 
