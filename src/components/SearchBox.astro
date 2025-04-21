@@ -1,111 +1,121 @@
 ---
 import Search from "astro-pagefind/components/Search";
-import XMark from 'astro-heroicons/solid/XMark.astro';
+import XMark from "astro-heroicons/solid/XMark.astro";
 ---
 
 <div id="search" style="display: none">
-    <div class="fixed backdrop-blur w-screen h-screen z-[51] top-0 left-0 grid items-center p-2 sm:p-12">
-        <div class="absolute w-full h-full top-0 left-0 bg-gray-300 opacity-50 -z-[1]" id="searchBackdrop"></div>
-        <button class="z-10 w-12 h-12 absolute right-3 top-3" id="closeButton">
-            <XMark />
-        </button>
-            <div class="relative max-w-xl mx-auto max-h-[80vh] w-full shadow-xs bg-white px-4 sm:px-8 pb-10 pt-8 rounded-md overflow-scroll">
-                <h3 class="text-xl mb-3">Search My Site</h3>
-
-                <Search uiOptions={{ showImages: false, resetStyles: false }}/>
-
-            </div>
-        </div>
+  <div
+    class="fixed backdrop-blur w-screen h-screen z-[51] top-0 left-0 grid items-center p-2 sm:p-12"
+  >
+    <div
+      class="absolute w-full h-full top-0 left-0 bg-gray-300 opacity-50 -z-[1]"
+      id="searchBackdrop"
+    >
     </div>
+    <button class="z-10 w-12 h-12 absolute right-3 top-3" id="closeButton">
+      <XMark />
+    </button>
+    <div
+      class="relative max-w-xl mx-auto max-h-[80vh] w-full shadow-xs bg-white px-4 sm:px-8 pb-10 pt-8 rounded-md overflow-scroll"
+    >
+      <h3 class="text-xl mb-3">Search My Site</h3>
+
+      <Search uiOptions={{ showImages: false, resetStyles: false }} />
+    </div>
+  </div>
 </div>
 
 <style>
-    .is-open {
-        display: block !important;
-        z-index: 1000 !important;
-    }
+  .is-open {
+    display: block !important;
+    z-index: 1000 !important;
+  }
 </style>
 
 <script>
-    import { sendEvent } from "../utils";
-    import { debounce } from "../utils";
+  import { sendEvent } from "../utils";
+  import { debounce } from "../utils";
 
-    let abortController;
-    let signal;
-    let searchIsOpen = false;
-    let search;
-    let searchInput;
-    let searchBackdrop;
-    let closeButton;
+  let abortController;
+  let signal;
+  let searchIsOpen = false;
+  let search;
+  let searchInput;
+  let searchBackdrop;
+  let closeButton;
 
-    function setVariables() {
-        abortController = new AbortController();
-        signal = abortController.signal;
+  function setVariables() {
+    abortController = new AbortController();
+    signal = abortController.signal;
 
-        searchIsOpen = false;
-        search = document.getElementById('search') as HTMLDivElement;
-        searchInput = search.querySelector('input[type="text"]') as HTMLInputElement;
-        searchBackdrop = document.getElementById('searchBackdrop') as HTMLDivElement;
-        closeButton = document.getElementById('closeButton') as HTMLButtonElement;
+    searchIsOpen = false;
+    search = document.getElementById("search") as HTMLDivElement;
+    searchInput = search.querySelector(
+      'input[type="text"]',
+    ) as HTMLInputElement;
+    searchBackdrop = document.getElementById(
+      "searchBackdrop",
+    ) as HTMLDivElement;
+    closeButton = document.getElementById("closeButton") as HTMLButtonElement;
+  }
+
+  const debouncedHandleSearch = debounce(function () {
+    if (!searchInput.value.length) {
+      return;
     }
 
-    const debouncedHandleSearch = debounce(function() {
-        if(!searchInput.value.length) {
-            return;
-        }
-
-        sendEvent('search', {   
-            query: searchInput.value
-        });
-    }, 500);
-
-    function showSearch() {
-        document.body.style.overflow = 'hidden';
-        search.classList.add('is-open');
-        searchIsOpen = true;
-
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                searchInput.focus();
-            });
-        });
-    }
-
-    function hideSearch() {
-        document.body.style.overflow = '';
-        search.classList.remove('is-open');
-        searchIsOpen = false;
-    }
-
-    function handleKeydown(event) {
-        if(event.key.toLowerCase() === 'escape' && searchIsOpen) {
-            event.preventDefault();
-            
-            hideSearch();
-        }
-
-        if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
-            event.preventDefault(); 
-
-            showSearch();
-
-            sendEvent('search_open', {
-                method: 'keyboard'
-            });
-        }
-    }
-
-    document.addEventListener('astro:before-preparation', () => {
-        abortController.abort();
+    sendEvent("search", {
+      query: searchInput.value,
     });
+  }, 500);
 
-    document.addEventListener('astro:page-load', () => {
-        setVariables();
+  function showSearch() {
+    document.body.style.overflow = "hidden";
+    search.classList.add("is-open");
+    searchIsOpen = true;
 
-        closeButton.addEventListener('click', hideSearch, { signal });
-        searchBackdrop.addEventListener('click', hideSearch, { signal });
-        searchInput.addEventListener('keyup', debouncedHandleSearch, { signal });
-        document.addEventListener('keydown', handleKeydown, { signal });
-        document.body.addEventListener("search:open", showSearch, { signal });
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        searchInput.focus();
+      });
     });
+  }
+
+  function hideSearch() {
+    document.body.style.overflow = "";
+    search.classList.remove("is-open");
+    searchIsOpen = false;
+  }
+
+  function handleKeydown(event) {
+    if (event.key.toLowerCase() === "escape" && searchIsOpen) {
+      event.preventDefault();
+
+      hideSearch();
+    }
+
+    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+      event.preventDefault();
+
+      showSearch();
+
+      sendEvent("search_open", {
+        method: "keyboard",
+      });
+    }
+  }
+
+  document.addEventListener("astro:before-preparation", () => {
+    abortController.abort();
+  });
+
+  document.addEventListener("astro:page-load", () => {
+    setVariables();
+
+    closeButton.addEventListener("click", hideSearch, { signal });
+    searchBackdrop.addEventListener("click", hideSearch, { signal });
+    searchInput.addEventListener("keyup", debouncedHandleSearch, { signal });
+    document.addEventListener("keydown", handleKeydown, { signal });
+    document.body.addEventListener("search:open", showSearch, { signal });
+  });
 </script>

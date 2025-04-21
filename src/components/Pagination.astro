@@ -17,31 +17,33 @@ const getLinkClasses = (link?: string) => {
 };
 ---
 
-{ totalPages > 1 &&
-  <div class="flex flex-col items-center justify-center mt-16">
-    <hr class="border-0 block h-1 w-20 bg-purple-400 mb-4" />
+{
+  totalPages > 1 && (
+    <div class="flex flex-col items-center justify-center mt-16">
+      <hr class="border-0 block h-1 w-20 bg-purple-400 mb-4" />
 
-    <span class="block mt-1 mb-2 text-base">
-      {currentPage} of {totalPages}
-    </span>
+      <span class="block mt-1 mb-2 text-base">
+        {currentPage} of {totalPages}
+      </span>
 
-    <ul class="flex space-x-6">
-      <li>
-        <a
-          href={prevUrl}
-          class={`text-base font-light ${getLinkClasses(prevUrl)}`}
-        >
-          Previous
-        </a>
-      </li>
-      <li>
-        <a
-          href={nextUrl}
-          class={`text-base font-light ${getLinkClasses(nextUrl)}`}
-        >
-          Next
-        </a>
-      </li>
-    </ul>
-  </div>
+      <ul class="flex space-x-6">
+        <li>
+          <a
+            href={prevUrl}
+            class={`text-base font-light ${getLinkClasses(prevUrl)}`}
+          >
+            Previous
+          </a>
+        </li>
+        <li>
+          <a
+            href={nextUrl}
+            class={`text-base font-light ${getLinkClasses(nextUrl)}`}
+          >
+            Next
+          </a>
+        </li>
+      </ul>
+    </div>
+  )
 }

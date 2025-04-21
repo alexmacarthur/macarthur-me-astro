@@ -2,38 +2,47 @@
 import FlagIcon from "../components/FlagIcon.astro";
 import Layout from "./Layout.astro";
 
-const {frontmatter} = Astro.props;
+const { frontmatter } = Astro.props;
 ---
 
-<Layout 
+<Layout
   showNav={false}
   openGraphImage={`https://macarthur-me-api.vercel.app/api/flag-og?title=${frontmatter.title.toUpperCase()}`}
   openGraphAlt={`Violation: ${frontmatter.title}`}
-  title={`Violation: ${frontmatter.title}`} 
+  title={`Violation: ${frontmatter.title}`}
   pageType="narrow"
-  >
+>
   <div class="max-w-3xl mx-auto py-20">
-      <h2 class="text-sm md:text-base flex items-center justify-center gap-2 text-center text-rose-600 mb-8 uppercase font-normal">
-        <span class="bg-rose-600 block h-1 w-0 md:w-12"></span>
-        You've Violated a LinkedIn Guidline.
-        <span class="bg-rose-600 block h-1 w-0 md:w-12"></span>
-      </h2>
+    <h2
+      class="text-sm md:text-base flex items-center justify-center gap-2 text-center text-rose-600 mb-8 uppercase font-normal"
+    >
+      <span class="bg-rose-600 block h-1 w-0 md:w-12"></span>
+      You've Violated a LinkedIn Guidline.
+      <span class="bg-rose-600 block h-1 w-0 md:w-12"></span>
+    </h2>
 
-      <div class="flex flex-col justify-center text-center items-center gap-4 mb-6 bg-rose-600 p-8 py-12">
-        <i class="h-24 md:h-32 w-24 md:w-32 !text-white">
-          <FlagIcon />
-        </i>
-        <h1 class="text-white text-4xl md:text-7xl font-black uppercase">
-          { frontmatter.title }
-        </h1>
-      </div>
+    <div
+      class="flex flex-col justify-center text-center items-center gap-4 mb-6 bg-rose-600 p-8 py-12"
+    >
+      <i class="h-24 md:h-32 w-24 md:w-32 !text-white">
+        <FlagIcon />
+      </i>
+      <h1 class="text-white text-4xl md:text-7xl font-black uppercase">
+        {frontmatter.title}
+      </h1>
+    </div>
 
-      <div class="immune red-copy text-2xl leading-normal slanted-text max-w-xl mx-auto mb-10">
-        <slot />
-      </div>
+    <div
+      class="immune red-copy text-2xl leading-normal slanted-text max-w-xl mx-auto mb-10"
+    >
+      <slot />
+    </div>
 
-      <div class="text-center">
-        <a href="/linkedin/violations" class="text-rose-600 text-sm font-semibold uppercase">← View them all</a>
-      </div>
+    <div class="text-center">
+      <a
+        href="/linkedin/violations"
+        class="text-rose-600 text-sm font-semibold uppercase">← View them all</a
+      >
+    </div>
   </div>
 </Layout>

@@ -4,200 +4,282 @@ import Layout from "../layouts/Layout.astro";
 const payLink = import.meta.env.EM_DASH_PAY_LINK;
 ---
 
-<Layout 
-    title="Copy the Perfect Em Dash" 
-    pageType="unhinged" 
-    showNav={false}
-    openGraphImage="https://macarthur.me/em-dash.png"
-    description="Copy the perfect em dash for $1. It's easier than trying to figure out the key combination."
+<Layout
+  title="Copy the Perfect Em Dash"
+  pageType="unhinged"
+  showNav={false}
+  openGraphImage="https://macarthur.me/em-dash.png"
+  description="Copy the perfect em dash for $1. It's easier than trying to figure out the key combination."
 >
-    <div class="h-screen w-full content-center opacity-0 transition-opacity duration-700 delay-75" id="wrapper">
-        <div class="max-w-3xl mx-auto flex flex-col items-center">
-            <div class="text-center max-w-3xl">
-                <h1 id="heading" class="leading-tight text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Copy the perfect <em class="text-inherit font-bold">em dash</em> for $1.</h1>
+  <div
+    class="h-screen w-full content-center opacity-0 transition-opacity duration-700 delay-75"
+    id="wrapper"
+  >
+    <div class="max-w-3xl mx-auto flex flex-col items-center">
+      <div class="text-center max-w-3xl">
+        <h1
+          id="heading"
+          class="leading-tight text-3xl sm:text-4xl md:text-5xl font-bold mb-4"
+        >
+          Copy the perfect <em class="text-inherit font-bold">em dash</em> for $1.
+        </h1>
 
-                <p id="subCopy" class="text-lg">It's a easier than trying to figure out the key combination.</p>
-            </div>
+        <p id="subCopy" class="text-lg">
+          It's a easier than trying to figure out the key combination.
+        </p>
+      </div>
 
-            <span id="emDash" class="mx-auto mt-6 mb-8 max-w-xl flex justify-center text-inherit text-8xl font-black select-none italic opacity-30">
-                &mdash;
-            </span>
+      <span
+        id="emDash"
+        class="mx-auto mt-6 mb-8 max-w-xl flex justify-center text-inherit text-8xl font-black select-none italic opacity-30"
+      >
+        &mdash;
+      </span>
 
-            <a href={payLink} id="payButton" class="border-1 px-4 py-2 rounded-md cursor-pointer border-gray-800 flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
-                </svg>
-
-                Pay to Unlock
-            </a>
-
-            <button id="copyButton" class="border-1 px-4 py-2 rounded-md cursor-pointer border-gray-800 flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
-                </svg>
-
-                    Copy the Em Dash
-            </button>
-
-            <span id="unsupportedText" class="hidden max-w-sm text-center text-red-800 mt-8">
-                <strong class="text-inherit font-semibold">Your browser doesn't support copying to the clipboard!</strong> You'll have to do it like the pilgrims did.
-            </span>
-        </div>
-    </div>
-    
-    <div id="faq" class="hidden fixed z-10 top-0 left-0 w-full h-full place-content-center bg-white p-4">
-        
-        <button id="closeButton" class="absolute top-4 right-4 cursor-pointer">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-12">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+      <a
+        href={payLink}
+        id="payButton"
+        class="border-1 px-4 py-2 rounded-md cursor-pointer border-gray-800 flex items-center gap-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="size-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z"
+          ></path>
         </svg>
-        </button>
-        <div class="max-w-lg mx-auto mt-8 border-1 rounded-md border-gray-800 p-8">
-            <h2 class="text-center text-xl mb-6">Frequently Asked Questions</h2>
 
-            <ul class="flex flex-col gap-5">
-                <li>
-                    <h3>Are you serious?</h3>
-                    <p>Good, accessible grammer is always serious.</p>
-                </li>
+        Pay to Unlock
+      </a>
 
-                <li>
-                    <h3>Is there a refund policy?</h3>
-                    <p>No.</p>
-                </li>
+      <button
+        id="copyButton"
+        class="border-1 px-4 py-2 rounded-md cursor-pointer border-gray-800 flex items-center gap-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="size-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184"
+          ></path>
+        </svg>
 
-                <li>
-                    <h3>How many times can I copy the em dash?</h3>
-                    <p>As many times as you want, but only on one device. To copy it from a different device, you owe me another dollar.</p>
-                </li>
-            </ul>
-        </div>
+        Copy the Em Dash
+      </button>
+
+      <span
+        id="unsupportedText"
+        class="hidden max-w-sm text-center text-red-800 mt-8"
+      >
+        <strong class="text-inherit font-semibold"
+          >Your browser doesn't support copying to the clipboard!</strong
+        > You'll have to do it like the pilgrims did.
+      </span>
     </div>
+  </div>
 
-    <footer class="fixed bottom-0 left-0 w-full">
-        <div class="max-w-3xl mx-auto flex flex-col items-center">
-            <p class="text-center text-sm mt-8 mb-4">A product from <a href="https://macarthur.me" target="_blank" class="font-semibold" rel="noopener noreferrer">Alex MacArthur.</a></p>
-        </div>
-    </footer>
+  <div
+    id="faq"
+    class="hidden fixed z-10 top-0 left-0 w-full h-full place-content-center bg-white p-4"
+  >
+    <button id="closeButton" class="absolute top-4 right-4 cursor-pointer">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="size-12"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+        ></path>
+      </svg>
+    </button>
+    <div class="max-w-lg mx-auto mt-8 border-1 rounded-md border-gray-800 p-8">
+      <h2 class="text-center text-xl mb-6">Frequently Asked Questions</h2>
+
+      <ul class="flex flex-col gap-5">
+        <li>
+          <h3>Are you serious?</h3>
+          <p>Good, accessible grammer is always serious.</p>
+        </li>
+
+        <li>
+          <h3>Is there a refund policy?</h3>
+          <p>No.</p>
+        </li>
+
+        <li>
+          <h3>How many times can I copy the em dash?</h3>
+          <p>
+            As many times as you want, but only on one device. To copy it from a
+            different device, you owe me another dollar.
+          </p>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <footer class="fixed bottom-0 left-0 w-full">
+    <div class="max-w-3xl mx-auto flex flex-col items-center">
+      <p class="text-center text-sm mt-8 mb-4">
+        A product from <a
+          href="https://macarthur.me"
+          target="_blank"
+          class="font-semibold"
+          rel="noopener noreferrer">Alex MacArthur.</a>
+      </p>
+    </div>
+  </footer>
 </Layout>
 
 <script>
-import { sendEvent } from "../utils";
-import confetti from "canvas-confetti";
+  import { sendEvent } from "../utils";
+  import confetti from "canvas-confetti";
 
-const localStorageKey = "macarthur-me-em-dash";
-    const heading = document.getElementById('heading') as HTMLHeadingElement;
-    const closeButton = document.getElementById('closeButton') as HTMLButtonElement;
-    const copyButton = document.getElementById('copyButton') as HTMLButtonElement;
-    const unsupportedText = document.getElementById('unsupportedText') as HTMLSpanElement;
-    const faq = document.getElementById('faq') as HTMLDivElement;
-    const subCopy = document.getElementById('subCopy') as HTMLSpanElement;
-    const emDash = document.getElementById('emDash') as HTMLSpanElement;
-    const wrapper = document.getElementById('wrapper') as HTMLDivElement;
-    
-    let timeout;
+  const localStorageKey = "macarthur-me-em-dash";
+  const heading = document.getElementById("heading") as HTMLHeadingElement;
+  const closeButton = document.getElementById(
+    "closeButton",
+  ) as HTMLButtonElement;
+  const copyButton = document.getElementById("copyButton") as HTMLButtonElement;
+  const unsupportedText = document.getElementById(
+    "unsupportedText",
+  ) as HTMLSpanElement;
+  const faq = document.getElementById("faq") as HTMLDivElement;
+  const subCopy = document.getElementById("subCopy") as HTMLSpanElement;
+  const emDash = document.getElementById("emDash") as HTMLSpanElement;
+  const wrapper = document.getElementById("wrapper") as HTMLDivElement;
 
-    function isValidSuccessId() {
-        return /^cs_*./.test(getSuccessId());
-    }
+  let timeout;
 
-    function canCopy() {
-        return isValidSuccessId() 
-        || new URLSearchParams(window.location.search).get('canCopy') === 'true';
-    }
+  function isValidSuccessId() {
+    return /^cs_*./.test(getSuccessId());
+  }
 
-    function clipboardIsSupported() {
-        return navigator.clipboard && navigator.clipboard.writeText;
-    }
+  function canCopy() {
+    return (
+      isValidSuccessId() ||
+      new URLSearchParams(window.location.search).get("canCopy") === "true"
+    );
+  }
 
-    function getSuccessId(): string {
-        return new URLSearchParams(window.location.search).get("success_id") || window.localStorage.getItem(localStorageKey) || "";
-    }
+  function clipboardIsSupported() {
+    return navigator.clipboard && navigator.clipboard.writeText;
+  }
 
-    async function handleCopy(e) {
-        sendEvent("Copy Em Dash", {
-            checkoutSessionId: getSuccessId(),
-        });
+  function getSuccessId(): string {
+    return (
+      new URLSearchParams(window.location.search).get("success_id") ||
+      window.localStorage.getItem(localStorageKey) ||
+      ""
+    );
+  }
 
-        await navigator.clipboard.writeText("—");
-
-        const button = e.target;
-
-        button.innerText = "You did it! It's copied!";
-
-        clearTimeout(timeout);
-
-        timeout = setTimeout(() => {
-            button.innerHTML = "Copy the Em Dash";
-        }, 2000);
-    }
-
-    copyButton.addEventListener("click", handleCopy);
-
-    closeButton.addEventListener("click", () => {
-        faq.classList.add("hidden");
+  async function handleCopy(e) {
+    sendEvent("Copy Em Dash", {
+      checkoutSessionId: getSuccessId(),
     });
 
-    if(!clipboardIsSupported()) {
-        unsupportedText.classList.remove("hidden");
-        copyButton.classList.add("disabled");
+    await navigator.clipboard.writeText("—");
+
+    const button = e.target;
+
+    button.innerText = "You did it! It's copied!";
+
+    clearTimeout(timeout);
+
+    timeout = setTimeout(() => {
+      button.innerHTML = "Copy the Em Dash";
+    }, 2000);
+  }
+
+  copyButton.addEventListener("click", handleCopy);
+
+  closeButton.addEventListener("click", () => {
+    faq.classList.add("hidden");
+  });
+
+  if (!clipboardIsSupported()) {
+    unsupportedText.classList.remove("hidden");
+    copyButton.classList.add("disabled");
+  }
+
+  if (canCopy()) {
+    if (!window.localStorage.getItem(localStorageKey)) {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+      });
     }
 
-    if(canCopy()) {
-        if(!window.localStorage.getItem(localStorageKey)) {
-            confetti({
-            particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
-        }
+    heading.innerHTML =
+      "Congratulations! <br />You've unlocked the <em class='font-bold inline-block'>em dash</em>!";
+    subCopy.innerHTML = "Click to copy below. Wield with care.";
+    emDash.classList.remove("select-none");
+    wrapper.classList.add("can-copy");
+    emDash.classList.remove("opacity-30");
+    window.localStorage.setItem(localStorageKey, getSuccessId());
+  }
 
-        heading.innerHTML = "Congratulations! <br />You've unlocked the <em class='font-bold inline-block'>em dash</em>!";
-        subCopy.innerHTML = "Click to copy below. Wield with care.";
-        emDash.classList.remove("select-none")
-        wrapper.classList.add("can-copy");
-        emDash.classList.remove("opacity-30");
-        window.localStorage.setItem(localStorageKey, getSuccessId());
-    }
-
+  requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            wrapper.classList.remove("opacity-0");
-        })
-    })
+      wrapper.classList.remove("opacity-0");
+    });
+  });
 </script>
 
 <style>
-    html, body, body > div, body main {
-        min-height: 100vh;
-        padding: 0;
-    }
+  html,
+  body,
+  body > div,
+  body main {
+    min-height: 100vh;
+    padding: 0;
+  }
 
-    button.disabled {
-        cursor: not-allowed;
-        pointer-events: none;
-        border-color: var(--color-gray-400);
-        color: var(--color-gray-400);   
-    }
+  button.disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    border-color: var(--color-gray-400);
+    color: var(--color-gray-400);
+  }
 
-    button:not(#closeButton):hover, 
-    a:not(footer a):hover {
-        background-color: var(--color-gray-800);
-        color: var(--color-gray-100);
-    }
+  button:not(#closeButton):hover,
+  a:not(footer a):hover {
+    background-color: var(--color-gray-800);
+    color: var(--color-gray-100);
+  }
 
+  #copyButton {
+    display: none;
+  }
+
+  #wrapper.can-copy {
     #copyButton {
-        display: none;
+      display: flex;
     }
 
-    #wrapper.can-copy {
-        #copyButton {
-            display: flex;
-        }
-
-        #payButton {
-            display: none;
-        }   
+    #payButton {
+      display: none;
     }
+  }
 </style>
-

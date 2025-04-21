@@ -1,7 +1,7 @@
 ---
-import CloseIcon from './CloseIcon.astro';
-import NewsletterForm from './NewsletterForm.astro';
-import NewsletterIcon from './NewsletterIcon.astro';
+import CloseIcon from "./CloseIcon.astro";
+import NewsletterForm from "./NewsletterForm.astro";
+import NewsletterIcon from "./NewsletterIcon.astro";
 
 export interface Props {
   heading?: string;
@@ -14,186 +14,199 @@ const {
   description = "No spam. Might be irregular. Unsubscribe whenever. Won't be hurt.",
 } = Astro.props;
 ---
+
 <div class="screen-wrap"></div>
 
-<div class="translate-y-full transition duration-300 ease-in-out fixed bottom-0 right-[5vw] newsletter-popup-wrapper hidden sm:block z-20">
-        <button class="toggleNewsletter absolute shadow-box no-padding purple-shadow-box top-0 right-0 bg-purple-600 flex items-center whitespace-nowrap !px-5 !pt-2 !pb-4 w-full cursor-pointer">
-            <div class="relative w-6 h-8 flex items-center justify-center icon-wrapper overflow-hidden mr-3">
-                <div class="icon newsletter-icon">
-                    <NewsletterIcon />
-                </div>
-            </div>
-            
-            <h5 class="text-white mb-0 font-semibold h-8 flex items-center">
-                {heading}
-            </h5>
-
-            <div class="relative w-6 h-8 flex items-center justify-center ml-auto">
-                <div class="icon close-icon">
-                    <CloseIcon />
-                </div>
-            </div>
-        </button>
-        <div
-        class={`w-80 bg-gradient-to-br from-purple-600 to-purple-600 p-6 !pt-0 shadow-box purple-shadow-box max-w-full relative z-20`}>
-            <div class={`mb-5 col-span-3`}>
-                <span class="text-purple-200 leading-snug block">
-                    {description}
-                </span>
-            </div>
-
-            <NewsletterForm disableButtonHover={true} />
-        </div>
+<div
+  class="translate-y-full transition duration-300 ease-in-out fixed bottom-0 right-[5vw] newsletter-popup-wrapper hidden sm:block z-20"
+>
+  <button
+    class="toggleNewsletter absolute shadow-box no-padding purple-shadow-box top-0 right-0 bg-purple-600 flex items-center whitespace-nowrap !px-5 !pt-2 !pb-4 w-full cursor-pointer"
+  >
+    <div
+      class="relative w-6 h-8 flex items-center justify-center icon-wrapper overflow-hidden mr-3"
+    >
+      <div class="icon newsletter-icon">
+        <NewsletterIcon />
+      </div>
     </div>
 
+    <h5 class="text-white mb-0 font-semibold h-8 flex items-center">
+      {heading}
+    </h5>
+
+    <div class="relative w-6 h-8 flex items-center justify-center ml-auto">
+      <div class="icon close-icon">
+        <CloseIcon />
+      </div>
+    </div>
+  </button>
+  <div
+    class={`w-80 bg-gradient-to-br from-purple-600 to-purple-600 p-6 !pt-0 shadow-box purple-shadow-box max-w-full relative z-20`}
+  >
+    <div class={`mb-5 col-span-3`}>
+      <span class="text-purple-200 leading-snug block">
+        {description}
+      </span>
+    </div>
+
+    <NewsletterForm disableButtonHover={true} />
+  </div>
+</div>
+
 <style>
-    @reference "../styles/global.css";
+  @reference "../styles/global.css";
 
-    .screen-wrap {
-        @apply fixed w-screen h-screen top-0 left-0 z-10 hidden;
+  .screen-wrap {
+    @apply fixed w-screen h-screen top-0 left-0 z-10 hidden;
 
-        &.is-open {
-            @apply block;
-        }
-    }   
-
-    .toggleNewsletter {
-        --original-transform: translateY(calc(-100% + 10px));
-        transition: all 0.15s ease-in-out;
-        z-index: 11;
-
-        @keyframes bump {
-            0% {
-                transform: none;
-            }
-
-            50% {
-                transform: translateY(calc(-100% + 3px));
-            }
-
-            100% {
-                transform: var(--original-transform)
-            }
-        }
-        
-        &.initial-bump {
-            animation: bump 0.5s ease-in-out 1;
-            transform: var(--original-transform);
-        }
-
-        &:hover {   
-            transform: translateY(calc(-100% + 7px));
-        }
-
-        &.disable-hover {   
-            transform: var(--original-transform);
-        }
-
-        .icon-wrapper {
-            transition: all 0.20s ease-in-out .05s, opacity 0.25s ease-in-out 0s;
-        }
-
-        .icon {
-            @apply text-white absolute;
-            transition: opacity 0.2s ease-in-out;
-        }
-
-        .newsletter-icon {
-            opacity: 1;
-        }
-
-        .close-icon {
-            opacity: 0;
-        }
-
-
-        &:focus-visible {
-            outline: none;
-        }
-
-        &.is-open {
-            .icon-wrapper {
-                width: 0;
-                opacity: 0;
-                margin-right: 0;
-            }
-
-            .close-icon {
-                opacity: 1;
-            }
-        }
+    &.is-open {
+      @apply block;
     }
+  }
+
+  .toggleNewsletter {
+    --original-transform: translateY(calc(-100% + 10px));
+    transition: all 0.15s ease-in-out;
+    z-index: 11;
+
+    @keyframes bump {
+      0% {
+        transform: none;
+      }
+
+      50% {
+        transform: translateY(calc(-100% + 3px));
+      }
+
+      100% {
+        transform: var(--original-transform);
+      }
+    }
+
+    &.initial-bump {
+      animation: bump 0.5s ease-in-out 1;
+      transform: var(--original-transform);
+    }
+
+    &:hover {
+      transform: translateY(calc(-100% + 7px));
+    }
+
+    &.disable-hover {
+      transform: var(--original-transform);
+    }
+
+    .icon-wrapper {
+      transition:
+        all 0.2s ease-in-out 0.05s,
+        opacity 0.25s ease-in-out 0s;
+    }
+
+    .icon {
+      @apply text-white absolute;
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    .newsletter-icon {
+      opacity: 1;
+    }
+
+    .close-icon {
+      opacity: 0;
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &.is-open {
+      .icon-wrapper {
+        width: 0;
+        opacity: 0;
+        margin-right: 0;
+      }
+
+      .close-icon {
+        opacity: 1;
+      }
+    }
+  }
 </style>
 
 <script>
-    let isOpen = false;
+  let isOpen = false;
 
-    function getToggles() {
-        return document.querySelectorAll('.toggleNewsletter') as NodeListOf<HTMLElement>;
+  function getToggles() {
+    return document.querySelectorAll(
+      ".toggleNewsletter",
+    ) as NodeListOf<HTMLElement>;
+  }
+
+  function closePopup(event) {
+    if (event.key.toLowerCase() === "escape" && isOpen) {
+      event.preventDefault();
+
+      const parent = document.querySelector(
+        ".newsletter-popup-wrapper",
+      ) as HTMLElement;
+      const toggle = document.querySelector(".toggleNewsletter") as HTMLElement;
+      const screenWrap = document.querySelector(".screen-wrap") as HTMLElement;
+
+      screenWrap.classList.remove("is-open");
+      toggle.classList.remove("disable-hover");
+      parent.classList.add("translate-y-full");
+      toggle.classList.remove("is-open");
+      isOpen = false;
     }
+  }
 
-    function closePopup(event) {
-        if(event.key.toLowerCase() === 'escape' && isOpen) {
-            event.preventDefault();
-            
-            const parent = document.querySelector('.newsletter-popup-wrapper') as HTMLElement;
-            const toggle = document.querySelector('.toggleNewsletter') as HTMLElement;
-            const screenWrap = document.querySelector('.screen-wrap') as HTMLElement;
-            
-            screenWrap.classList.remove('is-open');
-            toggle.classList.remove('disable-hover');
-            parent.classList.add('translate-y-full');
-            toggle.classList.remove('is-open');
-            isOpen = false;
-        }
-    }
+  function handleScreenWrapClick() {
+    closePopup({ key: "Escape", preventDefault: () => {} });
+  }
 
-    function handleScreenWrapClick() {
-        closePopup({ key: 'Escape', preventDefault: () => {} });    
-    }
+  function getScreenWrap() {
+    return document.querySelector(".screen-wrap") as HTMLElement;
+  }
 
-    function getScreenWrap() {
-        return document.querySelector('.screen-wrap') as HTMLElement;
-    }
+  function handleToggle(e) {
+    const toggle = e.currentTarget as HTMLElement;
+    const parent = toggle.closest(".newsletter-popup-wrapper") as HTMLElement;
+    const screenWrap = document.querySelector(".screen-wrap") as HTMLElement;
 
-    function handleToggle(e) {
-        const toggle = e.currentTarget as HTMLElement;
-        const parent = toggle.closest('.newsletter-popup-wrapper') as HTMLElement;
-        const screenWrap = document.querySelector('.screen-wrap') as HTMLElement;
+    screenWrap.classList.toggle("is-open", !isOpen);
+    toggle.classList.toggle("disable-hover", !isOpen);
+    parent.classList.toggle("translate-y-full", isOpen);
+    toggle.classList.toggle("is-open", !isOpen);
 
-        screenWrap.classList.toggle('is-open', !isOpen);
-        toggle.classList.toggle('disable-hover', !isOpen);
-        parent.classList.toggle('translate-y-full', isOpen);
-        toggle.classList.toggle('is-open', !isOpen);
+    isOpen = !isOpen;
+  }
 
-        isOpen = !isOpen;
-    }
-    
-    document.addEventListener('astro:before-preparation', () => {
-        document.removeEventListener('keydown', closePopup);
+  document.addEventListener("astro:before-preparation", () => {
+    document.removeEventListener("keydown", closePopup);
 
-        getScreenWrap().removeEventListener('click', handleScreenWrapClick);
-        
-        getToggles().forEach(toggle => {
-            toggle.removeEventListener('click', handleToggle);
-        });
+    getScreenWrap().removeEventListener("click", handleScreenWrapClick);
+
+    getToggles().forEach((toggle) => {
+      toggle.removeEventListener("click", handleToggle);
     });
-    
-    document.addEventListener('astro:page-load', () => {
-        document.addEventListener('keydown', closePopup);
+  });
 
-        getScreenWrap().addEventListener('click', handleScreenWrapClick);
+  document.addEventListener("astro:page-load", () => {
+    document.addEventListener("keydown", closePopup);
 
-        getToggles().forEach(toggle => {
-            toggle.classList.remove('initial-bump');
+    getScreenWrap().addEventListener("click", handleScreenWrapClick);
 
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    toggle.classList.add('initial-bump');
-                });
-            })
-        
-            toggle.addEventListener('click', handleToggle);
+    getToggles().forEach((toggle) => {
+      toggle.classList.remove("initial-bump");
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          toggle.classList.add("initial-bump");
         });
+      });
+
+      toggle.addEventListener("click", handleToggle);
     });
+  });
 </script>

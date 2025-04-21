@@ -4,7 +4,7 @@ import type { PaginatedList } from "../../types/types";
 import contentService from "../../lib/ContentService";
 import PaginatedScraps from "../../layouts/PaginatedScraps.astro";
 
-const posts = await contentService.getPosts(1, { tags: ["scrap"]});
+const posts = await contentService.getPosts(1, { tags: ["scrap"] });
 
 const pageData: PaginatedList = {
   data: posts,

@@ -1,5 +1,5 @@
 ---
-import NewsletterForm from './NewsletterForm.astro';
+import NewsletterForm from "./NewsletterForm.astro";
 
 export interface Props {
   heading?: string;
@@ -17,8 +17,8 @@ const {
 <div
   class={`bg-gradient-to-br from-purple-600 to-purple-600 p-6 shadow-box purple-shadow-box w-full ${
     isHorizontal ? "grid md:grid-cols-5 gap-10 py-11" : ""
-  }`}>
-  
+  }`}
+>
   <div class={`${isHorizontal ? "mb-0" : "mb-5"} md:col-span-3`}>
     <p class="text-white mb-3 font-semibold">
       {heading}

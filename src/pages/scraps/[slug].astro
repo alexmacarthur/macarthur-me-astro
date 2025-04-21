@@ -12,9 +12,11 @@ interface Params {
 }
 
 export async function getStaticPaths() {
-  return (await contentService.getAllPosts({
-    tags: ["scrap"]
-  })).map((post) => {
+  return (
+    await contentService.getAllPosts({
+      tags: ["scrap"],
+    })
+  ).map((post) => {
     return {
       params: { slug: post.slug },
     };
@@ -50,7 +52,6 @@ if (post.updated_at) {
 }
 
 const generatedOgImage = `https://www.macarthur.me/open-graph-simple?title=${encodeURIComponent(post.title)}`;
-
 ---
 
 <Layout
@@ -60,34 +61,37 @@ const generatedOgImage = `https://www.macarthur.me/open-graph-simple?title=${enc
   description={computedDescription}
   openGraphImage={post.og_image || post.feature_image || generatedOgImage}
   openGraphAlt={post.feature_image_caption || undefined}
-  canonicalUrl={post.canonical_url} 
+  canonicalUrl={post.canonical_url}
   postData={{
     date: post.published_at,
     lastUpdated: post.updated_at || "",
-  }}>
+  }}
+>
   <ButtonLink
     href="/scraps"
     withArrow={true}
     arrowDirection="left"
-    classes="mb-2">
+    classes="mb-2"
+  >
     Back to All
   </ButtonLink>
 
   <Title
     headingClasses={"text-3xl md:text-6xl mb-5"}
     subtitle={post.custom_excerpt}
-    >
+  >
     {post.title}
   </Title>
 
   <div
-    class={`flex items-start gap-4 mb-6 ${post.custom_excerpt ? "" : "-mt-4"}`}>
+    class={`flex items-start gap-4 mb-6 ${post.custom_excerpt ? "" : "-mt-4"}`}
+  >
     <div class="flex flex-wrap gap-x-3">
       <DateFormatter date={post.published_at} className="inline-block" />
     </div>
   </div>
 
-    <div class="prose lg:prose-lg mx-auto" set:html={post.html} />
+  <div class="prose lg:prose-lg mx-auto" set:html={post.html} />
 
   <script>
     const observer = new IntersectionObserver((entries, o) => {
@@ -120,7 +124,7 @@ const generatedOgImage = `https://www.macarthur.me/open-graph-simple?title=${enc
 
   <style is:global>
     @reference "../../styles/global.css";
-    
+
     @keyframes slide {
       0% {
         transform: translateX(0);

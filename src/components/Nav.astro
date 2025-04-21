@@ -31,7 +31,8 @@ const navItems = [
 ---
 
 <nav
-  class="p-6 px-5 lg:px-10 mb-3 flex justify-between items-center min-h-[105px]">
+  class="p-6 px-5 lg:px-10 mb-3 flex justify-between items-center min-h-[105px]"
+>
   <a href="/">
     <Logo hoverable />
   </a>
@@ -42,7 +43,8 @@ const navItems = [
         <li class="">
           <a
             href={item.href}
-            class="text-gray-600 font-light fancy-link-on-hover">
+            class="text-gray-600 font-light fancy-link-on-hover"
+          >
             {item.name}
           </a>
         </li>
@@ -59,14 +61,16 @@ const navItems = [
 
   <div
     class="md:hidden flex items-center opacity-0 w-full h-screen bg-gray-700 z-40 fixed top-0 left-0 -translate-x-full px-8"
-    id="mobileNav">
+    id="mobileNav"
+  >
     <ul class="gap-3 flex flex-col">
       {
         navItems.map((item) => (
           <li class="">
             <a
               href={item.href}
-              class="text-white text-5xl font-bold slanted-text">
+              class="text-white text-5xl font-bold slanted-text"
+            >
               {item.name}
             </a>
           </li>
@@ -76,7 +80,8 @@ const navItems = [
         <a
           href={"#"}
           id="navSearchTrigger"
-          class="text-white text-5xl font-bold slanted-text">
+          class="text-white text-5xl font-bold slanted-text"
+        >
           Search
         </a>
       </li>
@@ -87,14 +92,15 @@ const navItems = [
     class="cursor-pointer z-50 md:hidden absolute top-[2.15rem] right-0 mr-6"
     for="menuToggle"
     aria-label="Toggle Menu"
-    id="menuToggleLabel">
+    id="menuToggleLabel"
+  >
     <MenuToggle />
   </label>
 </nav>
 
 <style is:global>
   @reference "../styles/global.css";
-  
+
   #mobileNav {
     transition:
       transform 0.15s ease-in-out,
@@ -128,10 +134,12 @@ const navItems = [
 <script>
   import { handleTrigger } from "../scripts/search-trigger";
 
-  const navSearchTrigger = document.getElementById('navSearchTrigger') as HTMLElement;
-  const menuToggle = document.getElementById('menuToggle') as HTMLInputElement;
+  const navSearchTrigger = document.getElementById(
+    "navSearchTrigger",
+  ) as HTMLElement;
+  const menuToggle = document.getElementById("menuToggle") as HTMLInputElement;
 
-  navSearchTrigger.addEventListener('click', (event) => {
+  navSearchTrigger.addEventListener("click", (event) => {
     event.preventDefault();
 
     menuToggle.checked = false;

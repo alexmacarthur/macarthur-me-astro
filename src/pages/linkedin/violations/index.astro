@@ -2,55 +2,71 @@
 import FlagIcon from "../../../components/FlagIcon.astro";
 import Layout from "../../../layouts/Layout.astro";
 
-const flags = await Astro.glob('./*.md');
+const flags = await Astro.glob("./*.md");
 ---
 
-<Layout 
-showNav={false}
+<Layout
+  showNav={false}
   openGraphImage={`https://macarthur-me-api.vercel.app/api/flag-og?title=LinkedIn Guideline Violations`}
   pageType="narrow"
   title="Flagged on LinkedIn"
-  >
+>
   <div class="max-w-3xl mx-auto py-20">
-      <div class="flex flex-col justify-center text-center items-center gap-4 mb-6">
-        <h1 class="text-4xl text-rose-600 md:text-6xl font-black uppercase">
-          LinkedIn Violations
-        </h1>
+    <div
+      class="flex flex-col justify-center text-center items-center gap-4 mb-6"
+    >
+      <h1 class="text-4xl text-rose-600 md:text-6xl font-black uppercase">
+        LinkedIn Violations
+      </h1>
 
-        <div class="max-w-xl mx-auto mb-12">
+      <div class="max-w-xl mx-auto mb-12">
         <p class="text-rose-600">
-            While it's potential as a useful platform still remains, LinkedIn, has become a cesspool of self-righteousness, faux-sincerity, and virtue signaling. The first step to reversing this demise is to call it out on the spot. 
+          While it's potential as a useful platform still remains, LinkedIn, has
+          become a cesspool of self-righteousness, faux-sincerity, and virtue
+          signaling. The first step to reversing this demise is to call it out
+          on the spot.
         </p>
-        </div>
       </div>
+    </div>
 
     <ul class="grid md:grid-cols-2 gap-8">
+      {
+        flags.map(({ frontmatter, url }) => (
+          <li class="text-center">
+            <article class="flex h-full">
+              <a
+                href={url}
+                class="flex group border-8 border-solid border-rose-600 w-full"
+                title="Read violation"
+              >
+                <div class="flex flex-col justify-center text-center items-center gap-4 mb-0 w-full bg-rose-600 group-hover:bg-white p-8">
+                  <div class="flex flex-col justify-center items-center gap-4">
+                    <i class="h-16 md:h-24 w-16 md:w-24 block !text-white group-hover:!text-rose-600">
+                      <FlagIcon />
+                    </i>
+                    <h2 class="text-white group-hover:text-rose-600 text-xl md:text-2xl font-black uppercase">
+                      {frontmatter.title}
+                    </h2>
+                  </div>
+                  <span class="text-white group-hover:text-rose-600 font-semibold">
+                    Read it →
+                  </span>
+                </div>
+              </a>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
 
-    {flags.map(({ frontmatter, url}) => (
-        <li class="text-center">
-      <article class="flex h-full">
-
-        <a href={url} class="flex group border-8 border-solid border-rose-600 w-full" title="Read violation">
-          <div class="flex flex-col justify-center text-center items-center gap-4 mb-0 w-full bg-rose-600 group-hover:bg-white p-8">
-            <div class="flex flex-col justify-center items-center gap-4">
-        <i class="h-16 md:h-24 w-16 md:w-24 block !text-white group-hover:!text-rose-600">
-          <FlagIcon />
-        </i>
-        <h2 class="text-white group-hover:text-rose-600 text-xl md:text-2xl font-black uppercase">
-          { frontmatter.title }
-        </h2>
-</div>
-        <span class="text-white group-hover:text-rose-600 font-semibold">Read it →</span>
-      </div>
-      </a>
-  </article>
-  </li>
-))}
-</ul>
-
-  <div class="text-center mt-16">
-    <span class="text-rose-600 text-sm uppercase">Curated by <a href="https://macarthur.me" class="font-semibold text-rose-600">Alex MacArthur</a></span>
+    <div class="text-center mt-16">
+      <span class="text-rose-600 text-sm uppercase"
+        >Curated by <a
+          href="https://macarthur.me"
+          class="font-semibold text-rose-600">Alex MacArthur</a
+        ></span
+      >
+    </div>
   </div>
-
-  </div>
-</Layout
+  </Layout
+</Layout>

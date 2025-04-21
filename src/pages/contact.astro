@@ -15,7 +15,6 @@ import Title from "../components/Title.astro";
 
   <div class="mx-auto max-w-xl">
     <form id="contactForm" name="contact" method="post" action="/api/email">
-
       <div class="input-wrapper">
         <p class="mb-4 password-wrapper">
           <label class="block">
@@ -55,7 +54,9 @@ import Title from "../components/Title.astro";
         </p>
       </div>
 
-      <div class="flex flex-col md:flex-row justify-between md:items-center mt-2 gap-5 py-2">
+      <div
+        class="flex flex-col md:flex-row justify-between md:items-center mt-2 gap-5 py-2"
+      >
         <p class="my-2">
           <button type="submit" class="button">Send</button>
         </p>
@@ -95,7 +96,7 @@ import Title from "../components/Title.astro";
   const form = document.getElementById("contactForm") as HTMLFormElement;
   const inputWrapper = form.querySelector(".input-wrapper") as HTMLDivElement;
   const submitButton = form.querySelector(
-    "button[type=submit]"
+    "button[type=submit]",
   ) as HTMLButtonElement;
   const messageEl = document.getElementById("message") as HTMLSpanElement;
   let timer = 0;
@@ -117,7 +118,10 @@ import Title from "../components/Title.astro";
     });
   };
 
-  const setValidationMessage = (message: string, status: `error` | `info` | `success` = "info") => {
+  const setValidationMessage = (
+    message: string,
+    status: `error` | `info` | `success` = "info",
+  ) => {
     messageEl.innerHTML = message;
     messageEl.style.display = "block";
     messageEl.classList.remove("is-error", "is-success");
@@ -127,7 +131,7 @@ import Title from "../components/Title.astro";
       return;
     }
 
-    if(status === "success") {
+    if (status === "success") {
       messageEl.classList.add("is-success");
       return;
     }
@@ -140,7 +144,10 @@ import Title from "../components/Title.astro";
   };
 
   const setIsSubmitting = () => {
-    setValidationMessage("Transporting your message through Internet tubes...", "info");
+    setValidationMessage(
+      "Transporting your message through Internet tubes...",
+      "info",
+    );
     setCanSubmit(false);
   };
 
@@ -176,25 +183,25 @@ import Title from "../components/Title.astro";
     try {
       const formData = new FormData(e.target as HTMLFormElement);
 
-      await fetch(
-        `${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/contact`,
-        {
-          keepalive: true,
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "x-completion-time": String(differenceInSeconds),
-            "x-is-trusted": e.isTrusted ? "1" : "0",
-          },
-          body: new URLSearchParams(formData as any).toString(),
-        }
-      );
+      await fetch(`${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/contact`, {
+        keepalive: true,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "x-completion-time": String(differenceInSeconds),
+          "x-is-trusted": e.isTrusted ? "1" : "0",
+        },
+        body: new URLSearchParams(formData as any).toString(),
+      });
 
       onSubmitSuccess();
-    } catch(e) {
+    } catch (e) {
       setCanSubmit(true);
 
-      setValidationMessage(`Something failed. Email me instead: <a style="color: inherit; font-weight: 500;" href="mailto:contact@macarthur.me">contact@macarthur.me</a>`, "error");
+      setValidationMessage(
+        `Something failed. Email me instead: <a style="color: inherit; font-weight: 500;" href="mailto:contact@macarthur.me">contact@macarthur.me</a>`,
+        "error",
+      );
     }
   });
 </script>

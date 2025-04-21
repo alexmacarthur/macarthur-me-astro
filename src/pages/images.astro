@@ -3,18 +3,16 @@ import PicPerfImage from "@picperf/astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Content Not Found" pageType="narrow" shouldIndexForSearch={false}>
+<Layout
+  title="Content Not Found"
+  pageType="narrow"
+  shouldIndexForSearch={false}
+>
   <div class="text-center py-20">
-
-    <PicPerfImage
-    src="/test-images/sea.jpg"
-    ></PicPerfImage>
+    <PicPerfImage src="/test-images/sea.jpg" />
 
     <br />
 
-    <PicPerfImage
-    src="/test-images/hoop.jpg"
-    ></PicPerfImage>
-
+    <PicPerfImage src="/test-images/hoop.jpg" />
   </div>
 </Layout>

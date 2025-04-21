@@ -16,9 +16,11 @@ interface Params {
 }
 
 export async function getStaticPaths() {
-  return (await contentService.getAllPosts({
-    excludeTags: ["scrap"]
-  })).map((post) => {
+  return (
+    await contentService.getAllPosts({
+      excludeTags: ["scrap"],
+    })
+  ).map((post) => {
     return {
       params: { slug: post.slug },
     };
@@ -61,56 +63,59 @@ if (post.updated_at) {
   description={computedDescription}
   openGraphImage={post.og_image || post.feature_image || undefined}
   openGraphAlt={post.feature_image_caption || undefined}
-  canonicalUrl={post.canonical_url} 
+  canonicalUrl={post.canonical_url}
   schema={postSchema}
   postData={{
     date: post.published_at,
     lastUpdated: post.updated_at || "",
-  }}>
-
-      <ButtonLink
-        href="/posts"
-        withArrow={true}
-        arrowDirection="left"
-        classes="mb-2">
-        Back to All Posts
-     </ButtonLink>
+  }}
+>
+  <ButtonLink
+    href="/posts"
+    withArrow={true}
+    arrowDirection="left"
+    classes="mb-2"
+  >
+    Back to All Posts
+  </ButtonLink>
 
   <Title
     headingClasses={"text-3xl md:text-6xl mb-5"}
     subtitle={post.custom_excerpt}
-    >
+  >
     {post.title}
   </Title>
 
-  <div class={`flex items-start gap-4 mb-6 ${post.custom_excerpt ? "" : "-mt-4"}`}>
+  <div
+    class={`flex items-start gap-4 mb-6 ${post.custom_excerpt ? "" : "-mt-4"}`}
+  >
     <div class="flex w-full flex-wrap gap-x-3 items-center">
       <Bio />
-      <DateFormatter date={post.published_at} className="inline-block" />    
+      <DateFormatter date={post.published_at} className="inline-block" />
     </div>
   </div>
 
-    <div class="prose lg:prose-lg mx-auto" set:html={post.html} />
-    
-    <div class="block sm:hidden my-8">
-      <NewsletterBox isHorizontal={true}
-        heading="Get blog posts like this in your inbox."
-        description="May be irregular. Unsubscribe whenever."
-      />
-    </div>
+  <div class="prose lg:prose-lg mx-auto" set:html={post.html} />
+
+  <div class="block sm:hidden my-8">
+    <NewsletterBox
+      isHorizontal={true}
+      heading="Get blog posts like this in your inbox."
+      description="May be irregular. Unsubscribe whenever."
+    />
+  </div>
 
   <hr class="divider my-8 hidden sm:block" />
 
   <div class="max-w-3xl mx-auto">
-    <h5 class="text-2xl font-semibold slanted-text">
-      Leave a Free Comment
-    </h5>
+    <h5 class="text-2xl font-semibold slanted-text">Leave a Free Comment</h5>
 
-    <JamComments 
+    <JamComments
       schema={postSchema}
       copy={{
-      commentPlaceholder: "Markdown is supported!",
-    }} />
+        commentPlaceholder: "Markdown is supported!",
+      }}
+    />
   </div>
 
   <NewsletterPopUp />
@@ -163,7 +168,7 @@ if (post.updated_at) {
 
     .code-block {
       @apply relative my-4 p-5;
-      
+
       /* Performance benefit? */
       contain: content;
     }

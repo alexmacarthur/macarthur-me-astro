@@ -106,14 +106,18 @@ for (let stat of stats) {
     stat.value = Number(result).toLocaleString();
   } catch (e) {
     console.log(
-      `DASHBOARD - Could not get stat value: ${stat.title}, ${result}`
+      `DASHBOARD - Could not get stat value: ${stat.title}, ${result}`,
     );
     stat.value = null;
   }
 }
 ---
 
-<Layout title="Personal Dashboard" pageType={"narrow"} shouldIndexForSearch={false}>
+<Layout
+  title="Personal Dashboard"
+  pageType={"narrow"}
+  shouldIndexForSearch={false}
+>
   <Title>Dashboard</Title>
 
   <div class="post-content mx-auto prose max-w-none md:prose-lg mb-12">
@@ -139,7 +143,8 @@ for (let stat of stats) {
                     href={stat.link}
                     class="inline-block ml-3"
                     target="_blank"
-                    rel="noreferrer">
+                    rel="noreferrer"
+                  >
                     <ArrowTopRightOnSquare class="h-4 w-4" />
                   </a>
                 )}

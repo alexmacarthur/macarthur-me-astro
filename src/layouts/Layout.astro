@@ -7,9 +7,9 @@ import type { WebSite, WithContext } from "schema-dts";
 import { SEO } from "astro-seo";
 import Footer from "../components/Footer.astro";
 import { getOpenGraphUrl } from "../utils";
-import { ClientRouter } from 'astro:transitions';
-import figtreeNormal from '@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2?url';
-import figtreeItalic from '@fontsource-variable/figtree/files/figtree-latin-wght-italic.woff2?url';
+import { ClientRouter } from "astro:transitions";
+import figtreeNormal from "@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2?url";
+import figtreeItalic from "@fontsource-variable/figtree/files/figtree-latin-wght-italic.woff2?url";
 import SearchBox from "../components/SearchBox.astro";
 
 export interface Props {
@@ -53,7 +53,7 @@ const mainClass = (() => {
       return "max-w-screen-lg";
     case "wide":
       return "max-w-[1100px]";
-    case "unhinged": 
+    case "unhinged":
       return "max-w-screen";
     default:
       return "";
@@ -75,7 +75,7 @@ const defaultSchema: WithContext<WebSite> = {
 };
 
 const indexingAttributes = {
-  ...(shouldIndexForSearch ? {} : { 'data-pagefind-ignore': true }),
+  ...(shouldIndexForSearch ? {} : { "data-pagefind-ignore": true }),
 };
 
 const image = getOpenGraphUrl({
@@ -104,19 +104,9 @@ const articleOgData = postData
       href="https://macarthur.me/sitemap-images.xml"
     />
 
-    <link
-      rel="preload"
-      href={figtreeNormal}
-      as="font"
-      type="font/woff2"
-    />
+    <link rel="preload" href={figtreeNormal} as="font" type="font/woff2" />
 
-    <link
-      rel="preload"
-      href={figtreeItalic}
-      as="font"
-      type="font/woff2"
-    />
+    <link rel="preload" href={figtreeItalic} as="font" type="font/woff2" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
@@ -207,15 +197,18 @@ const articleOgData = postData
     <ClientRouter />
   </head>
   <body>
-    { showNav && <Nav /> }
-    
+    {showNav && <Nav />}
+
     <div data-pagefind-body>
-      <main class={`px-4 md:px-6 mx-auto w-full ${mainClass}`} {...indexingAttributes} >
+      <main
+        class={`px-4 md:px-6 mx-auto w-full ${mainClass}`}
+        {...indexingAttributes}
+      >
         <slot />
       </main>
     </div>
 
-    { showNav && <Footer /> }
+    {showNav && <Footer />}
 
     <SearchBox />
 
@@ -224,6 +217,7 @@ const articleOgData = postData
       import "../scripts/search-trigger";
     </script>
 
-    <script defer src="https://unpkg.com/@picperf/client@1.0.1/dist/picperf.js"></script>
+    <script defer src="https://unpkg.com/@picperf/client@1.0.1/dist/picperf.js"
+    ></script>
   </body>
 </html>

@@ -2,7 +2,6 @@
 import GradientText from "./GradientText.astro";
 
 export interface Props {
-
   headingClasses?: string;
   subtitle?: string | null;
   bottomSpacingClasses?: string;
@@ -11,14 +10,14 @@ export interface Props {
 const {
   headingClasses = "text-4xl md:text-6xl",
   subtitle = "",
-  bottomSpacingClasses = "pb-2 mb-2 md:mb-6"
+  bottomSpacingClasses = "pb-2 mb-2 md:mb-6",
 } = Astro.props;
 ---
 
 <div class="">
   <h1
     class={`${headingClasses} font-extrabold block md:leading-[1.10 ${bottomSpacingClasses}`}
-    >
+  >
     <GradientText>
       <slot />
     </GradientText>

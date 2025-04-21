@@ -17,7 +17,7 @@ const featuredBlogPosts = (await Promise.all(
     "promise-with-resolvers",
     "send-an-http-request-on-page-exit",
     "long-tasks",
-  ].map((slug) => contentService.getPost(slug))
+  ].map((slug) => contentService.getPost(slug)),
 )) as CustomPostsOrPages;
 ---
 
@@ -48,7 +48,9 @@ const featuredBlogPosts = (await Promise.all(
       </li>
     </ul>
 
-    <ul class="list-none grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-4 featured-blocks">
+    <ul
+      class="list-none grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-4 featured-blocks"
+    >
       {
         featuredBlogPosts.map((post) => {
           const external = isExternal(post);
@@ -73,8 +75,8 @@ const featuredBlogPosts = (await Promise.all(
                   classes="text-xs md:text-sm"
                   href={url}
                   target={external ? "_blank" : "_self"}
-                  withArrow={true}>
-
+                  withArrow={true}
+                >
                   {external ? <>{extractHostFromUrl(url)}</> : "read it"}
                 </ButtonLink>
               </div>
@@ -84,7 +86,8 @@ const featuredBlogPosts = (await Promise.all(
       }
 
       <li
-        class="signup-form grid row-auto col-span-full sm:row-span-2 sm:col-start-3 sm:row-start-1">
+        class="signup-form grid row-auto col-span-full sm:row-span-2 sm:col-start-3 sm:row-start-1"
+      >
         <NewsletterBox />
       </li>
     </ul>
