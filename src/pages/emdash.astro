@@ -2,6 +2,8 @@
 import Layout from "../layouts/Layout.astro";
 
 const payLink = import.meta.env.EM_DASH_PAY_LINK;
+const buttonClass =
+  "border-1 px-4 py-2 rounded-md cursor-pointer border-gray-800 flex items-center gap-2";
 ---
 
 <Layout
@@ -25,8 +27,25 @@ const payLink = import.meta.env.EM_DASH_PAY_LINK;
         </h1>
 
         <p id="subCopy" class="text-lg">
-          It's a easier than trying to figure out the key combination.
+          It's easier than trying to figure out the key combination.
         </p>
+
+        <ul class="flex justify-center gap-3 mt-4">
+          <li>
+            <button
+              id="wutButton"
+              class="immune cursor-pointer font-semibold hover:text-gray-500"
+              >Wut</button
+            >
+          </li>
+          <li>
+            <button
+              id="faqButton"
+              class="immune cursor-pointer font-semibold hover:text-gray-500"
+              >FAQ</button
+            >
+          </li>
+        </ul>
       </div>
 
       <span
@@ -36,11 +55,7 @@ const payLink = import.meta.env.EM_DASH_PAY_LINK;
         &mdash;
       </span>
 
-      <a
-        href={payLink}
-        id="payButton"
-        class="border-1 px-4 py-2 rounded-md cursor-pointer border-gray-800 flex items-center gap-2"
-      >
+      <a href={payLink} id="payButton" class={buttonClass}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -59,10 +74,7 @@ const payLink = import.meta.env.EM_DASH_PAY_LINK;
         Pay to Unlock
       </a>
 
-      <button
-        id="copyButton"
-        class="border-1 px-4 py-2 rounded-md cursor-pointer border-gray-800 flex items-center gap-2"
-      >
+      <button id="copyButton" class={buttonClass}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -93,10 +105,13 @@ const payLink = import.meta.env.EM_DASH_PAY_LINK;
   </div>
 
   <div
-    id="faq"
+    id="modal"
     class="hidden fixed z-10 top-0 left-0 w-full h-full place-content-center bg-white p-4"
   >
-    <button id="closeButton" class="absolute top-4 right-4 cursor-pointer">
+    <button
+      id="closeButton"
+      class="immune absolute top-4 right-4 cursor-pointer"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -112,7 +127,11 @@ const payLink = import.meta.env.EM_DASH_PAY_LINK;
         ></path>
       </svg>
     </button>
-    <div class="max-w-lg mx-auto mt-8 border-1 rounded-md border-gray-800 p-8">
+
+    <div
+      class="hidden max-w-lg mx-auto mt-8 border-1 rounded-md border-gray-800 p-8"
+      id="faqContent"
+    >
       <h2 class="text-center text-xl mb-6">Frequently Asked Questions</h2>
 
       <ul class="flex flex-col gap-5">
@@ -135,21 +154,52 @@ const payLink = import.meta.env.EM_DASH_PAY_LINK;
         </li>
       </ul>
     </div>
-  </div>
 
-  <footer class="fixed bottom-0 left-0 w-full">
-    <div class="max-w-3xl mx-auto flex flex-col items-center">
-      <p class="text-center text-sm mt-8 mb-4">
-        A product from <a
-          href="https://macarthur.me"
-          target="_blank"
-          class="font-semibold"
-          rel="noopener noreferrer">Alex MacArthur.</a
-        >
+    <div
+      class="hidden max-w-lg mx-auto mt-8 border-1 rounded-md border-gray-800 p-8"
+      id="wutContent"
+    >
+      <h2 class="text-center text-xl mb-6">Wut</h2>
+
+      <p class="mb-5">
+        The em dash has endured an onslaught of defamation the past couple of
+        years. It's nearly impossible for the poor guy to bless a sentence
+        without getting accused of being written by an LLM.
+      </p>
+
+      <p class="mb-5">
+        It desperately needs revival, and that begins with accessibility. To
+        that end, I've launched this premium tool for easily loading the perfect
+        em dash into your clipboard for convenient use.
+      </p>
+
+      <p class="mb-5">
+        This ain't some charity — it's a holy undertaking, and that requires
+        cash. But I'm no money-hungry grifter, so I've priced this tool
+        generously low. Just make sure you're prepared to buy because no one's
+        getting a refund.
+      </p>
+
+      <p>
+        To using English good, <br />
+        Alex
       </p>
     </div>
-  </footer>
+  </div>
 </Layout>
+
+<footer class="fixed bottom-0 left-0 w-full">
+  <div class="max-w-3xl mx-auto flex flex-col items-center">
+    <p class="text-center text-sm mt-8 mb-4">
+      A product from <a
+        href="https://macarthur.me"
+        target="_blank"
+        class="font-semibold"
+        rel="noopener noreferrer">Alex MacArthur.</a
+      >
+    </p>
+  </div>
+</footer>
 
 <script>
   import { sendEvent } from "../utils";
@@ -164,7 +214,9 @@ const payLink = import.meta.env.EM_DASH_PAY_LINK;
   const unsupportedText = document.getElementById(
     "unsupportedText",
   ) as HTMLSpanElement;
-  const faq = document.getElementById("faq") as HTMLDivElement;
+  const wutButton = document.getElementById("wutButton") as HTMLButtonElement;
+  const modal = document.getElementById("modal") as HTMLDivElement;
+  const faqButton = document.getElementById("faqButton") as HTMLButtonElement;
   const subCopy = document.getElementById("subCopy") as HTMLSpanElement;
   const emDash = document.getElementById("emDash") as HTMLSpanElement;
   const wrapper = document.getElementById("wrapper") as HTMLDivElement;
@@ -214,8 +266,33 @@ const payLink = import.meta.env.EM_DASH_PAY_LINK;
 
   copyButton.addEventListener("click", handleCopy);
 
-  closeButton.addEventListener("click", () => {
-    faq.classList.add("hidden");
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.classList.add("hidden");
+      modal.classList.remove("faq", "wut");
+    }
+  });
+
+  window.addEventListener("keyup", (e) => {
+    if (e.key === "Escape") {
+      modal.classList.add("hidden");
+      modal.classList.remove("faq", "wut");
+    }
+  });
+
+  closeButton.addEventListener("click", (e) => {
+    modal.classList.add("hidden");
+    modal.classList.remove("faq", "wut");
+  });
+
+  faqButton.addEventListener("click", () => {
+    modal.classList.remove("hidden");
+    modal.classList.add("faq");
+  });
+
+  wutButton.addEventListener("click", () => {
+    modal.classList.remove("hidden");
+    modal.classList.add("wut");
   });
 
   if (!clipboardIsSupported()) {
@@ -264,7 +341,7 @@ const payLink = import.meta.env.EM_DASH_PAY_LINK;
     color: var(--color-gray-400);
   }
 
-  button:not(#closeButton):hover,
+  button:not(.immune):hover,
   a:not(footer a):hover {
     background-color: var(--color-gray-800);
     color: var(--color-gray-100);
@@ -281,6 +358,18 @@ const payLink = import.meta.env.EM_DASH_PAY_LINK;
 
     #payButton {
       display: none;
+    }
+  }
+
+  #modal.faq {
+    #faqContent {
+      display: block;
+    }
+  }
+
+  #modal.wut {
+    #wutContent {
+      display: block;
     }
   }
 </style>
