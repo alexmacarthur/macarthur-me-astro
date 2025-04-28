@@ -70,19 +70,15 @@
   }
   /** global typography adjustments */
 
+  blockquote {
+    /* border-inline-start-width: .5rem !important; */
+    padding-inline-start: 1.25rem !important;
+  }
+
   .italic,
   em,
   i {
     font-style: italic;
-  }
-
-  blockquote {
-    font-style: italic;
-    @apply leading-relaxed text-gray-800;
-
-    * {
-      @apply text-gray-800;
-    }
   }
 
   * {

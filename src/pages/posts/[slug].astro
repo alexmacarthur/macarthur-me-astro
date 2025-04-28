@@ -95,7 +95,10 @@ if (post.updated_at) {
     </div>
   </div>
 
-  <div class="prose lg:prose-lg mx-auto" set:html={post.html} />
+  <div
+    class="prose lg:prose-lg mx-auto prose-blockquote:text-gray-600"
+    set:html={post.html}
+  />
 
   <div class="block sm:hidden my-8">
     <NewsletterBox

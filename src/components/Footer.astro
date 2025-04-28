@@ -8,10 +8,6 @@ interface Link {
 
 const socialLinks: Array<Link> = [
   {
-    name: "X (Twitter)",
-    href: "https://x.com/amacarthur",
-  },
-  {
     name: "GitHub",
     href: "https://github.com/alexmacarthur",
   },
@@ -19,13 +15,13 @@ const socialLinks: Array<Link> = [
     name: "LinkedIn",
     href: "https://www.linkedin.com/in/alexmacarthur/",
   },
+  {
+    name: "X (Twitter)",
+    href: "https://x.com/amacarthur",
+  },
 ];
 
 const otherLinks: Array<Link> = [
-  {
-    name: "My Policy on AI",
-    href: "/ai",
-  },
   {
     name: "Scraps",
     href: "/scraps",
@@ -35,19 +31,23 @@ const otherLinks: Array<Link> = [
     href: "/stack",
   },
   {
+    name: "RSS Feed",
+    href: "https://www.macarthur.me/rss/feed.xml",
+  },
+  {
     name: "Newsletter",
     href: "/newsletter",
   },
   {
-    name: "RSS Feed",
-    href: "https://www.macarthur.me/rss/feed.xml",
+    name: "My Policy on AI",
+    href: "/ai",
   },
 ];
 
 const productLinks: Array<Link> = [
   {
-    name: "Plausible Bootstrapper",
-    href: "https://plausiblebootstrapper.com",
+    name: "TypeIt",
+    href: "https://typeitjs.com",
   },
   {
     name: "PicPerf",
@@ -58,8 +58,8 @@ const productLinks: Array<Link> = [
     href: "https://jamcomments.com",
   },
   {
-    name: "TypeIt",
-    href: "https://typeitjs.com",
+    name: "Plausible Bootstrapper",
+    href: "https://plausiblebootstrapper.com",
   },
   {
     name: "Copy the Perfect Em Dash",
@@ -68,6 +68,10 @@ const productLinks: Array<Link> = [
 ];
 
 const toolLinks: Array<Link> = [
+  {
+    name: "svgful",
+    href: "https://svgful.com",
+  },
   {
     name: "Headlights",
     href: "https://www.macarthur.me/headlights",
@@ -79,10 +83,6 @@ const toolLinks: Array<Link> = [
   {
     name: "slide-element",
     href: "https://macarthur.me/slide-element",
-  },
-  {
-    name: "svgful",
-    href: "https://svgful.com",
   },
 ];
 
@@ -125,9 +125,10 @@ const linkSections = [
         linkSections.map((section) => {
           return (
             <div>
-              <span class="block mb-3 text-gray-500 font-light text-base slanted-text">
+              <span class="block mb-3 text-gray-500 font-medium text-sm slanted-text">
                 {section.name}
               </span>
+
               <ul class="flex flex-col gap-3">
                 {section.links.map((link) => {
                   const target =
