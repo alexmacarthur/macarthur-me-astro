@@ -8,8 +8,6 @@ import pagefind from "astro-pagefind";
 
 import tailwindcss from "@tailwindcss/vite";
 
-import playformInline from "@playform/inline";
-
 configDotenv();
 
 export default defineConfig({
@@ -33,7 +31,6 @@ export default defineConfig({
     }),
     prefetch({ selector: "a[href^='/'], a[href^='https://macarthur.me']" }),
     pagefind(),
-    playformInline(),
   ],
 
   vite: {

@@ -9,7 +9,6 @@
     "@jam-comments/astro": "^2.8.5",
     "@picperf/astro": "^1.1.2",
     "@picperf/rehype": "^0.5.1",
-    "@playform/inline": "^0.1.2",
     "@supabase/supabase-js": "^2.49.4",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.4",
