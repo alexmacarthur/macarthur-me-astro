@@ -10,6 +10,7 @@ import contentService, { computeDescription } from "../../lib/ContentService";
 import ButtonLink from "../../components/ButtonLink.astro";
 import NewsletterPopUp from "../../components/NewsletterPopUp.astro";
 import NewsletterBox from "../../components/NewsletterBox.astro";
+import NotAIDisclaimer from "../../components/NotAIDisclaimer.astro";
 
 interface Params {
   slug: string;
@@ -100,7 +101,9 @@ if (post.updated_at) {
     set:html={post.html}
   />
 
-  <div class="block sm:hidden my-8">
+  <div class="block sm:hidden my-9">
+    <NotAIDisclaimer cssClass="inline-block mb-8 w-full text-center" />
+
     <NewsletterBox
       isHorizontal={true}
       heading="Get blog posts like this in your inbox."
@@ -108,10 +111,13 @@ if (post.updated_at) {
     />
   </div>
 
-  <hr class="divider my-8 hidden sm:block" />
+  <div class="my-8">
+    <NotAIDisclaimer cssClass="hidden md:inline-block mb-1 text-right w-full" />
+    <hr class="divider hidden sm:block" />
+  </div>
 
   <div class="max-w-3xl mx-auto">
-    <h5 class="text-2xl font-semibold slanted-text">Leave a Free Comment</h5>
+    <h5 class="text-2xl font-semibold slanted-text">Share Your Thoughts</h5>
 
     <JamComments
       schema={postSchema}

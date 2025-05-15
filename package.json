@@ -4,17 +4,17 @@
   "dependencies": {
     "@astrojs/prefetch": "^0.4.1",
     "@astrojs/rss": "^4.0.11",
-    "@astrojs/sitemap": "^3.3.1",
-    "@fontsource-variable/figtree": "^5.2.6",
+    "@astrojs/sitemap": "^3.4.0",
+    "@fontsource-variable/figtree": "^5.2.7",
     "@jam-comments/astro": "^2.8.5",
     "@picperf/astro": "^1.1.2",
     "@picperf/rehype": "^0.5.1",
     "@supabase/supabase-js": "^2.49.4",
     "@tailwindcss/typography": "^0.5.16",
-    "@tailwindcss/vite": "^4.1.4",
-    "@tryghost/content-api": "^1.11.22",
-    "@types/node": "^22.15.2",
-    "astro": "^5.7.5",
+    "@tailwindcss/vite": "^4.1.6",
+    "@tryghost/content-api": "^1.11.24",
+    "@types/node": "^22.15.18",
+    "astro": "^5.7.13",
     "astro-heroicons": "^2.1.5",
     "astro-pagefind": "^1.8.3",
     "astro-seo": "^0.8.4",
@@ -27,9 +27,9 @@
     "prettier": "^3.5.3",
     "prettier-plugin-astro": "^0.14.1",
     "prismjs": "^1.30.0",
-    "sanitize-html": "^2.16.0",
+    "sanitize-html": "^2.17.0",
     "schema-dts": "^1.1.5",
-    "tailwindcss": "^4.1.4"
+    "tailwindcss": "^4.1.6"
   },
   "private": true,
   "scripts": {
@@ -44,12 +44,12 @@
   },
   "type": "module",
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250428.0",
-    "@types/sanitize-html": "^2.15.0",
+    "@cloudflare/workers-types": "^4.20250514.0",
+    "@types/sanitize-html": "^2.16.0",
     "@types/tryghost__content-api": "^1.3.17",
     "typescript": "^5.8.3"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.40.0"
+    "@rollup/rollup-linux-x64-gnu": "^4.40.2"
   }
 }

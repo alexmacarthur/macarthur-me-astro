@@ -2,26 +2,19 @@
 import PicPerfImage from "@picperf/astro";
 ---
 
-<div class="flex flex-row items-center gap-4">
+<a href="/about" aria-label="about me" class="flex flex-row items-center gap-4">
   <div class="flex-none w-10 shadow-box no-padding">
-    <a href="/about" target="_blank" aria-label="about me">
-      <PicPerfImage
-        src="https://picperf.io/https://macarthur.me/me.jpg"
-        alt="my face"
-        includeInSitemap={true}
-        class="filter grayscale"
-        width={25}
-        height={25}
-        class="filter grayscale rounded w-10"
-        fetchpriority="high"
-      />
-    </a>
+    <PicPerfImage
+      src="https://picperf.io/https://macarthur.me/me.jpg"
+      alt="my face"
+      includeInSitemap={true}
+      class="filter grayscale"
+      width={25}
+      height={25}
+      class="filter grayscale rounded w-10"
+      fetchpriority="high"
+    />
   </div>
 
-  <!-- <p class="prose text-sm leading-relaxed text-right text-gray-600">
-    Alex MacArthur is a software engineer for Dave Ramsey in
-    Nashville-ish, TN. Soli Deo Gloria.
-  </p> -->
-
   <p class="text-gray-500 text-sm">Alex MacArthur &nbsp; /</p>
-</div>
+</a>
