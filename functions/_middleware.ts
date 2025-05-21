@@ -14,13 +14,13 @@ function isCacheableForever(requestUrl: string) {
 }
 
 export const onRequestGet: PagesFunction = async (context) => {
-  const response = await context.next();
   const requestUrl = context.request.url;
-
+  
   if (requestUrl.includes("www.")) {
     return Response.redirect(requestUrl.replace("www.", ""), 301);
   }
-
+  
+  const response = await context.next();
   const contentType = response.headers.get("content-type") || "";
 
   if (contentType.includes("text/html")) {
@@ -28,6 +28,8 @@ export const onRequestGet: PagesFunction = async (context) => {
       "Cache-Control",
       "public, s-maxage=3600, stale-while-revalidate=43200",
     );
+
+    return response;
   }
 
   if (isCacheableForever(requestUrl)) {
