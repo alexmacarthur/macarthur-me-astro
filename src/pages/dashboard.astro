@@ -9,6 +9,7 @@ import gsService from "../lib/GoogleSearchService";
 import npmService from "../lib/NpmService";
 import stravaService from "../lib/StravaService";
 import wpService from "../lib/WordPressService";
+import domainAuthorityService from "../lib/DomainAuthorityService";
 
 type State = {
   title: string;
@@ -42,6 +43,12 @@ const stats: State[] = [
     link: "https://github.com/alexmacarthur",
     subTitle: "Do it yourself today, for free.",
     value: ghService.getFollowerCount(),
+  },
+  {
+    title: "Domain Authority",
+    subTitle:
+      "As determined by <a href='https://moz.com/domain-analysis' target='_blank'>Moz</a>.",
+    value: domainAuthorityService.fetchAuthority(),
   },
   {
     title: "Links in <em>JavaScript Weekly</em>",
@@ -101,6 +108,8 @@ for (let stat of stats) {
 
     if (!result) {
       console.log(`DASHBOARD - Stat value was empty: ${stat.title}, ${result}`);
+      stat.value = null;
+      continue;
     }
 
     stat.value = Number(result).toLocaleString();

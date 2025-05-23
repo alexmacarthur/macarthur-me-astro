@@ -15,11 +15,11 @@ function isCacheableForever(requestUrl: string) {
 
 export const onRequestGet: PagesFunction = async (context) => {
   const requestUrl = context.request.url;
-  
+
   if (requestUrl.includes("www.")) {
     return Response.redirect(requestUrl.replace("www.", ""), 301);
   }
-  
+
   const response = await context.next();
   const contentType = response.headers.get("content-type") || "";
 

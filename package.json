@@ -19,6 +19,7 @@
     "astro-pagefind": "^1.8.3",
     "astro-seo": "^0.8.4",
     "canvas-confetti": "^1.9.3",
+    "cheerio": "^1.0.0",
     "countup.js": "^2.8.2",
     "dotenv": "^16.5.0",
     "jsdom": "^26.1.0",
