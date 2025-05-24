@@ -1,7 +1,22 @@
 import * as cheerio from "cheerio";
+import kvService from "./KvService";
+
+const DAY_IN_SECONDS = 86400;
 
 class DomainAuthorityService {
-  async fetchAuthority() {
+  async getAuthority(): Promise<number> {
+    const cachedValue = await kvService.getByKey("domain_authority");
+
+    if (cachedValue) return Number(cachedValue);
+
+    const freshValue = await this.fetchAuthority();
+
+    if (!freshValue) throw new Error("No domain authority could be scraped!");
+
+    return kvService.update("domain_authority", freshValue, DAY_IN_SECONDS);
+  }
+
+  private async fetchAuthority() {
     const response = await fetch(
       "https://moz.com/domain-analysis?site=macarthur.me",
       {
