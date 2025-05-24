@@ -9,6 +9,15 @@ class GoogleSearchService {
     return await response.json();
   }
 
+  async getBytesTotalResults(): Promise<number> {
+    const results = await this.search(
+      '"alex%20macarthur"',
+      import.meta.env.GOOGLE_CUSTOM_SEARCH_BYTES_CX,
+    );
+
+    return Number(results.searchInformation.totalResults);
+  }
+
   async getJsWeeklyTotalResults(): Promise<number> {
     const results = await this.search(
       "alex%20macarthur",

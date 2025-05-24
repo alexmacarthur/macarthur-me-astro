@@ -57,6 +57,12 @@ const stats: State[] = [
     value: gsService.getJsWeeklyTotalResults(),
   },
   {
+    title: "Links in <em>Bytes.dev</em>",
+    link: "https://www.google.com/search?q=site%3Abytes.dev+%22alex+macarthur%22",
+    subTitle: "Hilarious newsletter.",
+    value: gsService.getBytesTotalResults(),
+  },
+  {
     title: "Articles Published on <em>CSS Tricks</em>",
     link: "https://css-tricks.com/author/alexmacarthur",
     subTitle: "Fun.",
@@ -117,6 +123,7 @@ for (let stat of stats) {
     console.log(
       `DASHBOARD - Could not get stat value: ${stat.title}, ${result}`,
     );
+    console.error(e);
     stat.value = null;
   }
 }
