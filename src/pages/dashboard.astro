@@ -33,18 +33,6 @@ const stats: State[] = [
     value: contentService.getTotalWordCount(),
   },
   {
-    title: "Total GitHub Stars",
-    link: "https://github.com/alexmacarthur",
-    subTitle: "If you haven't starred my repos, get on that.",
-    value: ghService.getTotalStars(),
-  },
-  {
-    title: "Total GitHub Followers",
-    link: "https://github.com/alexmacarthur",
-    subTitle: "Do it yourself today, for free.",
-    value: ghService.getFollowerCount(),
-  },
-  {
     title: "Domain Authority",
     subTitle:
       "As determined by <a href='https://moz.com/domain-analysis' target='_blank'>Moz</a>.",
@@ -57,7 +45,7 @@ const stats: State[] = [
     value: gsService.getJsWeeklyTotalResults(),
   },
   {
-    title: "Links in <em>Bytes.dev</em>",
+    title: "Links on <em>Bytes.dev</em>",
     link: "https://www.google.com/search?q=site%3Abytes.dev+%22alex+macarthur%22",
     subTitle: "Hilarious newsletter.",
     value: gsService.getBytesTotalResults(),
@@ -79,6 +67,18 @@ const stats: State[] = [
     link: "https://www.strava.com/athletes/27922666",
     subTitle: "As tracked by Strava since October, 2016.",
     value: stravaService.getTotalRunMiles(),
+  },
+  {
+    title: "Total GitHub Stars",
+    link: "https://github.com/alexmacarthur",
+    subTitle: "If you haven't starred my repos, get on that.",
+    value: ghService.getTotalStars(),
+  },
+  {
+    title: "Total GitHub Followers",
+    link: "https://github.com/alexmacarthur",
+    subTitle: "Do it yourself today, for free.",
+    value: ghService.getFollowerCount(),
   },
   {
     title: "Total npm Downloads",

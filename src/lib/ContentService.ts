@@ -111,6 +111,24 @@ class ContentService {
     return data as CustomPostOrPage;
   }
 
+  async getLatestPost({
+    excludeTags = undefined,
+  }: {
+    excludeTags?: string[];
+  }): Promise<CustomPostOrPage> {
+    const args: Params = { limit: "1", include: "tags" };
+
+    if (excludeTags) {
+      args.filter = `tags:-${excludeTags.toString()}`;
+    }
+
+    const result = (await api.posts.browse(
+      args,
+    )) as unknown as Promise<CustomPostsOrPages>;
+
+    return result[0] as CustomPostOrPage;
+  }
+
   getAllPosts({
     tags = undefined,
     excludeTags = undefined,
