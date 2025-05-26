@@ -11,6 +11,7 @@ import ButtonLink from "../../components/ButtonLink.astro";
 import NewsletterPopUp from "../../components/NewsletterPopUp.astro";
 import NewsletterBox from "../../components/NewsletterBox.astro";
 import NotAIDisclaimer from "../../components/NotAIDisclaimer.astro";
+import RelatedPosts from "../../components/RelatedPosts.astro";
 
 interface Params {
   slug: string;
@@ -116,8 +117,12 @@ if (post.updated_at) {
     <hr class="divider hidden sm:block" />
   </div>
 
+  <RelatedPosts post={post} />
+
   <div class="max-w-3xl mx-auto">
-    <h5 class="text-2xl font-semibold slanted-text">Share Your Thoughts</h5>
+    <h5 class="text-xl md:text-2xl font-semibold slanted-text">
+      Drop a Comment
+    </h5>
 
     <JamComments
       schema={postSchema}

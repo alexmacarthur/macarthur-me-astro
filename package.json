@@ -2,6 +2,7 @@
   "name": "macarthur-me-astro",
   "version": "0.0.1",
   "dependencies": {
+    "@ai-sdk/anthropic": "^1.2.12",
     "@astrojs/prefetch": "^0.4.1",
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.4.0",
@@ -14,6 +15,7 @@
     "@tailwindcss/vite": "^4.1.6",
     "@tryghost/content-api": "^1.11.24",
     "@types/node": "^22.15.18",
+    "ai": "^4.3.16",
     "astro": "^5.7.13",
     "astro-heroicons": "^2.1.5",
     "astro-pagefind": "^1.8.3",

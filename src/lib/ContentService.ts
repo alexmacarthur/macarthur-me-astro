@@ -1,9 +1,14 @@
-import GhostContentAPI, { type Params } from "@tryghost/content-api";
+import GhostContentAPI, {
+  type Params,
+  type PostOrPage,
+} from "@tryghost/content-api";
 import { JSDOM } from "jsdom";
 import { POSTS_PER_PAGE } from "./constants";
 import prism from "prismjs";
 import loadLanguages from "prismjs/components/index";
 import type { CustomPostOrPage, CustomPostsOrPages } from "../types/types";
+import aiService, { RELATED_POST_PROMPT } from "./AiService";
+import { isProduction, randomInRange } from "../utils";
 
 loadLanguages();
 
@@ -147,6 +152,50 @@ class ContentService {
     }
 
     return api.posts.browse(args) as Promise<CustomPostsOrPages>;
+  }
+
+  async getRelatedPosts(post: CustomPostOrPage): Promise<CustomPostOrPage[]> {
+    const all = await this.getAllPosts({
+      excludeTags: ["scrap"],
+    });
+
+    if (!isProduction()) {
+      return [all[randomInRange(0, 50)], all[randomInRange(0, 50)]];
+    }
+
+    const allPosts = all.map((p) => {
+      return {
+        title: p.title,
+        excerpt: computeDescription(p),
+        slug: p.slug,
+      };
+    });
+
+    const slugs = await aiService.ask(`
+      ${RELATED_POST_PROMPT}
+
+      ---
+      
+      Here is the post information: 
+      
+      ${JSON.stringify({
+        title: post.title,
+        excerpt: computeDescription(post),
+        slug: post.slug,
+      })}
+
+      ---
+
+      Here is the list of all posts from which I want you to provide related posts: 
+
+      ${JSON.stringify(allPosts)}
+    `);
+
+    const posts = await Promise.all(
+      slugs.split(",").map((p) => this.getPost(p.trim())),
+    );
+
+    return posts;
   }
 
   getTotalWordCount(): Promise<number> {
