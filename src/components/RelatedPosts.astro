@@ -1,6 +1,10 @@
 ---
-import { isExternal } from "util/types";
-import contentService, { extractHostFromUrl } from "../lib/ContentService";
+import contentService, {
+  extractHostFromUrl,
+  extractUrlFromBookmark,
+  isExternal,
+} from "../lib/ContentService";
+import ButtonLink from "./ButtonLink.astro";
 
 const { post } = Astro.props;
 
@@ -16,14 +20,27 @@ const related = await contentService.getRelatedPosts(post);
 
       <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {related.map((relatedPost) => {
-          const external = isExternal(relatedPost.url);
+          const external = isExternal(relatedPost);
+          const url = external
+            ? extractUrlFromBookmark(post.html)
+            : `/posts/${post.slug}`;
 
           return (
             <li class="grid">
               <a class="shadow-box hoverable-shadow-box" href={relatedPost.url}>
-                <h6 class="font-light break-words text-md">
+                <h6 class="font-light break-words text-md mb-4">
                   {relatedPost.title}
                 </h6>
+
+                <ButtonLink
+                  classes="text-xs md:text-sm"
+                  href={url}
+                  target={external ? "_blank" : "_self"}
+                  withArrow={true}
+                  tag="span"
+                >
+                  {external ? <>{extractHostFromUrl(url)}</> : "read it"}
+                </ButtonLink>
               </a>
             </li>
           );

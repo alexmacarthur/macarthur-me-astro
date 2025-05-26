@@ -240,7 +240,7 @@
   }
 
   .shadow-box {
-    @apply border-2 p-5 md:p-6 rounded-md;
+    @apply block border-2 p-5 md:p-6 rounded-md;
     transition:
       box-shadow 0.1s ease,
       hover 0.1s ease;

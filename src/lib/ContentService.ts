@@ -156,7 +156,11 @@ class ContentService {
     const slugs =
       (await KvService.getByKey(`related_posts:${post.slug}`)) || "";
 
-    return await Promise.all(slugs.split(",").map((s) => this.getPost(s)));
+    const posts = await Promise.all(
+      slugs.split(",").map((s) => this.getPost(s)),
+    );
+
+    return posts.slice(0, 2);
   }
 
   getTotalWordCount(): Promise<number> {
