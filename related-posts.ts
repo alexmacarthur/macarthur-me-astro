@@ -72,7 +72,7 @@ async function buildRelatedPosts(
   return slugs
     .split(",")
     .map((slug) => {
-      const selectedPost = postMap.get(slug);
+      const selectedPost = postMap.get(slug.trim());
 
       if (!selectedPost) {
         console.error("Could not find post in map:", slug);

@@ -156,6 +156,8 @@ class ContentService {
     const slugs =
       (await KvService.getByKey(`related_posts:${post.slug}`)) || "";
 
+    console.log(`Found related post slugs for ${post.slug}:`, slugs);
+
     const posts = await Promise.all(
       slugs
         .split(",")
@@ -167,7 +169,7 @@ class ContentService {
 
           return true;
         })
-        .map((s) => this.getPost(s)),
+        .map((s) => this.getPost(s.trim())),
     );
 
     return posts.slice(0, 2);

@@ -12,7 +12,7 @@ const related = await contentService.getRelatedPosts(post);
 ---
 
 {
-  related ? (
+  related.length > 0 ? (
     <section class="mb-12">
       <h5 class="text-xl md:text-2xl font-semibold slanted-text mb-5">
         Hopefully At Least Marginally Related Posts
