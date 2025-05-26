@@ -1,7 +1,6 @@
 ---
 import { isExternal } from "util/types";
 import contentService, { extractHostFromUrl } from "../lib/ContentService";
-import ButtonLink from "./ButtonLink.astro";
 
 const { post } = Astro.props;
 
@@ -12,7 +11,7 @@ const related = await contentService.getRelatedPosts(post);
   related ? (
     <section class="mb-12">
       <h5 class="text-xl md:text-2xl font-semibold slanted-text mb-5">
-        At Least Marginally Related Posts
+        Hopefully At Least Marginally Related Posts
       </h5>
 
       <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -21,26 +20,11 @@ const related = await contentService.getRelatedPosts(post);
 
           return (
             <li class="grid">
-              <article class="shadow-box flex flex-col justify-between">
-                <h6 class="font-semibold text-md mb-4">
-                  <a class="font-light break-words" href={relatedPost.url}>
-                    {relatedPost.title}
-                  </a>
+              <a class="shadow-box hoverable-shadow-box" href={relatedPost.url}>
+                <h6 class="font-light break-words text-md">
+                  {relatedPost.title}
                 </h6>
-
-                <ButtonLink
-                  classes="text-xs md:text-sm"
-                  href={relatedPost.url!!}
-                  target={external ? "_blank" : "_self"}
-                  withArrow={true}
-                >
-                  {external ? (
-                    <>{extractHostFromUrl(relatedPost.url!!)}</>
-                  ) : (
-                    "read it"
-                  )}
-                </ButtonLink>
-              </article>
+              </a>
             </li>
           );
         })}

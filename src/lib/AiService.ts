@@ -1,20 +1,32 @@
 import { anthropic } from "@ai-sdk/anthropic";
-import { generateText } from "ai";
-import type { CustomPostOrPage } from "../types/types";
-
-export const RELATED_POST_PROMPT = `You are my personal blog curator. I am going to give you the title, excerpt, and slug for a blog post. Given a list of all blog post information I will also provide, I want you to give me TWO blog posts that the reader is likely to also find interesting. 
-
-The answer you give me must be a comma-separated list of slugs. 
-`;
+import { APICallError, generateText } from "ai";
 
 class AiService {
   async ask(prompt: string): Promise<string> {
-    const { text } = await generateText({
-      model: anthropic("claude-3-7-sonnet-20250219"),
-      prompt,
-    });
+    try {
+      const { text } = await generateText({
+        model: anthropic("claude-3-7-sonnet-20250219"),
+        prompt,
+      });
 
-    return text;
+      return text;
+    } catch (e) {
+      const error = (e as any).errors[0] as APICallError;
+
+      if (error.responseHeaders && error.responseHeaders["retry-after"]) {
+        const secondsToWait = Number(error.responseHeaders["retry-after"]);
+        console.log("Waiting to retry:", secondsToWait);
+
+        await new Promise((r) =>
+          // @ts-ignore
+          setTimeout(r, secondsToWait * 1000),
+        );
+
+        return this.ask(prompt);
+      } else {
+        throw error;
+      }
+    }
   }
 }
 

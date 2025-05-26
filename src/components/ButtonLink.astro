@@ -2,6 +2,7 @@
 import ArrowSmallRight from "astro-heroicons/outline/ArrowSmallRight.astro";
 import ArrowSmallLeft from "astro-heroicons/outline/ArrowSmallLeft.astro";
 import ArrowTopRightOnSquare from "astro-heroicons/outline/ArrowTopRightOnSquare.astro";
+import type { HTMLTag } from "astro/types";
 
 export interface Props {
   href: string;
@@ -11,6 +12,7 @@ export interface Props {
   linkId?: string;
   asButton?: boolean;
   classes?: string;
+  tag?: HTMLTag;
 }
 
 const {
@@ -21,16 +23,20 @@ const {
   target = "_self",
   asButton = false,
   classes = "",
+  tag = "a",
 } = Astro.props;
+
+const Element = tag;
+const isRealLink = tag == "a";
 ---
 
-<a
+<Element
   class={`inline-flex items-center gap-1 sm:gap-2 p-2 -m-2 ${
     asButton ? "button" : "fancy-link"
   } ${classes}`}
-  href={href}
-  data-link-id={linkId}
-  target={target}
+  href={isRealLink ? href : undefined}
+  data-link-id={isRealLink ? linkId : undefined}
+  target={isRealLink ? target : undefined}
 >
   {
     target !== "_blank" && withArrow && arrowDirection === "left" && (
@@ -47,7 +53,7 @@ const {
       <ArrowSmallRight class="h-3 sm:h-4" />
     )
   }
-</a>
+</Element>
 
 <style>
   svg {

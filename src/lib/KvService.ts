@@ -1,4 +1,4 @@
-type Key = `domain_authority`;
+export type Key = `domain_authority` | `related_posts:${string}`;
 
 class KvService {
   async getByKey(key: Key) {
@@ -24,7 +24,7 @@ class KvService {
     return await res.text();
   }
 
-  async update<T extends string | number>(
+  async update<T extends string | number | object>(
     key: Key,
     value: T,
     expirationInSeconds?: number,

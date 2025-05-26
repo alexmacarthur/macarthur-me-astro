@@ -27,32 +27,39 @@ const { posts } = Astro.props;
       const target = external ? "_blank" : "_self";
 
       return (
-        <li class="shadow-box hoverable-shadow-box flex flex-col">
-          <article>
-            <a href={postPath} target={target} class="">
-              <h2
-                class="text-2xl font-semibold mb-1 fancy-link-on-hover"
-                transition:name={post.slug}
-              >
-                {post.title}
-              </h2>
+        <li class="flex flex-col">
+          <a
+            class="shadow-box hoverable-shadow-box flex-1"
+            href={postPath}
+            target={target}
+          >
+            <h2
+              class="text-2xl font-semibold mb-1 fancy-link-on-hover"
+              transition:name={post.slug}
+            >
+              {post.title}
+            </h2>
 
-              <div class="flex flex-wrap items-center mb-3 gap-x-3 text-base text-gray-500">
-                <DateFormatter
-                  date={post.published_at}
-                  className="inline-block"
-                />
+            <div class="flex flex-wrap items-center mb-3 gap-x-3 text-base text-gray-500">
+              <DateFormatter
+                date={post.published_at}
+                className="inline-block"
+              />
 
-                {external ? extractHostFromUrl(postPath) : null}
-              </div>
+              {external ? extractHostFromUrl(postPath) : null}
+            </div>
 
-              <p class="block text-gray-500 mb-2">{description}</p>
+            <p class="block text-gray-500 mb-2">{description}</p>
 
-              <ButtonLink href={postPath} target={target} withArrow={true}>
-                Read It
-              </ButtonLink>
-            </a>
-          </article>
+            <ButtonLink
+              href={postPath}
+              target={target}
+              withArrow={true}
+              tag="span"
+            >
+              Read It
+            </ButtonLink>
+          </a>
         </li>
       );
     })

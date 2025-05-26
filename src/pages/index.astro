@@ -59,27 +59,26 @@ const featuredBlogPosts = (await Promise.all(
             : `/posts/${post.slug}`;
 
           return (
-            <li class="shadow-box hoverable-shadow-box flex flex-col">
-              <div class="mb-4">
-                <h3>
-                  <a class="font-light break-words" href={url}>
-                    {post.title}
-                  </a>
-                </h3>
+            <li class="flex flex-col">
+              <a class="shadow-box hoverable-shadow-box flex-1" href={url}>
+                <div class="mb-4">
+                  <h3 class="font-light break-words">{post.title}</h3>
 
-                <DateFormatter date={post.published_at} />
-              </div>
+                  <DateFormatter date={post.published_at} />
+                </div>
 
-              <div class="flex sm:gap-1 md:justify-between md:items-center flex-col md:flex-row mt-auto">
-                <ButtonLink
-                  classes="text-xs md:text-sm"
-                  href={url}
-                  target={external ? "_blank" : "_self"}
-                  withArrow={true}
-                >
-                  {external ? <>{extractHostFromUrl(url)}</> : "read it"}
-                </ButtonLink>
-              </div>
+                <div class="flex sm:gap-1 md:justify-between md:items-center flex-col md:flex-row mt-auto">
+                  <ButtonLink
+                    classes="text-xs md:text-sm"
+                    href={url}
+                    target={external ? "_blank" : "_self"}
+                    withArrow={true}
+                    tag="span"
+                  >
+                    {external ? <>{extractHostFromUrl(url)}</> : "read it"}
+                  </ButtonLink>
+                </div>
+              </a>
             </li>
           );
         })
