@@ -1,13 +1,8 @@
-import supabaseService from "./SupabaseService";
+import kvService from "./KvService";
 
 class StravaService {
   accessToken: string = "";
   refreshToken: string = "";
-  db;
-
-  constructor() {
-    this.db = supabaseService;
-  }
 
   async getTotalRunMiles(): Promise<number> {
     const stats = await this.getAthleteStats();
@@ -54,10 +49,14 @@ class StravaService {
   async setTokens() {
     if (this.accessToken) return this.accessToken;
 
-    const { access_token, refresh_token } = await this.db.getToken("strava");
+    // const { access_token, refresh_token } = await this.db.getToken("strava");
 
-    this.accessToken = access_token;
-    this.refreshToken = refresh_token;
+    this.accessToken = (await kvService.getByKey(
+      `strava:access_token`,
+    )) as string;
+    this.refreshToken = (await kvService.getByKey(
+      `strava:refresh_token`,
+    )) as string;
   }
 
   async updateTokens() {
@@ -76,12 +75,10 @@ class StravaService {
 
     const { access_token, refresh_token } = await response.json();
 
-    await this.db.updateToken({
-      service: "strava",
-      accessToken: access_token,
-      refreshToken: refresh_token,
-      oldAccessToken: this.accessToken,
-    });
+    await Promise.all([
+      kvService.update("strava:access_token", access_token),
+      kvService.update("strava:refresh_token", refresh_token),
+    ]);
 
     this.accessToken = access_token;
     this.refreshToken = refresh_token;

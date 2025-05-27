@@ -19,89 +19,89 @@ type State = {
 };
 
 const stats: State[] = [
-  {
-    title: "Total Blog Posts",
-    link: "https://macarthur.me/posts",
-    subTitle:
-      "Sign up for <a href='/newsletter' target='_blank'>my newsletter</a> to get new ones in your inbox.",
-    value: contentService.getTotalPostCount(),
-  },
-  {
-    title: "Total Words Written",
-    link: "https://macarthur.me/posts",
-    subTitle: "More is not necessarily better (Proverbs 10:14).",
-    value: contentService.getTotalWordCount(),
-  },
-  {
-    title: "Domain Authority",
-    subTitle:
-      "As determined by <a href='https://moz.com/domain-analysis' target='_blank'>Moz</a>.",
-    value: domainAuthorityService.getAuthority(),
-  },
-  {
-    title: "Links in <em>JavaScript Weekly</em>",
-    link: "https://www.google.com/search?q=site%3Ajavascriptweekly.com+%22alex+macarthur%22",
-    subTitle: "Mostly just blog posts, but the occassional project too.",
-    value: gsService.getJsWeeklyTotalResults(),
-  },
-  {
-    title: "Links on <em>Bytes.dev</em>",
-    link: "https://www.google.com/search?q=site%3Abytes.dev+%22alex+macarthur%22",
-    subTitle: "Hilarious newsletter.",
-    value: gsService.getBytesTotalResults(),
-  },
-  {
-    title: "Articles Published on <em>CSS Tricks</em>",
-    link: "https://css-tricks.com/author/alexmacarthur",
-    subTitle: "Fun.",
-    value: Promise.resolve(3),
-  },
-  {
-    title: "Blog Posts Published on Frontend Masters",
-    link: "https://frontendmasters.com/blog/author/alexmacarthur",
-    subTitle: "Also fun.",
-    value: Promise.resolve(2),
-  },
+  // {
+  //   title: "Total Blog Posts",
+  //   link: "https://macarthur.me/posts",
+  //   subTitle:
+  //     "Sign up for <a href='/newsletter' target='_blank'>my newsletter</a> to get new ones in your inbox.",
+  //   value: contentService.getTotalPostCount(),
+  // },
+  // {
+  //   title: "Total Words Written",
+  //   link: "https://macarthur.me/posts",
+  //   subTitle: "More is not necessarily better (Proverbs 10:14).",
+  //   value: contentService.getTotalWordCount(),
+  // },
+  // {
+  //   title: "Domain Authority",
+  //   subTitle:
+  //     "As determined by <a href='https://moz.com/domain-analysis' target='_blank'>Moz</a>.",
+  //   value: domainAuthorityService.getAuthority(),
+  // },
+  // {
+  //   title: "Links in <em>JavaScript Weekly</em>",
+  //   link: "https://www.google.com/search?q=site%3Ajavascriptweekly.com+%22alex+macarthur%22",
+  //   subTitle: "Mostly just blog posts, but the occassional project too.",
+  //   value: gsService.getJsWeeklyTotalResults(),
+  // },
+  // {
+  //   title: "Links on <em>Bytes.dev</em>",
+  //   link: "https://www.google.com/search?q=site%3Abytes.dev+%22alex+macarthur%22",
+  //   subTitle: "Hilarious newsletter.",
+  //   value: gsService.getBytesTotalResults(),
+  // },
+  // {
+  //   title: "Articles Published on <em>CSS Tricks</em>",
+  //   link: "https://css-tricks.com/author/alexmacarthur",
+  //   subTitle: "Fun.",
+  //   value: Promise.resolve(3),
+  // },
+  // {
+  //   title: "Blog Posts Published on Frontend Masters",
+  //   link: "https://frontendmasters.com/blog/author/alexmacarthur",
+  //   subTitle: "Also fun.",
+  //   value: Promise.resolve(2),
+  // },
   {
     title: "Total Miles Run",
     link: "https://www.strava.com/athletes/27922666",
     subTitle: "As tracked by Strava since October, 2016.",
     value: stravaService.getTotalRunMiles(),
   },
-  {
-    title: "Total GitHub Stars",
-    link: "https://github.com/alexmacarthur",
-    subTitle: "If you haven't starred my repos, get on that.",
-    value: ghService.getTotalStars(),
-  },
-  {
-    title: "Total GitHub Followers",
-    link: "https://github.com/alexmacarthur",
-    subTitle: "Do it yourself today, for free.",
-    value: ghService.getFollowerCount(),
-  },
-  {
-    title: "Total npm Downloads",
-    link: "https://www.npmjs.com/~alexmacarthur",
-    subTitle: "Mainly random open source JavaScript packages.",
-    value: npmService.getTotalDownloads(),
-  },
-  {
-    title: "Total WordPress Plugin Downloads",
-    link: "https://profiles.wordpress.org/alexmacarthur/#content-plugins",
-    subTitle: "Not a huge focus anymore, but still worth bragging about.",
-    value: wpService.getPluginDownloadCount(),
-  },
-  {
-    title: "How Many Inches Tall I've Grown",
-    subTitle: "Expecting a growth spurt any day now.",
-    value: Promise.resolve(68),
-  },
-  {
-    title: "Enneagram Number",
-    subTitle: "Probs obvious given that I have a personal dashboard.",
-    value: Promise.resolve(3),
-  },
+  // {
+  //   title: "Total GitHub Stars",
+  //   link: "https://github.com/alexmacarthur",
+  //   subTitle: "If you haven't starred my repos, get on that.",
+  //   value: ghService.getTotalStars(),
+  // },
+  // {
+  //   title: "Total GitHub Followers",
+  //   link: "https://github.com/alexmacarthur",
+  //   subTitle: "Do it yourself today, for free.",
+  //   value: ghService.getFollowerCount(),
+  // },
+  // {
+  //   title: "Total npm Downloads",
+  //   link: "https://www.npmjs.com/~alexmacarthur",
+  //   subTitle: "Mainly random open source JavaScript packages.",
+  //   value: npmService.getTotalDownloads(),
+  // },
+  // {
+  //   title: "Total WordPress Plugin Downloads",
+  //   link: "https://profiles.wordpress.org/alexmacarthur/#content-plugins",
+  //   subTitle: "Not a huge focus anymore, but still worth bragging about.",
+  //   value: wpService.getPluginDownloadCount(),
+  // },
+  // {
+  //   title: "How Many Inches Tall I've Grown",
+  //   subTitle: "Expecting a growth spurt any day now.",
+  //   value: Promise.resolve(68),
+  // },
+  // {
+  //   title: "Enneagram Number",
+  //   subTitle: "Probs obvious given that I have a personal dashboard.",
+  //   value: Promise.resolve(3),
+  // },
 ];
 
 await Promise.allSettled(stats.map((stat) => stat.value));

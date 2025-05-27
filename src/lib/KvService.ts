@@ -1,4 +1,8 @@
-export type Key = `domain_authority` | `related_posts:${string}`;
+export type Key =
+  | `domain_authority`
+  | `related_posts:${string}`
+  | `strava:access_token`
+  | `strava:refresh_token`;
 
 class KvService {
   async getByKey(key: Key) {

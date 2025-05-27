@@ -156,19 +156,10 @@ class ContentService {
     const slugs =
       (await KvService.getByKey(`related_posts:${post.slug}`)) || "";
 
-    console.log(`Found related post slugs for ${post.slug}:`, slugs);
-
     const posts = await Promise.all(
       slugs
         .split(",")
-        .filter((s) => {
-          if (!s) {
-            console.error("An empty related post slug is set for:", post.slug);
-            return false;
-          }
-
-          return true;
-        })
+        .filter(Boolean)
         .map((s) => this.getPost(s.trim())),
     );
 
