@@ -27,7 +27,11 @@ const related = await contentService.getRelatedPosts(post);
 
           return (
             <li class="grid">
-              <a class="shadow-box hoverable-shadow-box" href={relatedPost.url}>
+              <a
+                class="shadow-box hoverable-shadow-box"
+                href={relatedPost.url}
+                data-link-id={`related_post:${relatedPost.slug}`}
+              >
                 <h6 class="font-light break-words text-md mb-4">
                   {relatedPost.title}
                 </h6>
