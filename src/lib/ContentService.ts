@@ -163,6 +163,12 @@ class ContentService {
         .map((s) => this.getPost(s.trim())),
     );
 
+    if (posts.length == 1) {
+      const allPosts = Array.from(await this.getAllPosts());
+      const randomIndex = randomInRange(0, allPosts.length - 1);
+      posts.push(allPosts[randomIndex]);
+    }
+
     return posts.slice(0, 2);
   }
 
