@@ -31,7 +31,7 @@ const isRealLink = tag == "a";
 ---
 
 <Element
-  class={`inline-flex items-center gap-1 sm:gap-2 p-2 -m-2 ${
+  class={`inline-flex items-center gap-1 sm:gap-2 p-2 px-3 -m-2 ${
     asButton ? "button" : "fancy-link"
   } ${classes}`}
   href={isRealLink ? href : undefined}

@@ -62,41 +62,39 @@ const products: Product[] = [
     <ul class="grid gap-8 grid-cols-1 md:grid-cols-2">
       {
         products.map((project) => {
-          const link = project.link || "";
-
           return (
-            <li class="card">
-              <div class="mb-6">
-                <h3 class="font-bold text-3xl mb-2">
-                  <a href={link} target="_blank" rel="noreferrer">
-                    {project.name}
-                  </a>
-                </h3>
+            <li class="shadow-box flex flex-col">
+              <div>
+                <div class="mb-6">
+                  <h3 class="font-bold text-3xl mb-2">
+                    <a href={project.link} target="_blank" rel="noreferrer">
+                      {project.name}
+                    </a>
+                  </h3>
 
-                <small class="prose md:prose-lg max-w-none italic leading-none">
-                  {project.subheading}
-                </small>
-              </div>
-
-              <div class="mb-8">
-                <p class="prose md:prose-lg max-w-none">
-                  {project.description}
-                </p>
-              </div>
-
-              {link && (
-                <div class="mt-auto">
-                  <ButtonLink
-                    linkId={`${project.id}-link`}
-                    href={link}
-                    target="_blank"
-                    asButton={true}
-                    withArrow={true}
-                  >
-                    {link.replace(/https:\/\//, "")}
-                  </ButtonLink>
+                  <small class="prose md:prose-lg max-w-none italic leading-none">
+                    {project.subheading}
+                  </small>
                 </div>
-              )}
+
+                <div class="mb-8">
+                  <p class="prose md:prose-lg max-w-none">
+                    {project.description}
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-auto">
+                <ButtonLink
+                  linkId={`${project.id}-link`}
+                  href={project.link}
+                  target="_blank"
+                  asButton={true}
+                  withArrow={true}
+                >
+                  {project.link.replace(/https:\/\//, "")}
+                </ButtonLink>
+              </div>
             </li>
           );
         })
