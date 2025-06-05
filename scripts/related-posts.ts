@@ -1,7 +1,7 @@
-import aiService from "./src/lib/AiService";
-import contentService, { computeDescription } from "./src/lib/ContentService";
-import kvService, { type Key } from "./src/lib/KvService";
-import type { CustomPostOrPage } from "./src/types/types";
+import aiService from "../src/lib/AiService";
+import contentService, { computeDescription } from "../src/lib/ContentService";
+import kvService, { type Key } from "../src/lib/KvService";
+import type { CustomPostOrPage } from "../src/types/types";
 
 export const RELATED_POST_PROMPT = `You are my personal blog curator. When you are given information about a specific blog post (the "target" post), your task is to identify TWO other blog posts from a list of all posts that the reader is likely to also find interesting. 
 
