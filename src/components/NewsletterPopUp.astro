@@ -136,6 +136,7 @@ const {
 
 <script>
   let isOpen = false;
+  let timeout: any = null;
 
   function getToggles() {
     return document.querySelectorAll(
@@ -182,27 +183,46 @@ const {
     isOpen = !isOpen;
   }
 
-  document.addEventListener("astro:before-preparation", () => {
-    document.removeEventListener("keydown", closePopup);
+  document.addEventListener(
+    "astro:before-preparation",
+    () => {
+      const screenWrap = getScreenWrap();
 
-    getScreenWrap().removeEventListener("click", handleScreenWrapClick);
+      // Necessary because these Astro hooks fire everywhere once registered.
+      if (!screenWrap) {
+        return;
+      }
 
-    getToggles().forEach((toggle) => {
-      toggle.removeEventListener("click", handleToggle);
-    });
-  });
+      document.removeEventListener("keydown", closePopup);
+
+      getScreenWrap().removeEventListener("click", handleScreenWrapClick);
+
+      getToggles().forEach((toggle) => {
+        toggle.removeEventListener("click", handleToggle);
+      });
+
+      clearTimeout(timeout);
+    },
+    { once: true },
+  );
 
   document.addEventListener("astro:page-load", () => {
-    document.addEventListener("keydown", closePopup);
+    const screenWrap = getScreenWrap();
 
-    getScreenWrap().addEventListener("click", handleScreenWrapClick);
+    // Necessary because these Astro hooks fire everywhere once registered.
+    if (!screenWrap) {
+      return;
+    }
+
+    document.addEventListener("keydown", closePopup);
+    screenWrap.addEventListener("click", handleScreenWrapClick);
 
     getToggles().forEach((toggle) => {
       toggle.classList.remove("initial-bump");
 
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          setTimeout(() => {
+          timeout = setTimeout(() => {
             toggle.classList.add("initial-bump");
           }, 400);
         });
