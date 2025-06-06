@@ -57,6 +57,20 @@ const {
 <style>
   @reference "../styles/global.css";
 
+  @keyframes bump {
+    0% {
+      transform: none;
+    }
+
+    50% {
+      transform: translateY(calc(-100% + 3px));
+    }
+
+    100% {
+      transform: var(--original-transform);
+    }
+  }
+
   .screen-wrap {
     @apply fixed w-screen h-screen top-0 left-0 z-10 hidden;
 
@@ -67,25 +81,11 @@ const {
 
   .toggleNewsletter {
     --original-transform: translateY(calc(-100% + 10px));
-    transition: all 0.15s ease-in-out;
+    transition: all 0.15s ease-in-out 0.5s;
     z-index: 11;
 
-    @keyframes bump {
-      0% {
-        transform: none;
-      }
-
-      50% {
-        transform: translateY(calc(-100% + 3px));
-      }
-
-      100% {
-        transform: var(--original-transform);
-      }
-    }
-
     &.initial-bump {
-      animation: bump 0.5s ease-in-out 1;
+      animation: bump 0.5s ease-in-out;
       transform: var(--original-transform);
     }
 
@@ -99,7 +99,7 @@ const {
 
     .icon-wrapper {
       transition:
-        all 0.2s ease-in-out 0.05s,
+        all 0.2s ease-in-out 0.5s,
         opacity 0.25s ease-in-out 0s;
     }
 
@@ -202,7 +202,9 @@ const {
 
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          toggle.classList.add("initial-bump");
+          setTimeout(() => {
+            toggle.classList.add("initial-bump");
+          }, 400);
         });
       });
 
