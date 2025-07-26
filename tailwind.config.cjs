@@ -29,9 +29,9 @@ module.exports = {
               fontFamily: "inherit",
               padding: "0",
             },
-            strong: { color: "var(--color-gray-800)" },
+            strong: { color: "var(--color-gray-700)" },
             "h1, h2, h3, h4, h5, h6": {
-              color: "var(--color-gray-900)",
+              color: "var(--color-gray-700)",
               marginBottom: `theme("margin.3") !important`,
               fontWeight: `650`,
             },
