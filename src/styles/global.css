@@ -93,7 +93,7 @@
   /**
     Used for italized subheadings in some pages. 
   */
-  h2 + p > em {
+  h2 + p > em:only-child {
     margin-top: -0.7em;
     display: block;
   }
