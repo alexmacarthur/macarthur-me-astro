@@ -26,23 +26,20 @@ const { posts } = Astro.props;
       return (
         <li class="shadow-box no-padding hoverable-shadow-box">
           <a href={postPath} target={target} class="block p-6">
-            <article class="flex justify-between">
-              <div class="flex-none">
-                <h2
-                  class="text-2xl font-semibold mb-1 fancy-link-on-hover"
-                  transition:name={post.slug}
-                >
-                  {post.title}
-                </h2>
+            <article>
+              <h2
+                class="text-2xl font-semibold mb-1 fancy-link-on-hover leading-tight text-pretty"
+                transition:name={post.slug}>
+                {post.title}
+              </h2>
 
-                <div class="flex flex-wrap items-center gap-x-3 text-base">
-                  <DateFormatter
-                    date={post.published_at}
-                    className="inline-block group-hover:text-purple-500"
-                  />
+              <div class="flex flex-wrap items-center gap-x-3 text-base">
+                <DateFormatter
+                  date={post.published_at}
+                  className="inline-block group-hover:text-purple-500"
+                />
 
-                  {external ? extractHostFromUrl(postPath) : null}
-                </div>
+                {external ? extractHostFromUrl(postPath) : null}
               </div>
             </article>
           </a>
