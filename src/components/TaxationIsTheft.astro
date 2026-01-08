@@ -10,6 +10,8 @@ const { stacked, classes = "" } = Astro.props;
 {
   stacked && (
     <svg
+      role="img"
+      aria-label="Taxation is theft."
       width="45"
       height="20"
       viewBox="0 0 45 20"
@@ -88,6 +90,8 @@ const { stacked, classes = "" } = Astro.props;
 {
   !stacked && (
     <svg
+      role="img"
+      aria-label="Taxation is theft."
       class={classes}
       width="91"
       height="9"
