@@ -21,5 +21,4 @@ interface CustomBrowseResults<T> extends Array<T> {
   meta: { pagination: Pagination };
 }
 
-export interface CustomPostsOrPages
-  extends CustomBrowseResults<CustomPostOrPage> {}
+export interface CustomPostsOrPages extends CustomBrowseResults<CustomPostOrPage> {}

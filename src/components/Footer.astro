@@ -1,5 +1,6 @@
 ---
 import SearchInputTrigger from "./SearchInputTrigger.astro";
+import TaxationIsTheft from "./TaxationIsTheft.astro";
 
 interface Link {
   name: string;
@@ -111,7 +112,7 @@ const linkSections = [
 ---
 
 <footer
-  class="px-4 md:px-6 py-8 pb-6 mt-12 flex flex-col justify-center items-center"
+  class="px-4 md:px-6 py-8 pb-0 mt-12 flex flex-col justify-center items-center"
 >
   <hr class="bg-gray-200 h-px w-full max-w-5xl mb-8" />
 
@@ -160,6 +161,17 @@ const linkSections = [
       }
     </div>
   </div>
+
+  <aside
+    class="self-stretch [&_path]:fill-gray-700 [&_svg]:w-full [&_svg]:h-full mt-4 lg:mt-10"
+  >
+    <div
+      class="max-w-6xl [&_svg]:translate-y-[.15ch] lg:[&_svg]:translate-y-[.5ch] overflow-hidden"
+    >
+      <TaxationIsTheft stacked={false} classes="hidden lg:block" />
+      <TaxationIsTheft stacked={true} classes="lg:hidden w-2/3!" />
+    </div>
+  </aside>
 </footer>
 
 <style>
