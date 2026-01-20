@@ -197,10 +197,10 @@ const articleOgData = postData
     <ClientRouter />
   </head>
 
-  <body class="bg-white">
+  <body class="bg-white flex flex-col min-h-screen">
     {showNav && <Nav />}
 
-    <div data-pagefind-body>
+    <div data-pagefind-body class="grow">
       <main
         class={`px-4 md:px-6 md:pt-8 mx-auto w-full ${mainClass}`}
         {...indexingAttributes}

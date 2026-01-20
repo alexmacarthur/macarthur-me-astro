@@ -1,5 +1,6 @@
 ---
 import GradientText from "./GradientText.astro";
+import { twMerge } from "tailwind-merge";
 
 export interface Props {
   headingClasses?: string;
@@ -8,16 +9,25 @@ export interface Props {
 }
 
 const {
-  headingClasses = "text-4xl md:text-6xl",
+  headingClasses = "",
   subtitle = "",
-  bottomSpacingClasses = "pb-2 mb-2 md:mb-6",
+  bottomSpacingClasses = "",
 } = Astro.props;
+
+const defaultHeadingClasses =
+  "text-4xl md:text-6xl font-extrabold block md:leading-[1.10]";
+const defaultBottomSpacingClasses = "pb-2 mb-2 md:mb-6";
+
+const mergedClasses = twMerge(
+  defaultHeadingClasses,
+  defaultBottomSpacingClasses,
+  headingClasses,
+  bottomSpacingClasses,
+);
 ---
 
 <div class="">
-  <h1
-    class={`${headingClasses} font-extrabold block md:leading-[1.10 ${bottomSpacingClasses}`}
-  >
+  <h1 class={mergedClasses}>
     <GradientText>
       <slot />
     </GradientText>

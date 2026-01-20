@@ -1,0 +1,24 @@
+---
+import Title from "../../components/Title.astro";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Link Expired"
+  pageType="narrow"
+  ogTitle="Link Expired"
+  description={"Your confirmation link has expired."}
+>
+  <Title>Link expired.</Title>
+
+  <div class="prose lg:prose-lg">
+    <p>
+      That confirmation link has gone stale. They only last so long. Try signing
+      up again and click the link a little faster this time.
+    </p>
+
+    <p>
+      <a href="/newsletter">Back to the newsletter page &rarr;</a>
+    </p>
+  </div>
+</Layout>

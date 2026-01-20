@@ -1,0 +1,24 @@
+---
+import Title from "../../components/Title.astro";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Something Went Wrong"
+  pageType="narrow"
+  ogTitle="Something Went Wrong"
+  description={"An error occurred while processing your subscription."}
+>
+  <Title>Well, that didn't work.</Title>
+
+  <div class="prose lg:prose-lg">
+    <p>
+      Something broke on my end. It's not you, it's me. Give it another shot, or
+      if you're feeling especially charitable, let me know what happened.
+    </p>
+
+    <p>
+      <a href="/newsletter">Try again &rarr;</a>
+    </p>
+  </div>
+</Layout>

@@ -1,0 +1,24 @@
+---
+import MailCheckIcon from "../../components/MailCheckIcon.astro";
+import NewsletterBox from "../../components/NewsletterBox.astro";
+import Title from "../../components/Title.astro";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Newsletter Subscription Confirmed"
+  pageType="narrow"
+  ogTitle="Newsletter Subscription Confirmed"
+  description={"Thank you for subscribing to my newsletter. You're all set to receive updates!"}
+>
+  <div class="[&_h1,span]:flex [&_h1,span]:items-center [&_h1,span]:gap-5">
+    <Title>
+      <MailCheckIcon classes="size-15" />
+      You're in.</Title
+    >
+  </div>
+
+  <div class="prose lg:prose-lg">
+    <p>You're all set! Thanks for signing up.</p>
+  </div>
+</Layout>

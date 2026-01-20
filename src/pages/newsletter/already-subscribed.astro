@@ -1,0 +1,24 @@
+---
+import Title from "../../components/Title.astro";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Already Subscribed"
+  pageType="narrow"
+  ogTitle="Already Subscribed"
+  description={"You're already subscribed to the newsletter."}
+>
+  <Title>You're already on the list.</Title>
+
+  <div class="prose lg:prose-lg">
+    <p>
+      Looks like you've already signed up. I appreciate the enthusiasm, but
+      there's no need to subscribe twice. You're good.
+    </p>
+
+    <p>
+      <a href="/">Back to the homepage &rarr;</a>
+    </p>
+  </div>
+</Layout>
