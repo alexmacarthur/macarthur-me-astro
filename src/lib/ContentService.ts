@@ -5,8 +5,7 @@ import prism from "prismjs";
 import loadLanguages from "prismjs/components/index";
 import type { CustomPostOrPage, CustomPostsOrPages } from "../types/types";
 import KvService from "./KvService";
-import aiService, { RELATED_POST_PROMPT } from "./AiService";
-import { isProduction, randomInRange } from "../utils";
+import { randomInRange } from "../utils";
 
 loadLanguages();
 
@@ -82,14 +81,16 @@ class ContentService {
   getPosts(
     page: number = 1,
     {
+      limit = POSTS_PER_PAGE,
       tags = [],
       excludeTags = [],
     }: {
+      limit?: number;
       tags?: string[];
       excludeTags?: (`scrap` | `skip-rss` | `external` | `remote:${string}`)[];
     } = {},
   ): Promise<CustomPostsOrPages> {
-    const args: Params = { page, limit: POSTS_PER_PAGE, include: "tags" };
+    const args: Params = { page, limit, include: "tags" };
 
     if (tags.length) {
       args.filter = `tags:${tags.toString()}`;

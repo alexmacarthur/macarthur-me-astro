@@ -2,8 +2,9 @@ import rss from "@astrojs/rss";
 import contentService from "../../lib/ContentService";
 import sanitizeHtml from "sanitize-html";
 
-const posts = await contentService.getAllPosts({
+const posts = await contentService.getPosts(1, {
   excludeTags: ["scrap"],
+  limit: 75,
 });
 
 export const GET = () =>
