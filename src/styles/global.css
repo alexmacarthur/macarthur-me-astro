@@ -145,6 +145,10 @@
     grid-area: main;
   }
 
+  hr {
+    border: none;
+  }
+
   .password-wrapper {
     position: absolute;
     z-index: -1;
@@ -248,7 +252,7 @@
   }
 
   .shadow-box {
-    @apply block border-2 p-5 md:p-6 rounded-md;
+    @apply block border-2 p-5 md:p-6 rounded-md border-gray-200;
     transition:
       box-shadow 0.1s ease,
       hover 0.1s ease;

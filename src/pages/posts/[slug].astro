@@ -166,6 +166,15 @@ if (post.updated_at) {
   <style is:global>
     @reference "../../styles/global.css";
 
+    .jc-comments__count,
+    .jc-comments__count * {
+      font-weight: 500 !important;
+    }
+
+    :root {
+      --jc-max-width: 100%;
+    }
+
     @keyframes slide {
       0% {
         transform: translateX(0);
