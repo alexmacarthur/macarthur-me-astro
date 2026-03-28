@@ -7,7 +7,7 @@
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.7.0",
     "@fontsource-variable/figtree": "^5.2.10",
-    "@jam-comments/astro": "^2.12.1-beta.0",
+    "@jam-comments/astro": "^2.12.1-beta.1",
     "@picperf/astro": "^1.3.0",
     "@picperf/rehype": "^0.6.0",
     "@tailwindcss/typography": "^0.5.19",
