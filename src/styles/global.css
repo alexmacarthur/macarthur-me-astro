@@ -62,7 +62,7 @@
 
   form input,
   form textarea {
-    @apply border border-gray-300 rounded-xs w-full px-2 py-2 text-base;
+    @apply border bg-white border-gray-300 rounded-xs w-full px-2 py-2 text-base;
   }
 
   label {
