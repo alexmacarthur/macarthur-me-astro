@@ -70,27 +70,23 @@ if (post.updated_at) {
   postData={{
     date: post.published_at,
     lastUpdated: post.updated_at || "",
-  }}
->
+  }}>
   <ButtonLink
     href="/posts"
     withArrow={true}
     arrowDirection="left"
-    classes="mb-2"
-  >
+    classes="mb-2">
     Back to All Posts
   </ButtonLink>
 
   <Title
     headingClasses={"text-3xl md:text-6xl mb-5"}
-    subtitle={post.custom_excerpt}
-  >
+    subtitle={post.custom_excerpt}>
     {post.title}
   </Title>
 
   <div
-    class={`flex items-start gap-4 mb-6 ${post.custom_excerpt ? "" : "-mt-4"}`}
-  >
+    class={`flex items-start gap-4 mb-6 ${post.custom_excerpt ? "" : "-mt-4"}`}>
     <div class="flex w-full flex-wrap gap-x-3 items-center">
       <Bio />
       <DateFormatter date={post.published_at} className="inline-block" />
@@ -236,6 +232,10 @@ if (post.updated_at) {
 
     .kg-gallery-row:has(.kg-gallery-image) {
       @apply flex gap-4;
+    }
+
+    .kg-image-card img {
+      @apply border border-gray-300 rounded-md;
     }
   </style>
 </Layout>
