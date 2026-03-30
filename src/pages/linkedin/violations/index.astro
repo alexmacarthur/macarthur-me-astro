@@ -2,7 +2,8 @@
 import FlagIcon from "../../../components/FlagIcon.astro";
 import Layout from "../../../layouts/Layout.astro";
 
-const flags = await Astro.glob("./*.md");
+const flagModules = import.meta.glob("./*.md", { eager: true });
+const flags = Object.values(flagModules);
 ---
 
 <Layout
