@@ -218,6 +218,102 @@ const articleOgData = postData
       import "../scripts/search-trigger";
     </script>
 
+    <script is:inline>
+      if ("modelContext" in navigator) {
+        var ac = new AbortController();
+
+        navigator.modelContext.registerTool(
+          {
+            name: "search_posts",
+            description:
+              "Search blog posts on macarthur.me. Returns matching post titles, URLs, and excerpts.",
+            inputSchema: {
+              type: "object",
+              properties: {
+                query: { type: "string", description: "Search query" },
+              },
+              required: ["query"],
+            },
+            execute: async function (input) {
+              try {
+                if (typeof Pagefind !== "undefined") {
+                  var search = await Pagefind.search(input.query);
+                  var results = await Promise.all(
+                    search.results.slice(0, 5).map(function (r) {
+                      return r.data();
+                    }),
+                  );
+                  return results
+                    .map(function (r) {
+                      return (
+                        "- [" +
+                        (r.meta.title || r.url) +
+                        "](" +
+                        r.url +
+                        ")" +
+                        (r.meta.description ? ": " + r.meta.description : "")
+                      );
+                    })
+                    .join("\n");
+                }
+                return "Visit https://macarthur.me/posts to browse all blog posts.";
+              } catch (e) {
+                return "Visit https://macarthur.me/posts to browse all blog posts.";
+              }
+            },
+          },
+          { signal: ac.signal },
+        );
+
+        navigator.modelContext.registerTool(
+          {
+            name: "get_latest_posts",
+            description:
+              "Get the latest blog posts from macarthur.me. Returns post titles, URLs, and publication dates.",
+            inputSchema: {
+              type: "object",
+              properties: {
+                count: {
+                  type: "number",
+                  description: "Number of posts to return (default: 5)",
+                },
+              },
+            },
+            execute: async function (input) {
+              var count = (input && input.count) || 5;
+              try {
+                var res = await fetch("/rss/feed.xml");
+                var text = await res.text();
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(text, "application/xml");
+                var items = doc.querySelectorAll("item");
+                var result = [];
+                for (var i = 0; i < Math.min(count, items.length); i++) {
+                  var title =
+                    items[i].querySelector("title")?.textContent || "";
+                  var link = items[i].querySelector("link")?.textContent || "";
+                  if (title && link)
+                    result.push("- [" + title + "](" + link + ")");
+                }
+                return result.join("\n") || "Could not fetch latest posts.";
+              } catch (e) {
+                return "Visit https://macarthur.me/posts to browse all blog posts.";
+              }
+            },
+          },
+          { signal: ac.signal },
+        );
+
+        window.addEventListener(
+          "pagehide",
+          function () {
+            ac.abort();
+          },
+          { once: true },
+        );
+      }
+    </script>
+
     <script defer src="https://unpkg.com/@picperf/client@1.0.1/dist/picperf.js"
     ></script>
   </body>

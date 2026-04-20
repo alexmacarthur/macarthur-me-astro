@@ -1,17 +1,4 @@
-const CACHE_FOREVER_EXTENSIONS = [
-  ".css",
-  ".js",
-  ".woff",
-  ".woff2",
-  ".ttf",
-  ".svg",
-  ".eot",
-  ".otf",
-];
-
-function isCacheableForever(requestUrl: string) {
-  return CACHE_FOREVER_EXTENSIONS.some((ext) => requestUrl.endsWith(ext));
-}
+import { defineMiddleware } from "astro:middleware";
 
 const SITE_URL = "https://macarthur.me";
 
@@ -81,32 +68,14 @@ function htmlToMarkdown(html: string): string {
   return md;
 }
 
-export const onRequestGet: PagesFunction = async (context) => {
-  const requestUrl = context.request.url;
-  const url = new URL(requestUrl);
+export const onRequest = defineMiddleware(async (context, next) => {
   const accept = context.request.headers.get("accept") || "";
+  const wantsMarkdown =
+    accept.includes("text/markdown") && !accept.includes("text/html");
 
-  if (requestUrl.includes("www.")) {
-    return Response.redirect(requestUrl.replace("www.", ""), 301);
-  }
+  const response = await next();
 
-  const response = await context.next();
-  const contentType = response.headers.get("content-type") || "";
-
-  if (contentType.includes("text/html")) {
-    const isHomepage = url.pathname === "/" || url.pathname === "";
-    const wantsMarkdown =
-      accept.includes("text/markdown") && !accept.includes("text/html");
-
-    if (isHomepage) {
-      response.headers.set("Link", LINK_HEADERS.join(", "));
-    }
-
-    response.headers.set(
-      "Cache-Control",
-      "public, s-maxage=3600, stale-while-revalidate=43200",
-    );
-
+  if (response.headers.get("content-type")?.includes("text/html")) {
     if (wantsMarkdown) {
       const html = await response.text();
       const markdown = htmlToMarkdown(html);
@@ -117,24 +86,19 @@ export const onRequestGet: PagesFunction = async (context) => {
         headers: {
           "Content-Type": "text/markdown; charset=utf-8",
           "X-Markdown-Tokens": String(tokenEstimate),
-          "Cache-Control":
-            "public, s-maxage=3600, stale-while-revalidate=43200",
-          "Access-Control-Allow-Origin": "*",
           Vary: "Accept",
         },
       });
     }
 
-    response.headers.set("Vary", "Accept");
-    return response;
-  }
+    const isHomepage =
+      context.url.pathname === "/" || context.url.pathname === "";
+    if (isHomepage) {
+      response.headers.set("Link", LINK_HEADERS.join(", "));
+    }
 
-  if (isCacheableForever(requestUrl)) {
-    response.headers.set(
-      "Cache-Control",
-      "public, max-age=31536001, immutable",
-    );
+    response.headers.set("Vary", "Accept");
   }
 
   return response;
-};
+});
