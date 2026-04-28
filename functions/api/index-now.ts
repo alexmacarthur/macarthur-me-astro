@@ -221,10 +221,10 @@ export const onRequest: PagesFunction = async (context) => {
 
     console.log(`[IndexNow] Response for ${postUrl}: ${response.status}`);
 
-    return new Response(
-      JSON.stringify({ url: postUrl, indexNowStatus: response.status }),
-      { status: 202, headers: { "Content-Type": "application/json" } },
-    );
+    return new Response(JSON.stringify({ url: postUrl }), {
+      status: response.status,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 
   console.log(
