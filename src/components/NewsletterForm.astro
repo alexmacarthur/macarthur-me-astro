@@ -48,6 +48,31 @@ const buttonHoverClass = disableButtonHover ? "button-no-hover" : "";
 <script>
   import { sendEvent } from "../utils";
 
+  function loadTurnstileScript() {
+    return new Promise((resolve) => {
+      if (window.turnstile) {
+        resolve(true);
+        return;
+      }
+
+      const script = document.createElement("script");
+      script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+      script.async = true;
+      script.defer = true;
+      script.onload = resolve;
+      document.head.appendChild(script);
+    });
+  }
+
+  function getTurnstileToken() {
+    return new Promise((resolve, reject) => {
+      turnstile.execute(
+        import.meta.env.PUBLIC_TURNSTILE_SITE_KEY,
+        { callback: resolve },
+      );
+    });
+  }
+
   async function handleSubmission(e) {
     e.preventDefault();
     const form = e.target;
@@ -68,15 +93,24 @@ const buttonHoverClass = disableButtonHover ? "button-no-hover" : "";
     const path = window.location.pathname;
 
     try {
-      // @ts-ignore
-      fetch(`${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/sign-up`, {
-        keepalive: true,
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      await loadTurnstileScript();
+      const turnstileToken = await getTurnstileToken();
+
+      const response = await fetch(
+        `${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/sign-up`,
+        {
+          keepalive: true,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, path, turnstileToken }),
         },
-        body: JSON.stringify({ email, path }),
-      });
+      );
+
+      if (!response.ok) {
+        throw new Error("API error");
+      }
 
       resultMessage.classList.remove("hidden");
 
