@@ -23,7 +23,7 @@ const buttonHoverClass = disableButtonHover ? "button-no-hover" : "";
         autocomplete="off"
       />
     </div>
-    <div class="turnstile-wrapper" style="display:none"></div>
+    <div class="turnstile-wrapper"></div>
   </form>
 
   <p
@@ -49,7 +49,7 @@ const buttonHoverClass = disableButtonHover ? "button-no-hover" : "";
 <script>
   import { sendEvent } from "../utils";
 
-  function loadTurnstileScript() {
+  function loadTurnstile() {
     return new Promise((resolve) => {
       if (window.turnstile) {
         resolve(true);
@@ -57,7 +57,8 @@ const buttonHoverClass = disableButtonHover ? "button-no-hover" : "";
       }
 
       const script = document.createElement("script");
-      script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+      script.src =
+        "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
       script.async = true;
       script.defer = true;
       script.onload = resolve;
@@ -65,18 +66,20 @@ const buttonHoverClass = disableButtonHover ? "button-no-hover" : "";
     });
   }
 
-  function getTurnstileToken(form: HTMLFormElement) {
+  function getTurnstileToken(wrapper) {
     return new Promise((resolve) => {
-      turnstile.ready(() => {
-        const wrapper = form.querySelector(
-          ".turnstile-wrapper",
-        ) as HTMLDivElement;
+      const widgetId = wrapper.dataset.turnstileWidget;
 
-        turnstile.execute(wrapper, {
-          sitekey: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY,
-          callback: resolve,
-        });
+      if (widgetId) {
+        turnstile.remove(widgetId);
+      }
+
+      const id = turnstile.render(wrapper, {
+        sitekey: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY,
+        callback: resolve,
       });
+
+      wrapper.dataset.turnstileWidget = id;
     });
   }
 
@@ -100,8 +103,13 @@ const buttonHoverClass = disableButtonHover ? "button-no-hover" : "";
     const path = window.location.pathname;
 
     try {
-      await loadTurnstileScript();
-      const turnstileToken = await getTurnstileToken(form);
+      await loadTurnstile();
+
+      const wrapper = form.querySelector(
+        ".turnstile-wrapper",
+      ) as HTMLDivElement;
+
+      const turnstileToken = await getTurnstileToken(wrapper);
 
       const response = await fetch(
         `${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/sign-up`,
