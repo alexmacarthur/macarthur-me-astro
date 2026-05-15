@@ -23,6 +23,7 @@ const buttonHoverClass = disableButtonHover ? "button-no-hover" : "";
         autocomplete="off"
       />
     </div>
+    <div class="turnstile-wrapper" style="display:none"></div>
   </form>
 
   <p
@@ -64,11 +65,17 @@ const buttonHoverClass = disableButtonHover ? "button-no-hover" : "";
     });
   }
 
-  function getTurnstileToken() {
+  function getTurnstileToken(form: HTMLFormElement) {
     return new Promise((resolve) => {
-      turnstile.execute({
-        sitekey: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY,
-        callback: resolve,
+      turnstile.ready(() => {
+        const wrapper = form.querySelector(
+          ".turnstile-wrapper",
+        ) as HTMLDivElement;
+
+        turnstile.execute(wrapper, {
+          sitekey: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY,
+          callback: resolve,
+        });
       });
     });
   }
@@ -94,7 +101,7 @@ const buttonHoverClass = disableButtonHover ? "button-no-hover" : "";
 
     try {
       await loadTurnstileScript();
-      const turnstileToken = await getTurnstileToken();
+      const turnstileToken = await getTurnstileToken(form);
 
       const response = await fetch(
         `${import.meta.env.PUBLIC_MACARTHUR_API_BASE_URL}/sign-up`,
