@@ -4,6 +4,13 @@ const { isHorizontal = false, disableButtonHover = false } = Astro.props;
 const buttonHoverClass = disableButtonHover ? "button-no-hover" : "";
 ---
 
+<link rel="preconnect" href="https://challenges.cloudflare.com" />
+<script
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+  async
+  defer
+></script>
+
 <div class="flex flex-col justify-center flex-auto md:col-span-2">
   <form data-signup-form class={`${isHorizontal ? "is-horizontal" : ""}`}>
     <div class="mb-4">
@@ -49,20 +56,16 @@ const buttonHoverClass = disableButtonHover ? "button-no-hover" : "";
 <script>
   import { sendEvent } from "../utils";
 
-  function loadTurnstile() {
+  function waitForTurnstile() {
     return new Promise((resolve) => {
       if (window.turnstile) {
         resolve(true);
         return;
       }
 
-      const script = document.createElement("script");
-      script.src =
-        "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
-      script.async = true;
-      script.defer = true;
-      script.onload = resolve;
-      document.head.appendChild(script);
+      document
+        .querySelector('script[src*="turnstile"]')
+        .addEventListener("load", () => resolve(true), { once: true });
     });
   }
 
@@ -103,7 +106,7 @@ const buttonHoverClass = disableButtonHover ? "button-no-hover" : "";
     const path = window.location.pathname;
 
     try {
-      await loadTurnstile();
+      await waitForTurnstile();
 
       const wrapper = form.querySelector(
         ".turnstile-wrapper",
