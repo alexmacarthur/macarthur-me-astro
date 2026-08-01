@@ -10,6 +10,12 @@ const CACHE_FOREVER_EXTENSIONS = [
 ];
 
 function isCacheableForever(requestUrl: string) {
+  // Pagefind writes stable paths (pagefind.js, pagefind-entry.json, …) that
+  // change content between deploys. Never mark them immutable forever.
+  if (requestUrl.includes("/pagefind/")) {
+    return false;
+  }
+
   return CACHE_FOREVER_EXTENSIONS.some((ext) => requestUrl.endsWith(ext));
 }
 

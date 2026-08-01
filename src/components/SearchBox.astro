@@ -74,8 +74,10 @@ import XMark from "astro-heroicons/solid/XMark.astro";
   }, 500);
 
   /**
-   * Dynamically import Pagefind component UI + CSS and mount the searchbox
-   * custom elements. Idempotent after the first call.
+   * Lazy-load Pagefind from its generated static bundle (not the npm package
+   * via Vite). Vite rewrites dynamic import() inside @pagefind/component-ui
+   * and can break createInstance; the /pagefind/ assets use a plain import.
+   * Idempotent after the first call.
    */
   function ensureSearchUi(): Promise<void> {
     if (searchUiReady) {
@@ -88,6 +90,17 @@ import XMark from "astro-heroicons/solid/XMark.astro";
         return;
       }
 
+      // Register custom elements first, then mount — avoids upgrade races.
+      if (!document.querySelector('link[data-pagefind-ui-css]')) {
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = "/pagefind/pagefind-component-ui.css";
+        link.dataset.pagefindUiCss = "";
+        document.head.appendChild(link);
+      }
+
+      await import(/* @vite-ignore */ "/pagefind/pagefind-component-ui.js");
+
       if (!root.querySelector("pagefind-searchbox")) {
         const config = document.createElement("pagefind-config");
         config.setAttribute("bundle-path", "/pagefind/");
@@ -97,14 +110,8 @@ import XMark from "astro-heroicons/solid/XMark.astro";
         box.setAttribute("autofocus", "");
         // Modal owns Cmd/Ctrl+K; hide Pagefind's own shortcut chrome.
         box.setAttribute("hide-shortcut", "");
-        box.setAttribute("shortcut", "");
         root.appendChild(box);
       }
-
-      await Promise.all([
-        import("@pagefind/component-ui/css/pagefind-component-ui.css"),
-        import("@pagefind/component-ui"),
-      ]);
     })();
 
     return searchUiReady;
