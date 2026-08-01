@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
+import { unified } from "@astrojs/markdown-remark";
 import { rehypePicPerf } from "@picperf/rehype";
 import { jamComments } from "@jam-comments/astro/config";
 import { configDotenv } from "dotenv";
@@ -12,7 +13,15 @@ configDotenv();
 export default defineConfig({
   site: "https://macarthur.me",
   trailingSlash: "never",
-  markdown: { rehypePlugins: [rehypePicPerf] },
+
+  // Astro v7 defaults compressHTML to "jsx", which strips whitespace between
+  // inline elements. Keep the previous HTML-aware behavior so rendered output
+  // (e.g. spacing between inline elements in prose) doesn't change.
+  compressHTML: true,
+
+  // @picperf/rehype is a unified (remark/rehype) plugin, so keep the unified()
+  // markdown pipeline instead of the new default Sätteri processor.
+  markdown: { processor: unified({ rehypePlugins: [rehypePicPerf] }) },
 
   // ClientRouter defaults to prefetchAll: true. That, plus the old
   // @astrojs/prefetch viewport selector on every same-origin link,

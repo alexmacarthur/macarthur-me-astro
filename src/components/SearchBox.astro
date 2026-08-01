@@ -1,5 +1,4 @@
 ---
-import Search from "astro-pagefind/components/Search";
 import XMark from "astro-heroicons/solid/XMark.astro";
 ---
 
@@ -16,11 +15,13 @@ import XMark from "astro-heroicons/solid/XMark.astro";
       <XMark />
     </button>
     <div
-      class="relative max-w-xl mx-auto max-h-[80vh] w-full shadow-xs bg-white px-4 sm:px-8 pb-10 pt-8 rounded-md overflow-scroll"
+      class="relative max-w-xl mx-auto w-full shadow-xs bg-white px-4 sm:px-8 pb-10 pt-8 rounded-md overflow-visible"
     >
       <h3 class="text-xl mb-3">Search My Site</h3>
 
-      <Search uiOptions={{ showImages: false, resetStyles: false }} />
+      <!-- Pagefind UI is mounted on first open so its ~75KB module is not
+           on the critical path for every page view (PSI network tree). -->
+      <div id="pagefindSearchRoot"></div>
     </div>
   </div>
 </div>
@@ -36,31 +37,34 @@ import XMark from "astro-heroicons/solid/XMark.astro";
   import { sendEvent } from "../utils";
   import { debounce } from "../utils";
 
-  let abortController;
-  let signal;
+  let abortController: AbortController;
+  let signal: AbortSignal;
   let searchIsOpen = false;
-  let search;
-  let searchInput;
-  let searchBackdrop;
-  let closeButton;
+  let search: HTMLDivElement | null;
+  let searchInput: HTMLInputElement | null;
+  let searchBackdrop: HTMLDivElement | null;
+  let closeButton: HTMLButtonElement | null;
+  let searchUiReady: Promise<void> | null = null;
 
   function setVariables() {
     abortController = new AbortController();
     signal = abortController.signal;
 
     searchIsOpen = false;
-    search = document.getElementById("search") as HTMLDivElement;
-    searchInput = search.querySelector(
+    search = document.getElementById("search") as HTMLDivElement | null;
+    searchInput = search?.querySelector(
       'input[type="text"]',
-    ) as HTMLInputElement;
+    ) as HTMLInputElement | null;
     searchBackdrop = document.getElementById(
       "searchBackdrop",
-    ) as HTMLDivElement;
-    closeButton = document.getElementById("closeButton") as HTMLButtonElement;
+    ) as HTMLDivElement | null;
+    closeButton = document.getElementById(
+      "closeButton",
+    ) as HTMLButtonElement | null;
   }
 
   const debouncedHandleSearch = debounce(function () {
-    if (!searchInput.value.length) {
+    if (!searchInput?.value.length) {
       return;
     }
 
@@ -69,36 +73,87 @@ import XMark from "astro-heroicons/solid/XMark.astro";
     });
   }, 500);
 
-  function showSearch() {
+  /**
+   * Dynamically import Pagefind component UI + CSS and mount the searchbox
+   * custom elements. Idempotent after the first call.
+   */
+  function ensureSearchUi(): Promise<void> {
+    if (searchUiReady) {
+      return searchUiReady;
+    }
+
+    searchUiReady = (async () => {
+      const root = document.getElementById("pagefindSearchRoot");
+      if (!root) {
+        return;
+      }
+
+      if (!root.querySelector("pagefind-searchbox")) {
+        const config = document.createElement("pagefind-config");
+        config.setAttribute("bundle-path", "/pagefind/");
+        root.appendChild(config);
+
+        const box = document.createElement("pagefind-searchbox");
+        box.setAttribute("autofocus", "");
+        // Modal owns Cmd/Ctrl+K; hide Pagefind's own shortcut chrome.
+        box.setAttribute("hide-shortcut", "");
+        box.setAttribute("shortcut", "");
+        root.appendChild(box);
+      }
+
+      await Promise.all([
+        import("@pagefind/component-ui/css/pagefind-component-ui.css"),
+        import("@pagefind/component-ui"),
+      ]);
+    })();
+
+    return searchUiReady;
+  }
+
+  function bindSearchInput() {
+    searchInput = search?.querySelector(
+      'input[type="text"]',
+    ) as HTMLInputElement | null;
+
+    if (searchInput) {
+      searchInput.addEventListener("keyup", debouncedHandleSearch, { signal });
+    }
+  }
+
+  async function showSearch() {
+    await ensureSearchUi();
+    bindSearchInput();
+
+    if (!search) {
+      return;
+    }
+
     document.body.style.overflow = "hidden";
     search.classList.add("is-open");
     searchIsOpen = true;
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        searchInput.focus();
+        searchInput?.focus();
       });
     });
   }
 
   function hideSearch() {
     document.body.style.overflow = "";
-    search.classList.remove("is-open");
+    search?.classList.remove("is-open");
     searchIsOpen = false;
   }
 
-  function handleKeydown(event) {
+  function handleKeydown(event: KeyboardEvent) {
     if (event.key.toLowerCase() === "escape" && searchIsOpen) {
       event.preventDefault();
-
       hideSearch();
     }
 
     if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
       event.preventDefault();
-
-      showSearch();
-
+      void showSearch();
       sendEvent("search_open", {
         method: "keyboard",
       });
@@ -106,16 +161,22 @@ import XMark from "astro-heroicons/solid/XMark.astro";
   }
 
   document.addEventListener("astro:before-preparation", () => {
-    abortController.abort();
+    abortController?.abort();
   });
 
   document.addEventListener("astro:page-load", () => {
     setVariables();
 
-    closeButton.addEventListener("click", hideSearch, { signal });
-    searchBackdrop.addEventListener("click", hideSearch, { signal });
-    searchInput.addEventListener("keyup", debouncedHandleSearch, { signal });
+    closeButton?.addEventListener("click", hideSearch, { signal });
+    searchBackdrop?.addEventListener("click", hideSearch, { signal });
+    bindSearchInput();
     document.addEventListener("keydown", handleKeydown, { signal });
-    document.body.addEventListener("search:open", showSearch, { signal });
+    document.body.addEventListener(
+      "search:open",
+      () => {
+        void showSearch();
+      },
+      { signal },
+    );
   });
 </script>
