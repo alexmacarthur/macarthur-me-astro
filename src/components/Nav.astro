@@ -33,7 +33,7 @@ const navItems = [
 <nav
   class="p-6 px-5 lg:px-10 mb-3 flex justify-between items-center min-h-[105px]"
 >
-  <a href="/">
+  <a href="/" data-astro-prefetch>
     <Logo hoverable />
   </a>
 
@@ -43,6 +43,7 @@ const navItems = [
         <li class="">
           <a
             href={item.href}
+            data-astro-prefetch
             class="text-gray-600 font-light fancy-link-on-hover"
           >
             {item.name}
@@ -69,6 +70,7 @@ const navItems = [
           <li class="">
             <a
               href={item.href}
+              data-astro-prefetch
               class="text-white text-5xl font-bold slanted-text"
             >
               {item.name}

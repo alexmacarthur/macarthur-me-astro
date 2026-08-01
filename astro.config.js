@@ -1,6 +1,5 @@
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
-import prefetch from "@astrojs/prefetch";
 import { rehypePicPerf } from "@picperf/rehype";
 import { jamComments } from "@jam-comments/astro/config";
 import { configDotenv } from "dotenv";
@@ -14,6 +13,15 @@ export default defineConfig({
   site: "https://macarthur.me",
   trailingSlash: "never",
   markdown: { rehypePlugins: [rehypePicPerf] },
+
+  // ClientRouter defaults to prefetchAll: true. That, plus the old
+  // @astrojs/prefetch viewport selector on every same-origin link,
+  // made Lighthouse treat in-viewport post cards (and their CSS) as
+  // critical-path. Opt in only via data-astro-prefetch on primary nav.
+  prefetch: {
+    prefetchAll: false,
+    defaultStrategy: "hover",
+  },
 
   integrations: [
     jamComments({
@@ -29,7 +37,6 @@ export default defineConfig({
         return item;
       },
     }),
-    prefetch({ selector: "a[href^='/'], a[href^='https://macarthur.me']" }),
     pagefind(),
   ],
 

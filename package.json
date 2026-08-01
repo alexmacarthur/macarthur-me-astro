@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.64",
-    "@astrojs/prefetch": "^0.4.1",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
     "@fontsource-variable/figtree": "^5.2.10",
